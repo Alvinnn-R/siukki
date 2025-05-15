@@ -1,0 +1,115 @@
+/* khusus styling halaman login */
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+/* Mengatur seluruh body agar memenuhi seluruh layar */
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.login-illustration {
+    flex: 1;
+    background-color: #cfe8c4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-illustration img {
+    max-width: 80%;
+    height: auto;
+}
+
+.login-form-wrapper {
+    flex: 1;
+    padding: 4rem 3rem;
+    background-color: #e2f0d9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-form-wrapper h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.login-form-wrapper p {
+    margin-bottom: 2rem;
+    color: #4a4a4a;
+}
+
+.login-form-wrapper label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.login-form-wrapper input[type="text"],
+.login-form-wrapper input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.25rem;
+    border: 1px solid #9dbf9b;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.login-form-wrapper input.invalid {
+    border-color: #e74c3c;
+}
+
+.remember-me {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.remember-me input {
+    margin-right: 0.5rem;
+}
+
+.error-message {
+    display: none;
+    color: #e74c3c;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.error-message.show {
+    display: block;
+}
+
+#btnLogin {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #88b04b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+#btnLogin:disabled {
+    background-color: #aacf91;
+    cursor: default;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.register-link a {
+    color: #4a7c3a;
+    text-decoration: none;
+    font-weight: 600;
+}
