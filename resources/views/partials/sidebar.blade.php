@@ -2,83 +2,179 @@
 <div class="col-md-3 col-lg-2 d-md-block p-0 sidebar">
     <div class="d-flex flex-column h-100">
         <div class="sidebar-content p-3">
+            <!-- Logo dan Judul -->
             <div class="d-flex align-items-center mb-4 ps-3 pt-2">
                 <img src="{{ asset('assets/images/Logo UKKI.png') }}" alt="Logo UKKI" style="height: 48px; width:auto;">
                 <span class="ms-3 siukki-title text-white fw-semibold fs-4">SiUKKI</span>
+                @if (auth('admin')->check())
+                    <span class="badge bg-warning text-dark ms-2 small">Admin</span>
+                @endif
             </div>
+
+            <!-- Search Bar -->
             <div class="input-group mb-4">
                 <span class="input-group-text bg-white border-end-0">
-                    <img src="{{ asset('assets/images/ikon search.png') }}" alt="Search Icon" class="ikon">
+                    <i class="material-icons text-muted">search</i>
                 </span>
                 <input class="form-control border-start-0 bg-white" type="search" placeholder="Search">
             </div>
+
+            <!-- Navigation Menu -->
             <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                    <a class="nav-link active rounded-3 d-flex align-items-center" href="beranda.htm">
-                        <img src="{{ asset('assets/images/ikon beranda.png') }}" alt="Beranda" class="me-2 ikon">
-                        Beranda
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link d-flex hover-hijau rounded-3 align-items-center" href="misi.html">
-                        <img src="{{ asset('assets/images/ikon misi.png') }}" alt="Misi" class="me-2 ikon">
-                        Misi
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link d-flex hover-hijau rounded-3 align-items-center" href="#">
-                        <img src="{{ asset('assets/images/ikon poin.png') }}" alt="Poin" class="me-2 ikon">
-                        Poin
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link d-flex hover-hijau rounded-3 align-items-center" href="#">
-                        <img src="{{ asset('assets/images/ikon kalender.png') }}" alt="Kalender" class="me-2 ikon">
-                        Kalender Event
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link d-flex hover-hijau rounded-3 align-items-center" href="#">
-                        <img src="{{ asset('assets/images/ikon leaderboard.png') }}" alt="Leaderboard"
-                            class="me-2 ikon">
-                        Leaderboard
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link d-flex hover-hijau rounded-3 align-items-center" href="#">
-                        <img src="{{ asset('assets/images/ikon about.png') }}" alt="About" class="me-2 ikon">
-                        About
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link d-flex hover-hijau rounded-3 align-items-center" href="#">
-                        <img src="{{ asset('assets/images/ikon setting.png') }}" alt="Setting" class="me-2 ikon">
-                        Setting
-                    </a>
-                </li>
+                @if (auth('admin')->check())
+                    {{-- Admin Menu --}}
+                    <li class="nav-item mb-2">
+                        <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.dashboard') }}">
+                            <i class="material-icons me-2 nav-icon">dashboard</i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('admin.anggota*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.anggota.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('admin.anggota*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">people</i> Kelola Anggota
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('admin.misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.misi.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('admin.misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">assignment</i> Kelola Misi
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('admin.event*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.event.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('admin.event*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">event</i> Kelola Event
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('admin.poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.poin.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('admin.poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">stars</i> Kelola Poin
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('admin.leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.leaderboard.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('admin.leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">leaderboard</i> Leaderboard
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('admin.laporan*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.laporan.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('admin.laporan*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">assessment</i> Laporan
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('admin.setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.setting.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('admin.setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">settings</i> Setting
+                        </a>
+                    </li>
+                @else
+                    {{-- Anggota Menu --}}
+                    <li class="nav-item mb-2">
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('dashboard') }}">
+                            <i class="material-icons me-2 nav-icon">home</i> Beranda
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                           href="{{ route('misi.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">assignment</i> Misi
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('poin.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">stars</i> Poin
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('kalender.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">event</i> Kalender Event
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('leaderboard.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">leaderboard</i> Leaderboard
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('about*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('about.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('about*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">info</i> About
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        {{-- <a class="nav-link {{ request()->routeIs('setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('setting.index') }}"> --}}
+                        <a class="nav-link {{ request()->routeIs('setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#">
+                            <i class="material-icons me-2 nav-icon">settings</i> Setting
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
+
         <!-- Profile Footer -->
         <div class="mt-auto profile-footer">
-            <div class="d-flex align-items-center justify-content-between px-3 py-2">
+            <div class="d-flex align-items-center justify-content-between px-3 py-4">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('assets/images/Avater.png') }}" alt="Profile" class="rounded-circle avatar">
                     <div class="ms-2">
-                        <div class="fw-semibold text-white" style="font-size:1.1em; line-height:1.2;">Riky
-                        </div>
-                        <div class="text-white-50" style="font-size: 0.95em;">230011100021</div>
+                        @if (auth('admin')->check())
+                            <div class="fw-semibold text-white" style="font-size:0.99em; line-height:1.2;">
+                                {{ auth('admin')->user()->nama }}
+                            </div>
+                            <div class="text-white-50" style="font-size: 0.92em;">
+                                {{ auth('admin')->user()->username }}
+                            </div>
+                        @else
+                            <div class="fw-semibold text-white" style="font-size:0.99em; line-height:1.2;">
+                                {{ auth()->user()->nama }}
+                            </div>
+                            <div class="text-white-50" style="font-size: 0.92em;">
+                                {{ auth()->user()->npm }}
+                            </div>
+                        @endif
                     </div>
                 </div>
-                {{-- <a href="#" class="ms-2">
-                    <img src="{{ asset('assets/images/logout.png') }}" alt="Logout" class="logout-icon">
-                </a> --}}
-                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                <form method="POST" action="{{ auth('admin')->check() ? route('admin.logout') : route('logout') }}"
+                    class="d-inline">
                     @csrf
                     <button type="submit" class="btn p-0 border-0 bg-transparent ms-2">
-                        <img src="{{ asset('assets/images/logout.png') }}" alt="Logout" class="logout-icon">
+                        <i class="material-icons logout-icon text-white">logout</i>
                     </button>
                 </form>
-
             </div>
         </div>
     </div>

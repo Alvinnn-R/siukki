@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,16 @@ Route::middleware('auth:anggota')->group(function () {
     Route::get('/dashboard', function () {
         return view('anggota.dashboard');
     })->name('dashboard');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AuthAdminController::class, 'login'])->name('admin.login.post');
+    Route::post('/logout', [AuthAdminController::class, 'logout'])->name('admin.logout');
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
+    });
 });

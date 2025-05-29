@@ -44,6 +44,10 @@ return [
             'driver'   => 'session',
             'provider' => 'anggotas',
         ],
+        'admin'   => [
+            'driver'   => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -72,6 +76,11 @@ return [
         'anggotas' => [
             'driver' => 'eloquent',
             'model'  => App\Models\Anggota::class,
+        ],
+
+        'admins'   => [
+            'driver' => 'eloquent',
+            'model'  => App\Models\Admin::class,
         ],
 
         // 'users' => [
