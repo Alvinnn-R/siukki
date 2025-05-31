@@ -160,10 +160,10 @@
                             </div>
                         @else
                             <div class="fw-semibold text-white" style="font-size:0.99em; line-height:1.2;">
-                                {{ optional(auth()->user())->nama }}
+                                {{ auth()->user()->nama }}
                             </div>
                             <div class="text-white-50" style="font-size: 0.92em;">
-                                {{ optional(auth()->user())->npm }}
+                                {{ auth()->user()->npm }}
                             </div>
                         @endif
                     </div>
