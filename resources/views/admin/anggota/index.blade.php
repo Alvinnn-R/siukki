@@ -3,213 +3,131 @@
 @section('title', 'Kelola Anggota - Admin SiUKKI')
 
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <style>
-        .content-bg {
-            background-color: #F4FDF0;
-            min-height: calc(100vh - 2rem);
-            border-radius: 15px;
+        /* Modal styles */
+        .modal-header.bg-danger {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
         }
 
-        .stats-card {
-            background: linear-gradient(135deg, #d2ebbc 0%, #a6cf90 100%);
-            border-radius: 10px;
-            border: none;
-            color: white;
+        .btn-close-white {
+            filter: invert(1);
         }
 
-        .table-container {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(166, 207, 144, 0.2);
+        #deleteModal .alert-light {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
         }
 
-        .table-header {
-            background-color: #a6cf90;
-            color: white;
-            border-radius: 15px 15px 0 0;
+        #deleteModal .modal-body {
+            padding: 1.5rem;
         }
 
-        .btn-success-custom {
-            background-color: #a6cf90;
-            border-color: #a6cf90;
-            color: white;
-        }
-
-        .btn-success-custom:hover {
-            background-color: #8fb876;
-            border-color: #8fb876;
-            color: white;
-        }
-
-        .badge-status-aktif {
-            background-color: #a6cf90;
-            color: white;
-        }
-
-        .badge-status-nonaktif {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .search-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(166, 207, 144, 0.2);
+        #deleteModal .alert-danger {
+            font-size: 0.875rem;
         }
     </style>
 @endpush
 
 @section('content')
-    <div class="content-bg p-4">
-        <!-- Page Header -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h2 class="mb-1" style="color: #2d5016;">
-                            <i class="material-icons me-2" style="vertical-align: middle; color: #a6cf90;">people</i>
-                            Kelola Anggota
-                        </h2>
-                        <p class="text-muted mb-0">Manajemen data anggota UKKI</p>
-                    </div>
-                    <a href="{{ route('admin.anggota.create') }}" class="btn btn-success-custom">
-                        <i class="material-icons me-1" style="font-size: 18px; vertical-align: middle;">person_add</i>
-                        Tambah Anggota
-                    </a>
+    <!-- Page Header -->
+    <div class="section-header">
+        <h2>
+            <i class="material-icons me-3" style="font-size: 2rem;">people</i>
+            Kelola Anggota UKKI
+        </h2>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="material-icons mb-2" style="font-size: 2.5rem;">people</i>
+                    <h3 class="fw-bold">{{ $totalAnggota ?? 0 }}</h3>
+                    <p class="mb-0">Total Anggota</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="material-icons mb-2" style="font-size: 2.5rem;">person_add</i>
+                    <h3 class="fw-bold">{{ $anggotaBaru ?? 0 }}</h3>
+                    <p class="mb-0">Anggota Baru</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="material-icons mb-2" style="font-size: 2.5rem;">trending_up</i>
+                    <h3 class="fw-bold">{{ $anggotaAktif ?? 0 }}</h3>
+                    <p class="mb-0">Anggota Aktif</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="material-icons mb-2" style="font-size: 2.5rem;">military_tech</i>
+                    <h3 class="fw-bold">{{ $totalBadges ?? 0 }}</h3>
+                    <p class="mb-0">Jenis Badge</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Stats Cards -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-3">
-                <div class="card stats-card">
-                    <div class="card-body text-center">
-                        <i class="material-icons mb-2" style="font-size: 2.5rem;">people</i>
-                        <h4 class="fw-bold">{{ $totalAnggota ?? 25 }}</h4>
-                        <p class="mb-0 small">Total Anggota</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card stats-card">
-                    <div class="card-body text-center">
-                        <i class="material-icons mb-2" style="font-size: 2.5rem;">person_add</i>
-                        <h4 class="fw-bold">{{ $anggotaBaru ?? 5 }}</h4>
-                        <p class="mb-0 small">Anggota Baru (Bulan Ini)</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card stats-card">
-                    <div class="card-body text-center">
-                        <i class="material-icons mb-2" style="font-size: 2.5rem;">trending_up</i>
-                        <h4 class="fw-bold">{{ $anggotaAktif ?? 23 }}</h4>
-                        <p class="mb-0 small">Anggota Aktif</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card stats-card">
-                    <div class="card-body text-center">
-                        <i class="material-icons mb-2" style="font-size: 2.5rem;">military_tech</i>
-                        <h4 class="fw-bold">{{ $totalBadges ?? 3 }}</h4>
-                        <p class="mb-0 small">Jenis Badge</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Add New Button -->
+    <div class="misi-section-box d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-1">Manajemen Anggota</h5>
+            <p class="mb-0 text-muted">Kelola data anggota UKKI, tambah anggota baru, dan pantau aktivitas mereka</p>
         </div>
+        <a href="{{ route('admin.anggota.create') }}" class="btn btn-success-custom btn-lg">
+            <i class="material-icons me-2" style="vertical-align: middle;">person_add</i>
+            Tambah Anggota Baru
+        </a>
+    </div>
 
-        <!-- Search and Filter -->
-        <div class="search-container p-3 mb-4">
-            <form method="GET" action="{{ route('admin.anggota.index') }}">
-                <div class="row align-items-end">
-                    <div class="col-md-4 mb-2">
-                        <label for="search" class="form-label fw-semibold">Cari Anggota</label>
-                        <input type="text" class="form-control" id="search" name="search"
-                            value="{{ request('search') }}" placeholder="NPM atau Nama">
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <label for="level" class="form-label fw-semibold">Level</label>
-                        <select class="form-select" id="level" name="level">
-                            <option value="">Semua Level</option>
-                            @for ($i = 1; $i <= 20; $i++)
-                                <option value="{{ $i }}" {{ request('level') == $i ? 'selected' : '' }}>Level
-                                    {{ $i }}</option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <label for="badge" class="form-label fw-semibold">Badge</label>
-                        <select class="form-select" id="badge" name="badge">
-                            <option value="">Semua Badge</option>
-                            <option value="Murid Ilmu" {{ request('badge') == 'Murid Ilmu' ? 'selected' : '' }}>Murid Ilmu
-                            </option>
-                            <option value="Penuntut Kebaikan"
-                                {{ request('badge') == 'Penuntut Kebaikan' ? 'selected' : '' }}>Penuntut Kebaikan</option>
-                            <option value="Cendekiawan Islami"
-                                {{ request('badge') == 'Cendekiawan Islami' ? 'selected' : '' }}>Cendekiawan Islami
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-md-2 mb-2">
-                        <button type="submit" class="btn btn-success-custom w-100">
-                            <i class="material-icons" style="font-size: 18px;">search</i>
-                        </button>
-                    </div>
+    <!-- Search & Filter -->
+    <div class="search-filter-box">
+        <form method="GET" action="{{ route('admin.anggota.index') }}">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="search" class="form-label fw-semibold">Cari Anggota</label>
+                    <input type="text" class="form-control" id="search" name="search" value="{{ request('search') }}"
+                        placeholder="NPM atau Nama Anggota">
                 </div>
-            </form>
-        </div><input type="text" class="form-control" id="search" name="search" value="{{ request('search') }}"
-            placeholder="Nama, NPM, atau Email">
-    </div>
-    <div class="col-md-3 mb-2">
-        <label for="fakultas" class="form-label fw-semibold">Fakultas</label>
-        <select class="form-select" id="fakultas" name="fakultas">
-            <option value="">Semua Fakultas</option>
-            <option value="Fakultas Ilmu Komputer" {{ request('fakultas') == 'Fakultas Ilmu Komputer' ? 'selected' : '' }}>
-                Fakultas Ilmu Komputer</option>
-            <option value="Fakultas Teknik" {{ request('fakultas') == 'Fakultas Teknik' ? 'selected' : '' }}>Fakultas
-                Teknik</option>
-            <option value="Fakultas Ekonomi dan Bisnis"
-                {{ request('fakultas') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas Ekonomi dan Bisnis
-            </option>
-            <option value="Fakultas Ilmu Sosial dan Ilmu Politik"
-                {{ request('fakultas') == 'Fakultas Ilmu Sosial dan Ilmu Politik' ? 'selected' : '' }}>Fakultas Ilmu Sosial
-                dan Ilmu Politik</option>
-            <option value="Fakultas Hukum" {{ request('fakultas') == 'Fakultas Hukum' ? 'selected' : '' }}>Fakultas Hukum
-            </option>
-        </select>
-    </div>
-    <div class="col-md-2 mb-2">
-        <label for="angkatan" class="form-label fw-semibold">Angkatan</label>
-        <select class="form-select" id="angkatan" name="angkatan">
-            <option value="">Semua</option>
-            @for ($year = date('Y'); $year >= 2020; $year--)
-                <option value="{{ $year }}" {{ request('angkatan') == $year ? 'selected' : '' }}>
-                    {{ $year }}</option>
-            @endfor
-        </select>
-    </div>
-    <div class="col-md-2 mb-2">
-        <label for="status" class="form-label fw-semibold">Status</label>
-        <select class="form-select" id="status" name="status">
-            <option value="">Semua</option>
-            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Aktif</option>
-            <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Non-aktif</option>
-        </select>
-    </div>
-    <div class="col-md-1 mb-2">
-        <button type="submit" class="btn btn-success-custom w-100">
-            <i class="material-icons" style="font-size: 18px;">search</i>
-        </button>
-    </div>
-    </div>
-    </form>
+                <div class="col-md-3">
+                    <label for="level" class="form-label fw-semibold">Filter Level</label>
+                    <select class="form-select" id="level" name="level">
+                        <option value="">Semua Level</option>
+                        @for ($i = 1; $i <= 20; $i++)
+                            <option value="{{ $i }}" {{ request('level') == $i ? 'selected' : '' }}>Level
+                                {{ $i }}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="badge" class="form-label fw-semibold">Filter Badge</label>
+                    <select class="form-select" id="badge" name="badge">
+                        <option value="">Semua Badge</option>
+                        <option value="Murid Ilmu" {{ request('badge') == 'Murid Ilmu' ? 'selected' : '' }}>Murid Ilmu
+                        </option>
+                        <option value="Penuntut Kebaikan" {{ request('badge') == 'Penuntut Kebaikan' ? 'selected' : '' }}>
+                            Penuntut Kebaikan</option>
+                        <option value="Cendekiawan Islami"
+                            {{ request('badge') == 'Cendekiawan Islami' ? 'selected' : '' }}>Cendekiawan Islami</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-success-custom w-100">
+                        <i class="material-icons" style="font-size: 18px;">search</i>
+                        Cari
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 
-    <!-- Table Container -->
-    <div class="table-container">
-        <div class="table-header p-3">
+    <!-- Table -->
+    <div class="table-box">
+        <div class="table-header">
             <h5 class="mb-0">
                 <i class="material-icons me-2" style="vertical-align: middle;">list</i>
                 Daftar Anggota UKKI
@@ -222,7 +140,7 @@
                     <tr>
                         <th width="5%">#</th>
                         <th width="15%">NPM</th>
-                        <th width="25%">Nama</th>
+                        <th width="25%">Nama Anggota</th>
                         <th width="10%">Level</th>
                         <th width="15%">Badge</th>
                         <th width="10%">Total XP</th>
@@ -230,60 +148,64 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- Sample Data - Replace with actual data --}}
-                    @forelse(range(1, 10) as $index)
+                    @forelse($anggota ?? [] as $index => $member)
                         <tr>
-                            <td>{{ $index }}</td>
+                            <td>{{ $anggota->firstItem() + $index }}</td>
                             <td>
-                                <span class="fw-semibold">23081010{{ sprintf('%03d', $index) }}</span>
+                                <span class="fw-semibold text-primary">{{ $member->npm }}</span>
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ asset('assets/images/Avater.png') }}" alt="Avatar"
-                                        class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                    <img src="{{ $member->profile_url }}" alt="Avatar" class="rounded-circle me-2"
+                                        style="width: 35px; height: 35px; object-fit: cover;">
                                     <div>
-                                        <div class="fw-semibold">Anggota {{ $index }}</div>
-                                        <small class="text-muted">Member sejak {{ date('M Y') }}</small>
+                                        <div class="fw-semibold">{{ $member->nama }}</div>
+                                        <small class="text-muted">Member sejak
+                                            {{ $member->created_at->format('M Y') }}</small>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="text-center">
-                                    <span class="badge bg-primary fs-6">{{ ($index % 10) + 1 }}</span>
+                                    <span class="badge bg-primary fs-6 px-2 py-1">{{ $member->level }}</span>
                                     <div class="progress mt-1" style="height: 4px;">
-                                        <div class="progress-bar bg-success" style="width: {{ ($index * 10) % 100 }}%">
-                                        </div>
+                                        <div class="progress-bar bg-success"
+                                            style="width: {{ $member->progress_percentage }}%"></div>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 @php
-                                    $level = ($index % 10) + 1;
-                                    $badge =
-                                        $level >= 9
-                                            ? 'Cendekiawan Islami'
-                                            : ($level >= 5
-                                                ? 'Penuntut Kebaikan'
-                                                : 'Murid Ilmu');
-                                    $badgeColor = $level >= 9 ? 'warning' : ($level >= 5 ? 'info' : 'secondary');
+                                    $badgeClass = 'badge-murid';
+                                    if ($member->badge == 'Penuntut Kebaikan') {
+                                        $badgeClass = 'badge-penuntut';
+                                    }
+                                    if ($member->badge == 'Cendekiawan Islami') {
+                                        $badgeClass = 'badge-cendekiawan';
+                                    }
                                 @endphp
-                                <span class="badge bg-{{ $badgeColor }}">{{ $badge }}</span>
+                                <span class="badge {{ $badgeClass }}">{{ $member->badge ?? 'Murid Ilmu' }}</span>
                             </td>
                             <td>
                                 <div class="text-center">
-                                    <div class="fw-bold text-warning">{{ $index * 150 }}</div>
+                                    <div class="fw-bold text-warning" style="font-size: 1.1rem;">{{ $member->xp }}
+                                    </div>
                                     <small class="text-muted">XP</small>
                                 </div>
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-sm btn-outline-primary" title="Lihat Detail">
+                                    <a href="{{ route('admin.anggota.show', $member->npm) }}"
+                                        class="btn btn-sm btn-outline-primary" title="Lihat Detail">
                                         <i class="material-icons" style="font-size: 16px;">visibility</i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-warning" title="Edit">
+                                    </a>
+                                    <a href="{{ route('admin.anggota.edit', $member->npm) }}"
+                                        class="btn btn-sm btn-outline-warning" title="Edit">
                                         <i class="material-icons" style="font-size: 16px;">edit</i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" title="Hapus">
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" title="Hapus"
+                                        data-npm="{{ $member->npm }}" data-nama="{{ $member->nama }}"
+                                        data-aktivitas="{{ $member->aktivitas->count() }}" onclick="confirmDelete(this)">
                                         <i class="material-icons" style="font-size: 16px;">delete</i>
                                     </button>
                                 </div>
@@ -291,9 +213,13 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center py-4">
-                                <i class="material-icons text-muted mb-2" style="font-size: 3rem;">people_outline</i>
-                                <p class="text-muted mb-0">Belum ada data anggota</p>
+                            <td colspan="7" class="text-center py-5">
+                                <i class="material-icons text-muted mb-3" style="font-size: 4rem;">people_outline</i>
+                                <p class="text-muted mb-0 h5">Belum ada data anggota</p>
+                                <a href="{{ route('admin.anggota.create') }}" class="btn btn-success-custom mt-3">
+                                    <i class="material-icons me-1" style="font-size: 18px;">person_add</i>
+                                    Tambah Anggota Pertama
+                                </a>
                             </td>
                         </tr>
                     @endforelse
@@ -301,44 +227,131 @@
             </table>
         </div>
 
-        <!-- Pagination -->
-        <div class="p-3 border-top">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="text-muted">
-                    Menampilkan 1-10 dari 25 anggota
+        @if (isset($anggota) && $anggota->hasPages())
+            <!-- Pagination -->
+            <div class="p-3 border-top">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted">
+                        Menampilkan {{ $anggota->firstItem() }}-{{ $anggota->lastItem() }} dari {{ $anggota->total() }}
+                        anggota
+                    </div>
+                    {{ $anggota->links() }}
                 </div>
-                <nav aria-label="Page navigation">
-                    <ul class="pagination pagination-sm mb-0">
-                        <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
-                        </li>
-                        <li class="page-item active">
-                            <span class="page-link">1</span>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+            </div>
+        @endif
+    </div>
+
+    <!-- Success Alert -->
+    @if (session('success'))
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="material-icons me-2" style="vertical-align: middle;">check_circle</i>
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         </div>
-    </div>
+    @endif
+
+    <!-- Modal Konfirmasi Delete -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteModalLabel">
+                        <i class="material-icons me-2" style="vertical-align: middle;">warning</i>
+                        Konfirmasi Hapus Anggota
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <i class="material-icons text-danger" style="font-size: 4rem;">delete_forever</i>
+                    </div>
+                    <h5 class="text-center mb-3">Apakah Anda yakin ingin menghapus anggota ini?</h5>
+
+                    <div class="alert alert-light border">
+                        <div class="mb-2">
+                            <small class="text-muted">Nama Anggota:</small>
+                            <div class="fw-bold" id="deleteAnggotaNama">-</div>
+                        </div>
+                        <div class="mb-2">
+                            <small class="text-muted">NPM:</small>
+                            <div class="fw-bold" id="deleteAnggotaNpm">-</div>
+                        </div>
+                        <div>
+                            <small class="text-muted">Total Aktivitas:</small>
+                            <div class="fw-bold text-danger" id="deleteAnggotaAktivitas">0 aktivitas</div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <i class="material-icons me-2">info</i>
+                        <div>
+                            <strong>Perhatian!</strong> Tindakan ini tidak dapat dibatalkan.
+                            Semua data aktivitas yang terkait dengan anggota ini akan ikut terhapus.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="material-icons me-1" style="font-size: 18px;">close</i>
+                        Batal
+                    </button>
+                    <form id="deleteForm" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            <i class="material-icons me-1" style="font-size: 18px;">delete</i>
+                            Ya, Hapus Anggota
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @push('scripts')
     <script>
         // Auto submit form when filter changes
-        document.querySelectorAll('#fakultas, #angkatan, #status').forEach(element => {
+        document.querySelectorAll('#level, #badge').forEach(element => {
             element.addEventListener('change', function() {
                 this.form.submit();
             });
         });
+
+        // Auto hide success message
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(function(alert) {
+                const bsAlert = new bootstrap.Alert(alert);
+                setTimeout(() => {
+                    bsAlert.close();
+                }, 5000);
+            });
+        }, 100);
+
+        // Function to show delete confirmation modal
+        function confirmDelete(button) {
+            // Get data from button attributes
+            const npm = button.getAttribute('data-npm');
+            const nama = button.getAttribute('data-nama');
+            const totalAktivitas = button.getAttribute('data-aktivitas');
+
+            // Set data ke modal
+            document.getElementById('deleteAnggotaNama').textContent = nama;
+            document.getElementById('deleteAnggotaNpm').textContent = npm;
+            document.getElementById('deleteAnggotaAktivitas').textContent = totalAktivitas + ' aktivitas';
+
+            // Set action URL ke form
+            const deleteForm = document.getElementById('deleteForm');
+            const baseUrl = "{{ route('admin.anggota.destroy', '__npm__') }}";
+            deleteForm.action = baseUrl.replace('__npm__', npm);
+
+            // Show modal
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            deleteModal.show();
+        }
     </script>
 @endpush

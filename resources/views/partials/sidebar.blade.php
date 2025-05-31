@@ -30,10 +30,10 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('admin.anggota*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="{{ route('admin.anggota.index') }}"> --}}
                         <a class="nav-link {{ request()->routeIs('admin.anggota*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
+                            href="{{ route('admin.anggota.index') }}">
+                            {{-- <a class="nav-link {{ request()->routeIs('admin.anggota*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#"> --}}
                             <i class="material-icons me-2 nav-icon">people</i> Kelola Anggota
                         </a>
                     </li>
@@ -156,7 +156,7 @@
                                 {{ auth('admin')->user()->nama }}
                             </div>
                             <div class="text-white-50" style="font-size: 0.92em;">
-                                {{ auth('admin')->user()->username }}
+                                {{ auth('admin')->user()->id_admin }}
                             </div>
                         @else
                             <div class="fw-semibold text-white" style="font-size:0.99em; line-height:1.2;">

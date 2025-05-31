@@ -52,17 +52,19 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username"
-                            placeholder="Masukkan username admin" value="{{ old('username') }}" required>
-                        <div class="invalid-feedback">
-                            Please enter your username.
-                        </div>
+                        <label for="id_admin" class="form-label">ID Admin</label>
+                        <input type="text" class="form-control @error('id_admin') is-invalid @enderror"
+                            id="id_admin" name="id_admin" placeholder="Masukkan ID admin ..."
+                            value="{{ old('id_admin') }}" required>
+                        @error('id_admin')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Masukkan password ..." required>
                         <div class="invalid-feedback">
                             Please enter your password.
                         </div>

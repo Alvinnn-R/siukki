@@ -85,10 +85,56 @@ class Anggota extends Authenticatable
         return $this;
     }
 
-    // Relasi dengan aktivitas/poin (untuk nanti)
+    // Relasi dengan aktivitas
     public function aktivitas()
     {
         return $this->hasMany(Aktivitas::class, 'npm', 'npm');
+    }
+
+    // Method untuk mendapatkan aktivitas hari ini
+    public function aktivitasToday()
+    {
+        return $this->aktivitas()->whereDate('tanggal', today());
+    }
+
+    // Method untuk mendapatkan aktivitas bulan ini
+    public function aktivitasThisMonth()
+    {
+        return $this->aktivitas()->whereMonth('tanggal', now()->month)
+            ->whereYear('tanggal', now()->year);
+    }
+
+    // Method untuk menghitung total XP dari aktivitas
+    public function calculateTotalXpFromActivities()
+    {
+        return $this->aktivitas()
+            ->where('status', 'approved')
+            ->sum('xp_diperoleh');
+    }
+
+    // Method untuk sync XP dari aktivitas ke field xp
+    public function syncXpFromActivities()
+    {
+        $totalXp  = $this->calculateTotalXpFromActivities();
+        $this->xp = $totalXp;
+
+        // Auto level up
+        $newLevel = intval($this->xp / 300) + 1;
+        if ($newLevel > $this->level) {
+            $this->level = $newLevel;
+
+            // Auto update badge
+            if ($this->level >= 9) {
+                $this->badge = 'Cendekiawan Islami';
+            } elseif ($this->level >= 5) {
+                $this->badge = 'Penuntut Kebaikan';
+            } else {
+                $this->badge = 'Murid Ilmu';
+            }
+        }
+
+        $this->save();
+        return $this;
     }
 
     // Scope untuk filter by level
@@ -101,5 +147,10 @@ class Anggota extends Authenticatable
     public function scopeByBadge($query, $badge)
     {
         return $query->where('badge', $badge);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'npm';
     }
 }

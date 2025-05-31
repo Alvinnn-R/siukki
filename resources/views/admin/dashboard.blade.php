@@ -10,9 +10,6 @@
     <!-- Admin Welcome Banner -->
     <div class="admin-welcome-banner mb-4">
         <div class="row g-0 align-items-center">
-            <div class="col-auto ps-3">
-                <img src="{{ asset('assets/images/avater.png') }}" alt="Admin" class="img-fluid admin-image">
-            </div>
             <div class="col">
                 <div class="p-3">
                     <h2 class="welcome-title">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
 use Illuminate\Support\Facades\Route;
@@ -8,11 +9,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 Route::get('/', function () {
@@ -23,31 +19,13 @@ Route::get('/login', [AuthAnggotaController::class, 'showLoginForm'])->name('log
 Route::post('/login', [AuthAnggotaController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthAnggotaController::class, 'logout'])->name('logout');
 
-// Route::middleware('auth:anggota')->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('anggota.dashboard');
-//     })->name('dashboard');
-// });
-
-// Route::prefix('admin')->group(function () {
-//     Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('admin.login');
-//     Route::post('/login', [AuthAdminController::class, 'login'])->name('admin.login.post');
-//     Route::post('/logout', [AuthAdminController::class, 'logout'])->name('admin.logout');
-
-//     Route::middleware('auth:admin')->group(function () {
-//         Route::get('/dashboard', function () {
-//             return view('admin.dashboard');
-//         })->name('admin.dashboard');
-//     });
-// });
-
 // Protected Routes for Anggota
 Route::middleware('auth:anggota')->group(function () {
     Route::get('/dashboard', function () {
         return view('anggota.dashboard');
     })->name('dashboard');
 
-    // Placeholder routes untuk menu anggota - akan dibuat nanti
+    // Placeholder routes untuk menu anggota
     Route::get('/misi', function () {
         return view('anggota.misi.index');
     })->name('misi.index');
@@ -80,60 +58,57 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AuthAdminController::class, 'login'])->name('admin.login.post');
     Route::post('/logout', [AuthAdminController::class, 'logout'])->name('admin.logout');
 
-    // Protected Admin Routes
-    Route::middleware('auth:admin')->group(function () {
+    // Protected Admin Routes dengan name prefix
+    Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
-        })->name('admin.dashboard');
+        })->name('dashboard');
 
-        // Placeholder routes untuk menu admin - akan dibuat nanti
-        Route::get('/anggota', function () {
-            return view('admin.anggota.index');
-        })->name('admin.anggota.index');
+        // ANGGOTA MANAGEMENT ROUTES - FIXED dengan custom parameter
+        Route::resource('anggota', AnggotaController::class)->parameters([
+            'anggota' => 'anggota', // Force Laravel untuk menggunakan 'anggota' sebagai parameter
+        ]);
 
-        Route::get('/anggota/create', function () {
-            return view('admin.anggota.create');
-        })->name('admin.anggota.create');
-
+        // Placeholder routes untuk menu admin lainnya
         Route::get('/misi', function () {
             return view('admin.misi.index');
-        })->name('admin.misi.index');
+        })->name('misi.index');
 
         Route::get('/misi/create', function () {
             return view('admin.misi.create');
-        })->name('admin.misi.create');
+        })->name('misi.create');
 
         Route::get('/event', function () {
             return view('admin.event.index');
-        })->name('admin.event.index');
+        })->name('event.index');
 
         Route::get('/event/create', function () {
             return view('admin.event.create');
-        })->name('admin.event.create');
+        })->name('event.create');
 
         Route::get('/poin', function () {
             return view('admin.poin.index');
-        })->name('admin.poin.index');
+        })->name('poin.index');
 
         Route::get('/leaderboard', function () {
             return view('admin.leaderboard.index');
-        })->name('admin.leaderboard.index');
+        })->name('leaderboard.index');
 
         Route::get('/laporan', function () {
             return view('admin.laporan.index');
-        })->name('admin.laporan.index');
+        })->name('laporan.index');
 
         Route::get('/setting', function () {
             return view('admin.setting.index');
-        })->name('admin.setting.index');
+        })->name('setting.index');
 
         Route::get('/profile', function () {
             return view('admin.profile.index');
-        })->name('admin.profile');
+        })->name('profile');
     });
 });
 
-// Fallback route - redirect any undefined routes to login
+// Fallback route
 Route::fallback(function () {
     return redirect()->route('login');
 });

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -19,7 +18,7 @@ class AnggotaController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
-                  ->orWhere('npm', 'like', "%{$search}%");
+                    ->orWhere('npm', 'like', "%{$search}%");
             });
         }
 
@@ -35,12 +34,14 @@ class AnggotaController extends Controller
 
         $anggota = $query->orderBy('created_at', 'desc')->paginate(10);
 
-        // Statistics
+        // Statistics dengan relasi yang benar
         $totalAnggota = Anggota::count();
-        $anggotaBaru = Anggota::whereMonth('created_at', now()->month)
-                             ->whereYear('created_at', now()->year)
-                             ->count();
-        $anggotaAktif = Anggota::whereNotNull('npm')->count(); // Semua anggota yang terdaftar
+        $anggotaBaru  = Anggota::whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
+        $anggotaAktif = Anggota::whereHas('aktivitas', function ($query) {
+            $query->whereMonth('tanggal', now()->month);
+        })->count();
         $totalBadges = Anggota::distinct('badge')->whereNotNull('badge')->count();
 
         return view('admin.anggota.index', compact(
@@ -60,18 +61,18 @@ class AnggotaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'npm' => 'required|string|unique:anggotas,npm|max:15',
-            'nama' => 'required|string|max:255',
+            'npm'      => 'required|string|unique:anggotas,npm|max:15',
+            'nama'     => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
-            'profile' => 'nullable|image|mimes:jpeg,png,jpg|max:5048',
-            'xp' => 'nullable|integer|min:0|max:10000',
-            'level' => 'nullable|integer|min:1|max:20',
-            'badge' => 'nullable|string|in:Murid Ilmu,Penuntut Kebaikan,Cendekiawan Islami'
+            'profile'  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'xp'       => 'nullable|integer|min:0|max:10000',
+            'level'    => 'nullable|integer|min:1|max:20',
+            'badge'    => 'nullable|string|in:Murid Ilmu,Penuntut Kebaikan,Cendekiawan Islami',
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
-        $validated['xp'] = $validated['xp'] ?? 0;
-        $validated['level'] = $validated['level'] ?? 1;
+        $validated['xp']       = $validated['xp'] ?? 0;
+        $validated['level']    = $validated['level'] ?? 1;
 
         // Handle file upload
         if ($request->hasFile('profile')) {
@@ -94,11 +95,12 @@ class AnggotaController extends Controller
         $anggota = Anggota::create($validated);
 
         return redirect()->route('admin.anggota.index')
-                        ->with('success', 'Anggota berhasil didaftarkan!');
+            ->with('success', 'Anggota berhasil didaftarkan!');
     }
 
     public function show(Anggota $anggota)
     {
+        $anggota->load('aktivitas.misi');
         return view('admin.anggota.show', compact('anggota'));
     }
 
@@ -110,13 +112,13 @@ class AnggotaController extends Controller
     public function update(Request $request, Anggota $anggota)
     {
         $validated = $request->validate([
-            'npm' => ['required', 'string', 'max:15', Rule::unique('anggotas')->ignore($anggota->npm, 'npm')],
-            'nama' => 'required|string|max:255',
+            'npm'      => ['required', 'string', 'max:15', Rule::unique('anggotas')->ignore($anggota->npm, 'npm')],
+            'nama'     => 'required|string|max:255',
             'password' => 'nullable|string|min:8|confirmed',
-            'profile' => 'nullable|image|mimes:jpeg,png,jpg|max:5048',
-            'xp' => 'nullable|integer|min:0|max:10000',
-            'level' => 'nullable|integer|min:1|max:20',
-            'badge' => 'nullable|string|in:Murid Ilmu,Penuntut Kebaikan,Cendekiawan Islami'
+            'profile'  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'xp'       => 'nullable|integer|min:0|max:10000',
+            'level'    => 'nullable|integer|min:1|max:20',
+            'badge'    => 'nullable|string|in:Murid Ilmu,Penuntut Kebaikan,Cendekiawan Islami',
         ]);
 
         if ($request->filled('password')) {
@@ -137,7 +139,7 @@ class AnggotaController extends Controller
             $validated['profile'] = $fileName;
         }
 
-        $validated['xp'] = $validated['xp'] ?? $anggota->xp;
+        $validated['xp']    = $validated['xp'] ?? $anggota->xp;
         $validated['level'] = $validated['level'] ?? $anggota->level;
 
         // Auto set badge based on level if not provided
@@ -154,23 +156,19 @@ class AnggotaController extends Controller
         $anggota->update($validated);
 
         return redirect()->route('admin.anggota.index')
-                        ->with('success', 'Data anggota berhasil diperbarui!');
+            ->with('success', 'Data anggota berhasil diperbarui!');
     }
 
     public function destroy(Anggota $anggota)
     {
+        // Delete profile picture if exists
+        if ($anggota->profile && file_exists(public_path('uploads/profiles/' . $anggota->profile))) {
+            unlink(public_path('uploads/profiles/' . $anggota->profile));
+        }
+
         $anggota->delete();
 
         return redirect()->route('admin.anggota.index')
-                        ->with('success', 'Anggota berhasil dihapus!');
-    }
-
-    public function toggleStatus(Anggota $anggota)
-    {
-        // Karena tidak ada field status_aktif, kita bisa menggunakan alternatif
-        // Misalnya soft delete atau field lain, tapi untuk sementara kita hapus method ini
-
-        return redirect()->back()
-                        ->with('info', 'Fitur toggle status belum tersedia!');
+            ->with('success', 'Anggota berhasil dihapus!');
     }
 }
