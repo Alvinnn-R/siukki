@@ -15,7 +15,9 @@
         </div>
         <div class="col">
             <div class="p-3">
-                <h2 class="welcome-title">Selamat datang di SiUKKI {{ auth()->user()->nama }}</h2>
+                <h2 class="welcome-title">
+                    Selamat datang di SiUKKI {{ auth()->check() && auth()->user()->nama ? auth()->user()->nama : 'Tamu' }}
+                </h2>
                 <p class="mb-0">
                     Aplikasi gamifikasi untuk meningkatkan keterlibatanmu dalam kegiatan UKKI!<br>
                     Ayo ambil tantangan, kumpulkan XP, dan raih penghargaan.
