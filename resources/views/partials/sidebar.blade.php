@@ -168,12 +168,42 @@
                         @endif
                     </div>
                 </div>
-                <form method="POST" action="{{ auth('admin')->check() ? route('admin.logout') : route('logout') }}"
+                {{-- <form method="POST" action="{{ auth('admin')->check() ? route('admin.logout') : route('logout') }}"
                     class="d-inline">
                     @csrf
                     <button type="submit" class="btn p-0 border-0 bg-transparent ms-2">
                         <i class="material-icons logout-icon text-white">logout</i>
                     </button>
+                </form> --}}
+                <!-- Tombol Trigger Modal Logout -->
+                <button type="button" class="btn p-0 border-0 bg-transparent ms-2" data-bs-toggle="modal"
+                    data-bs-target="#logoutModal">
+                    <i class="material-icons logout-icon text-white">logout</i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Logout -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin logout?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+
+                <!-- Form Logout yang sebenarnya -->
+                <form method="POST" action="{{ auth('admin')->check() ? route('admin.logout') : route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Logout</button>
                 </form>
             </div>
         </div>
