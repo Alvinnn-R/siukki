@@ -69,6 +69,13 @@
                 <p class="text-center mt-4 register-link">
                     Not Registered Yet? <a href="{{ url('register') }}">Register</a>
                 </p>
+
+                <p class="text-center mt-3">
+                    Login as admin?
+                    <small class="text-muted">
+                        <a href="{{ route('admin.login') }}" class="text-decoration-none">Click here</a>
+                    </small>
+                </p>
             </div>
         </div>
     </div>
