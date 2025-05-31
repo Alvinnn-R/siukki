@@ -14,7 +14,7 @@ class AuthAnggotaController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'npm'      => 'required|string',
+            'npm'      => 'required|numeric|digits:11',
             'password' => 'required|string',
         ]);
 
