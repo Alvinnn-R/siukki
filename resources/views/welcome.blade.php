@@ -38,7 +38,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            background: #e2f0d9;
             min-height: 100vh;
             overflow-x: hidden;
             /* Remove the padding-top from here since it's duplicated */
@@ -90,7 +90,7 @@
 
         /* Header Section */
         .welcome-header {
-            background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+            background: #91c47b;
             color: white;
             text-align: center;
             padding: 60px 40px 40px;
@@ -103,8 +103,7 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20s-20-8.954-20-20 8.954-20 20-20 20 8.954 20 20zm-30 0c0 5.523 4.477 10 10 10s10-4.477 10-10-4.477-10-10-10-10 4.477-10 10z'/%3E%3C/g%3E%3C/svg%3E");
+            bottom: 0;       
         }
 
         .logo-container {
@@ -219,7 +218,7 @@
 
         /* Stats Section */
         .stats-section {
-            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            background: #91c47b;
             padding: 50px 40px;
             margin: 40px -40px;
             color: white;
@@ -292,7 +291,7 @@
 
         /* University Info */
         .university-info {
-            background: var(--light-green);
+            background: #e8f5e8;
             padding: 40px;
             margin: 40px -40px 0;
             text-align: center;
@@ -318,7 +317,7 @@
 
         /* Navigation Bar */
         .navbar {
-            background: rgba(46, 139, 87, 0.95);
+            background: #91c47b;
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
@@ -326,7 +325,7 @@
         }
 
         .navbar.scrolled {
-            background: rgba(46, 139, 87, 1);
+            background:rgb(0, 0, 0);
             box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
         }
 
@@ -383,15 +382,15 @@
         }
 
         .btn-login:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
+            background: #2e8a57;
+            border-color: #2e8a57;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn-register {
             background: var(--accent-gold);
-            color: var(--primary-green) !important;
+            color: #2e8a57;
             font-weight: 600;
             padding: 8px 20px;
             border-radius: 25px;
@@ -540,7 +539,7 @@
                 <div class="me-3">
                 <img src="{{ asset('assets/images/Logo UKKI.png') }}" alt="Logo" style="height: 50px;">
                 </div>
-                <span class="brand-text">BERANDA SiUKKI</span>
+                <span class="brand-text">SiUKKI</span>
             </a>
 
             <!-- Toggle button untuk mobile -->
@@ -570,7 +569,7 @@
                 
                 <div class="logo-container">
                     <div class="main-logo">
-                        <i class="fas fa-mosque" style="font-size: 3rem; color: var(--primary-green);"></i>
+                    <img src="{{ asset('assets/images/Logo UKKI.png') }}" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%;">
                     </div>
                 </div>
 
