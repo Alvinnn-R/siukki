@@ -3,9 +3,9 @@
     <div class="d-flex flex-column h-100">
         <div class="sidebar-content p-3">
             <!-- Logo dan Judul -->
-            <div class="d-flex align-items-center mb-4 ps-3 pt-2">
+            <div class="d-flex align-items-center mb-4 ps-2 pt-2">
                 <img src="{{ asset('assets/images/Logo UKKI.png') }}" alt="Logo UKKI" style="height: 48px; width:auto;">
-                <span class="ms-3 siukki-title text-white fw-semibold fs-4">SiUKKI</span>
+                <span class="siukki-title text-white fw-semibold fs-4">SiUKKI</span>
                 @if (auth('admin')->check())
                     <span class="badge bg-warning text-dark ms-2 small">Admin</span>
                 @endif
@@ -38,10 +38,10 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('admin.misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="{{ route('admin.misi.index') }}"> --}}
                         <a class="nav-link {{ request()->routeIs('admin.misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
+                            href="{{ route('admin.misi.index') }}">
+                            {{-- <a class="nav-link {{ request()->routeIs('admin.misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="#"> --}}
                             <i class="material-icons me-2 nav-icon">assignment</i> Kelola Misi
                         </a>
                     </li>

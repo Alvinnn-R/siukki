@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AnggotaController;
+use App\Http\Controllers\Admin\MisiController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
 use Illuminate\Support\Facades\Route;
@@ -74,9 +75,11 @@ Route::prefix('admin')->group(function () {
         ]);
 
         // Placeholder routes untuk menu admin lainnya
-        Route::get('/misi', function () {
-            return view('admin.misi.index');
-        })->name('misi.index');
+        // Route::get('/misi', function () {
+        //     return view('admin.misi.index');
+        // })->name('misi.index');
+        Route::resource('misi', MisiController::class);
+        Route::patch('misi/{misi}/toggle-status', [MisiController::class, 'toggleStatus'])->name('misi.toggle-status');
 
         Route::get('/misi/create', function () {
             return view('admin.misi.create');
