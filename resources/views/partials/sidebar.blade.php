@@ -32,58 +32,65 @@
                     <li class="nav-item mb-2">
                         <a class="nav-link {{ request()->routeIs('admin.anggota*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.anggota.index') }}">
-                            {{-- <a class="nav-link {{ request()->routeIs('admin.anggota*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#"> --}}
-                            <i class="material-icons me-2 nav-icon">people</i> Kelola Anggota
-                        </a>
+                            {{-- <a
+                                class="nav-link {{ request()->routeIs('admin.anggota*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#"> --}}
+                                <i class="material-icons me-2 nav-icon">people</i> Kelola Anggota
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
                         <a class="nav-link {{ request()->routeIs('admin.misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.misi.index') }}">
-                            {{-- <a class="nav-link {{ request()->routeIs('admin.misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#"> --}}
-                            <i class="material-icons me-2 nav-icon">assignment</i> Kelola Misi
-                        </a>
+                            {{-- <a
+                                class="nav-link {{ request()->routeIs('admin.misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#"> --}}
+                                <i class="material-icons me-2 nav-icon">assignment</i> Kelola Misi
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('admin.event*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('admin.event*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.event.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('admin.event*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">event</i> Kelola Event
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('admin.event*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">event</i> Kelola Event
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('admin.poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('admin.poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.poin.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('admin.poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">stars</i> Kelola Poin
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('admin.poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">stars</i> Kelola Poin
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('admin.leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('admin.leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.leaderboard.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('admin.leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">leaderboard</i> Leaderboard
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('admin.leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">leaderboard</i> Leaderboard
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('admin.laporan*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('admin.laporan*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.laporan.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('admin.laporan*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">assessment</i> Laporan
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('admin.laporan*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">assessment</i> Laporan
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('admin.setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('admin.setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.setting.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('admin.setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">settings</i> Setting
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('admin.setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">settings</i> Setting
+                            </a>
                     </li>
                 @else
                     {{-- Anggota Menu --}}
@@ -94,44 +101,49 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                           href="{{ route('misi.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">assignment</i> Misi
-                        </a>
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('misi.index') }}"> --}}
+                            <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">assignment</i> Misi
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('poin.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">stars</i> Poin
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">stars</i> Poin
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('kalender.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">event</i> Kalender Event
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">event</i> Kalender Event
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('leaderboard.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">leaderboard</i> Leaderboard
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="#">
+                                <i class="material-icons me-2 nav-icon">leaderboard</i> Leaderboard
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('about*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('about*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('about.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('about*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
-                            <i class="material-icons me-2 nav-icon">info</i> About
-                        </a>
+                            <a class="nav-link {{ request()->routeIs('about*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="{{ route('about') }}">
+                                <i class="material-icons me-2 nav-icon">info</i> About
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
                         <a class="nav-link {{ request()->routeIs('setting') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"

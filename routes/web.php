@@ -49,8 +49,12 @@ Route::middleware('auth:anggota')->group(function () {
     })->name('leaderboard.index');
 
     Route::get('/about', function () {
-        return view('anggota.about.index');
-    })->name('about.index');
+        return view('anggota.about');
+    })->name('about');
+
+    // Route::get('/about', function () {
+    //     return view('anggota.about.index');
+    // })->name('about.index');
 
     Route::get('/setting', function () {
         return view('anggota.setting');
