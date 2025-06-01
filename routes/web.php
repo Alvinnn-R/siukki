@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
+use App\Http\Controllers\SettingAnggotaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,8 +52,16 @@ Route::middleware('auth:anggota')->group(function () {
     })->name('about.index');
 
     Route::get('/setting', function () {
-        return view('anggota.setting.index');
-    })->name('setting.index');
+        return view('anggota.setting');
+    })->name('setting');
+
+    // Routes yang disesuaikan dengan SettingAnggotaController
+    Route::get('/setting', [SettingAnggotaController::class, 'index'])->name('setting');
+    Route::put('/setting/profile', [SettingAnggotaController::class, 'updateProfile'])->name('setting.profile');
+    Route::put('/setting/password', [SettingAnggotaController::class, 'updatePassword'])->name('setting.password');
+    Route::put('/setting/badge', [SettingAnggotaController::class, 'updateBadge'])->name('setting.badge');
+    Route::delete('/setting/remove-image', [SettingAnggotaController::class, 'removeProfileImage'])->name('setting.remove-image');
+    Route::put('/setting/notifications', [SettingAnggotaController::class, 'updateNotificationSettings'])->name('setting.notifications');
 });
 
 // Admin Routes
