@@ -134,10 +134,8 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="{{ route('setting.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
+                        <a class="nav-link {{ request()->routeIs('setting') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('setting') }}">
                             <i class="material-icons me-2 nav-icon">settings</i> Setting
                         </a>
                     </li>
