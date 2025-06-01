@@ -66,7 +66,8 @@
                     <button class="btn btn-success w-100" type="submit">Login</button>
                 </form>
 
-                <p class="text-center mt-4 register-link">
+                <p
+                    class="text-center mt-4 https://docs.google.com/forms/d/e/1FAIpQLSf7GU8-Kor1OPE0Ji6duCdPIWM0sGqNnnVTE3Hz1K9CNb7uZg/viewform?usp=sharing">
                     Not Registered Yet? <a
                         href="{{ url('https://docs.google.com/forms/d/e/1FAIpQLSf7GU8-Kor1OPE0Ji6duCdPIWM0sGqNnnVTE3Hz1K9CNb7uZg/viewform?usp=sharing') }}">Register</a>
                 </p>
