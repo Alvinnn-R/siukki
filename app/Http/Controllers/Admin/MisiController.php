@@ -38,7 +38,7 @@ class MisiController extends Controller
             'jadwal'          => 'required|date',
             'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'icon'            => 'nullable|image|mimes:svg|max:2048',
+            'icon'            => 'nullable|image|mimes:svg,png|max:2048',
         ]);
 
         $data = $request->all();
@@ -86,7 +86,7 @@ class MisiController extends Controller
             'jadwal'          => 'required|date',
             'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'icon'            => 'nullable|image|mimes:svg|max:2048',
+            'icon'            => 'nullable|image|mimes:svg,png|max:2048',
         ]);
 
         $data = $request->all();

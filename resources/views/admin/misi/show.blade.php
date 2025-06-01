@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                <a href="{{ route('admin.misi.edit', $misi->id) }}" class="btn btn-light">
+                <a href="{{ route('admin.misi.edit', $misi->id_misi) }}" class="btn btn-light">
                     <i class="material-icons me-1" style="font-size: 18px;">edit</i>
                     Edit Misi
                 </a>
@@ -198,7 +198,7 @@
                         <p class="mb-0 text-muted">Kelola misi ini</p>
                     </div>
                     <div class="d-flex gap-2">
-                        <a href="{{ route('admin.misi.edit', $misi->id) }}" class="btn btn-warning">
+                        <a href="{{ route('admin.misi.edit', $misi->id_misi) }}" class="btn btn-warning">
                             <i class="material-icons me-1" style="font-size: 18px;">edit</i>
                             Edit Misi
                         </a>
@@ -257,7 +257,7 @@
                         <i class="material-icons me-1" style="font-size: 18px;">close</i>
                         Batal
                     </button>
-                    <form action="{{ route('admin.misi.destroy', $misi->id) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin.misi.destroy', $misi->id_misi) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">
