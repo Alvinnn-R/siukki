@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\MisiController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
 use App\Http\Controllers\SettingAnggotaController;
+use App\Http\Controllers\PoinController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +38,7 @@ Route::middleware('auth:anggota')->group(function () {
     })->name('misi.index');
 
     Route::get('/poin', function () {
-        return view('anggota.poin.index');
+        return view('anggota.poin');
     })->name('poin.index');
 
     Route::get('/kalender', function () {

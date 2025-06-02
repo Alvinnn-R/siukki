@@ -63,10 +63,25 @@ body {
 /* Custom styling untuk welcome banner */
 .welcome-banner {
     background-color: #a6cf90;
-    border-radius: 15px;
+    border-radius: 20px;
     border: none;
-    overflow: hidden;
+    overflow: visible;
     font-family: "Aref Ruqaa";
+    padding-left: 250px;
+    padding-right: 40px;
+    width: 100%;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+}
+
+/*Stying gambar ustadz*/
+.ustadz-overflow {
+    position: absolute;
+    top: -90px;
+    left: -250px;
+    width: 170px;
+    height: auto;
 }
 
 .welcome-title {

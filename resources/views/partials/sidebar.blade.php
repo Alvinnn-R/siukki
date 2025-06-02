@@ -61,7 +61,7 @@
                             class="nav-link {{ request()->routeIs('admin.poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.poin.index') }}"> --}}
                             <a class="nav-link {{ request()->routeIs('admin.poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                                href="#">
+                                href="{{ route('poin.index') }}">
                                 <i class="material-icons me-2 nav-icon">stars</i> Kelola Poin
                             </a>
                     </li>
@@ -113,8 +113,8 @@
                         {{-- <a
                             class="nav-link {{ request()->routeIs('poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('poin.index') }}"> --}}
-                            <a class="nav-link {{ request()->routeIs('poin*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                                href="#">
+                            <a class="nav-link {{ request()->routeIs('poin.index') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="{{ route('poin.index') }}">
                                 <i class="material-icons me-2 nav-icon">stars</i> Poin
                             </a>
                     </li>

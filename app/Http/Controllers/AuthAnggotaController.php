@@ -20,7 +20,7 @@ class AuthAnggotaController extends Controller
 
         if (Auth::guard('anggota')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([
