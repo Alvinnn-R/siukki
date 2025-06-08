@@ -1,9 +1,15 @@
 <?php
 
 use App\Http\Controllers\Admin\AnggotaController;
+use App\Http\Controllers\Admin\MisiController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
+<<<<<<< HEAD
 use App\Http\Controllers\MisiController;
+=======
+use App\Http\Controllers\SettingAnggotaController;
+use App\Http\Controllers\PoinController;
+>>>>>>> 57d39b01a3897c30015dc157b64ae886616ede7f
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +42,7 @@ Route::middleware('auth:anggota')->group(function () {
     Route::post('/anggota/misi/checkin', [MisiController::class, 'checkin']);
 
     Route::get('/poin', function () {
-        return view('anggota.poin.index');
+        return view('anggota.poin');
     })->name('poin.index');
 
     Route::get('/kalender', function () {
@@ -48,12 +54,24 @@ Route::middleware('auth:anggota')->group(function () {
     })->name('leaderboard.index');
 
     Route::get('/about', function () {
-        return view('anggota.about.index');
-    })->name('about.index');
+        return view('anggota.about');
+    })->name('about');
+
+    // Route::get('/about', function () {
+    //     return view('anggota.about.index');
+    // })->name('about.index');
 
     Route::get('/setting', function () {
-        return view('anggota.setting.index');
-    })->name('setting.index');
+        return view('anggota.setting');
+    })->name('setting');
+
+    // Routes yang disesuaikan dengan SettingAnggotaController
+    Route::get('/setting', [SettingAnggotaController::class, 'index'])->name('setting');
+    Route::put('/setting/profile', [SettingAnggotaController::class, 'updateProfile'])->name('setting.profile');
+    Route::put('/setting/password', [SettingAnggotaController::class, 'updatePassword'])->name('setting.password');
+    Route::put('/setting/badge', [SettingAnggotaController::class, 'updateBadge'])->name('setting.badge');
+    Route::delete('/setting/remove-image', [SettingAnggotaController::class, 'removeProfileImage'])->name('setting.remove-image');
+    Route::put('/setting/notifications', [SettingAnggotaController::class, 'updateNotificationSettings'])->name('setting.notifications');
 });
 
 // Admin Routes
@@ -75,9 +93,11 @@ Route::prefix('admin')->group(function () {
         ]);
 
         // Placeholder routes untuk menu admin lainnya
-        Route::get('/misi', function () {
-            return view('admin.misi.index');
-        })->name('misi.index');
+        // Route::get('/misi', function () {
+        //     return view('admin.misi.index');
+        // })->name('misi.index');
+        Route::resource('misi', MisiController::class);
+        Route::patch('misi/{misi}/toggle-status', [MisiController::class, 'toggleStatus'])->name('misi.toggle-status');
 
         Route::get('/misi/create', function () {
             return view('admin.misi.create');

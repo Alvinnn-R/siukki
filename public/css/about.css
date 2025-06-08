@@ -1,0 +1,146 @@
+/* Custom styling yang tidak tersedia di Bootstrap 5 */
+body {
+  min-height: 100vh;
+  background-color: #f4fdf0;
+}
+
+/* Warna dan styling untuk sidebar */
+.sidebar {
+  background-color: #99bc85;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  border-right: 2px solid #7fbf4d;
+  font-family: "Poppins";
+}
+
+.sidebar-content {
+  overflow-y: auto;
+}
+
+/* Warna dan styling navigasi */
+.nav-link {
+  color: #000 !important;
+}
+
+.nav-link.active {
+  background-color: #6d9d3b !important;
+  color: white !important;
+}
+
+/* Ukuran ikon konsisten */
+.ikon {
+  height: 20px;
+  width: auto;
+}
+
+/* Footer profil */
+.profile-footer {
+  background: #6d9d3b;
+  margin-top: auto;
+}
+
+/* Gambar avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+/* Ikon logout */
+.logout-icon {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+/* Content area */
+.content {
+  padding: 20px;
+}
+
+/* Custom styling untuk welcome banner */
+.welcome-banner {
+  background-color: #a6cf90;
+  border-radius: 15px;
+  border: none;
+  overflow: hidden;
+  font-family: "Aref Ruqaa";
+}
+
+.welcome-title {
+  font-weight: 600;
+  color: #2c3e2b;
+}
+
+/* Box khusus about section */
+.about-section-box {
+  background-color: #d2ebbc;
+  padding: 20px 25px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  font-family: "Poppins";
+}
+
+.about-section-box h5 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1e4013;
+}
+
+.about-section-box ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.about-section-box ul li {
+  margin-bottom: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  .sidebar {
+    height: auto;
+    position: relative;
+  }
+
+  .logo-container {
+    margin-bottom: 15px;
+  }
+}
+
+/* Titel SiUKKI */
+.siukki-title {
+  letter-spacing: 1px;
+  font-size: 1.35rem;
+}
+
+/* Hover navigasi */
+.hover-hijau:hover,
+.hover-hijau:focus {
+  background-color: #6d9d3b !important;
+  color: #fff !important;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Putihkan ikon PNG pada menu yang sedang aktif */
+.nav-link.active .ikon {
+  filter: brightness(0) invert(1);
+}
+
+/* Header teks "About" rata tengah + background hijau */
+.section-header {
+  background-color: #a6cf90;
+  padding: 15px 0;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.section-header h2 {
+  margin: 0;
+  font-weight: 600;
+  color: #2c3e2b;
+  font-family: "poppins";
+}

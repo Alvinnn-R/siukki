@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Datang - SiUKKI</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary-green: #2E8B57;
@@ -62,7 +64,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 100px 20px 20px; /* Add top padding for navbar */
+            padding: 100px 20px 20px;
+            /* Add top padding for navbar */
             position: relative;
         }
 
@@ -82,6 +85,7 @@
                 opacity: 0;
                 transform: translateY(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -103,7 +107,7 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;       
+            bottom: 0;
         }
 
         .logo-container {
@@ -126,8 +130,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .main-logo img {
@@ -325,7 +336,7 @@
         }
 
         .navbar.scrolled {
-            background:rgb(0, 0, 0);
+            background: rgb(0, 0, 0);
             box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
         }
 
@@ -471,8 +482,15 @@
         }
 
         @keyframes floating {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         /* Responsive Design */
@@ -530,14 +548,14 @@
 
 <body>
     <div class="islamic-pattern"></div>
-    
+
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid px-4">
             <!-- Logo dan Brand -->
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <div class="me-3">
-                <img src="{{ asset('assets/images/Logo UKKI.png') }}" alt="Logo" style="height: 50px;">
+                    <img src="{{ asset('assets/images/Logo UKKI.png') }}" alt="Logo" style="height: 50px;">
                 </div>
                 <span class="brand-text">SiUKKI</span>
             </a>
@@ -553,29 +571,31 @@
                     <i class="fas fa-sign-in-alt me-2"></i>
                     Login
                 </button>
-                <button class="btn btn-light btn-register" data-bs-toggle="modal" data-bs-target="#registerModal">
+                <button class="btn btn-light btn-register"
+                    onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSf7GU8-Kor1OPE0Ji6duCdPIWM0sGqNnnVTE3Hz1K9CNb7uZg/viewform?usp=sharing', '_blank')">
                     <i class="fas fa-user-plus me-2"></i>
                     Register
                 </button>
             </div>
         </div>
     </nav>
-    
+
     <div class="welcome-container">
         <div class="welcome-card">
             <!-- Header Section -->
             <div class="welcome-header">
                 <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
-                
+
                 <div class="logo-container">
                     <div class="main-logo">
-                    <img src="{{ asset('assets/images/Logo UKKI.png') }}" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%;">
+                        <img src="{{ asset('assets/images/Logo UKKI.png') }}" alt="Logo"
+                            style="width: 100px; height: 100px; border-radius: 50%;">
                     </div>
                 </div>
 
                 <h1 class="app-title">SiUKKI</h1>
                 <p class="app-subtitle">Sistem Informasi Unit Kegiatan Kerohanian Islam</p>
-                
+
                 <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
                     <div class="d-flex align-items-center">
                         <i class="fas fa-university me-2"></i>
@@ -588,7 +608,8 @@
             <div class="welcome-content">
                 <div class="text-center mb-5">
                     <h2 class="display-5 fw-bold text-dark mb-3">Selamat Datang di Era Baru</h2>
-                    <p class="lead text-muted">Aplikasi gamifikasi untuk meningkatkan keterlibatan Anda dalam kegiatan UKKI melalui sistem poin, XP, dan pencapaian yang menarik!</p>
+                    <p class="lead text-muted">Aplikasi gamifikasi untuk meningkatkan keterlibatan Anda dalam kegiatan
+                        UKKI melalui sistem poin, XP, dan pencapaian yang menarik!</p>
                 </div>
 
                 <!-- Features Grid -->
@@ -598,7 +619,8 @@
                             <i class="fas fa-tasks"></i>
                         </div>
                         <h3 class="feature-title">Misi & Tantangan</h3>
-                        <p class="feature-desc">Ikuti berbagai misi menarik seperti membaca Al-Qur'an, sholat berjamaah, dan menghadiri kajian untuk mendapatkan XP.</p>
+                        <p class="feature-desc">Ikuti berbagai misi menarik seperti membaca Al-Qur'an, sholat berjamaah,
+                            dan menghadiri kajian untuk mendapatkan XP.</p>
                     </div>
 
                     <div class="feature-card">
@@ -606,7 +628,8 @@
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <h3 class="feature-title">Leaderboard</h3>
-                        <p class="feature-desc">Pemeringkatan untuk mendorong kompetisi sehat dan keterlibatan yang lebih tinggi antar anggota.</p>
+                        <p class="feature-desc">Pemeringkatan untuk mendorong kompetisi sehat dan keterlibatan yang
+                            lebih tinggi antar anggota.</p>
                     </div>
 
                     <div class="feature-card">
@@ -614,7 +637,8 @@
                             <i class="fas fa-calendar-alt"></i>
                         </div>
                         <h3 class="feature-title">Kalender Event</h3>
-                        <p class="feature-desc">Pantau jadwal kegiatan UKKI dan jangan lewatkan kesempatan untuk mengumpulkan poin!</p>
+                        <p class="feature-desc">Pantau jadwal kegiatan UKKI dan jangan lewatkan kesempatan untuk
+                            mengumpulkan poin!</p>
                     </div>
                 </div>
 
@@ -644,7 +668,8 @@
                 <!-- CTA Section -->
                 <div class="cta-section">
                     <h2 class="cta-title">Siap Memulai Perjalanan?</h2>
-                    <p class="cta-desc">Bergabunglah dengan ribuan mahasiswa lainnya dalam meningkatkan spiritualitas dan keterlibatan dalam kegiatan islami kampus.</p>
+                    <p class="cta-desc">Bergabunglah dengan ribuan mahasiswa lainnya dalam meningkatkan spiritualitas
+                        dan keterlibatan dalam kegiatan islami kampus.</p>
                     <a href="#" class="btn-get-started">
                         <i class="fas fa-rocket me-2"></i>
                         Mulai Sekarang
@@ -671,16 +696,16 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
         // Force scroll to top on page load/refresh
-        window.addEventListener('beforeunload', function() {
+        window.addEventListener('beforeunload', function () {
             window.scrollTo(0, 0);
         });
 
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             // Force scroll to top immediately
-            setTimeout(function() {
+            setTimeout(function () {
                 window.scrollTo(0, 0);
                 document.documentElement.scrollTop = 0;
                 document.body.scrollTop = 0;
@@ -698,17 +723,17 @@
         }
 
         // Add smooth scrolling and entrance animations
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Ensure page starts at top
             window.scrollTo(0, 0);
-            
+
             // Animate feature cards on scroll
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
             };
 
-            const observer = new IntersectionObserver(function(entries) {
+            const observer = new IntersectionObserver(function (entries) {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.style.opacity = '1';
@@ -727,7 +752,7 @@
 
             // Add click effects
             document.querySelectorAll('.feature-card').forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function () {
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
                         this.style.transform = 'translateY(-10px) scale(1)';
@@ -736,13 +761,13 @@
             });
 
             // Smooth scroll for CTA button
-            document.querySelector('.btn-get-started').addEventListener('click', function(e) {
+            document.querySelector('.btn-get-started').addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 // Add loading state
                 const originalText = this.innerHTML;
                 this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Memuat...';
-                
+
                 setTimeout(() => {
                     // Replace with actual navigation
                     alert('Fitur ini akan segera tersedia!');
@@ -755,7 +780,7 @@
         function typeWriter(element, text, speed = 100) {
             let i = 0;
             element.innerHTML = '';
-            
+
             function type() {
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
@@ -763,7 +788,7 @@
                     setTimeout(type, speed);
                 }
             }
-            
+
             type();
         }
 
@@ -771,7 +796,7 @@
         function animateCounter(element, target, duration = 2000) {
             let start = 0;
             const increment = target / (duration / 16);
-            
+
             function updateCounter() {
                 start += increment;
                 if (start < target) {
@@ -781,12 +806,12 @@
                     element.textContent = target + '+';
                 }
             }
-            
+
             updateCounter();
         }
 
         // Animate counters when they come into view
-        const counterObserver = new IntersectionObserver(function(entries) {
+        const counterObserver = new IntersectionObserver(function (entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const target = parseInt(entry.target.textContent);
@@ -800,7 +825,7 @@
         });
 
         // Navbar scroll effect
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
@@ -810,4 +835,5 @@
         });
     </script>
 </body>
+
 </html>

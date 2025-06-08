@@ -1,0 +1,102 @@
+/* Warna latar belakang halaman */
+body {
+    background-color: #e7f6df;
+}
+
+/* Konten utama */
+.content {
+    padding: 20px;
+}
+
+/* Kartu utama XP & Badge */
+.bg-success-subtle {
+    background-color: #a6cf90 !important;
+}
+
+/* Label di atas kartu */
+.badge-label {
+    background: #7fbf4d;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 6px 32px;
+    margin-bottom: 18px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    display: inline-block;
+}
+
+/* Kartu XP & Badge */
+.rounded-3 {
+    border-radius: 18px !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 2px 8px rgba(44, 62, 43, 0.08);
+}
+
+/* Gambar XP dan Badge */
+.bg-success-subtle img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Judul XP dan Badge */
+.fw-bold.text-dark {
+    color: #155724 !important;
+    font-size: 1.6rem;
+    margin-top: 10px;
+}
+
+.fw-bold.text-success {
+    color: #388e3c !important;
+    font-size: 1.2rem;
+}
+
+.text-dark {
+    color: #2c3e2b !important;
+    font-size: 1.1rem;
+}
+
+/* History XP */
+.bg-success-subtle .badge-label.ms-5 {
+    margin-left: 0 !important;
+    margin-bottom: 18px;
+    font-size: 1rem;
+}
+
+/* Item riwayat XP */
+.border-success {
+    border-color: #7fbf4d !important;
+    background: #f4fdf0;
+    transition: box-shadow 0.2s;
+}
+
+.border-success:hover {
+    box-shadow: 0 4px 16px rgba(127, 191, 77, 0.12);
+}
+
+.me-3 {
+    margin-right: 1rem !important;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .badge-label {
+        padding: 6px 18px;
+        font-size: 0.95rem;
+    }
+    .fw-bold.text-dark {
+        font-size: 1.2rem;
+    }
+    .fw-bold.text-success {
+        font-size: 1rem;
+    }
+    .text-dark {
+        font-size: 1rem;
+    }
+    .bg-success-subtle img {
+        height: 70px !important;
+    }
+}

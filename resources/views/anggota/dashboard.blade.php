@@ -7,11 +7,12 @@
 @endpush
 
 @section('content')
-<!-- Welcome Banner -->
-<div class="welcome-banner mb-4">
+<!-- Pak Ustadz Image (di luar card) -->
+<div class="welcome-banner mb-4 position-relative">
     <div class="row g-0 align-items-center">
-        <div class="col-auto ps-3">
-            <img src="{{ asset('assets/images/pak ustad.png') }}" alt="Ustadz" class="img-fluid ustadz-image">
+        <div class="col-auto ps-3 position-relative">
+            <!-- Tambahkan kelas khusus untuk gambar Pak Ustadz -->
+            <img src="{{ asset('assets/images/pak ustad.png') }}" alt="Ustadz" class="ustadz-image ustadz-large ustadz-overflow">
         </div>
         <div class="col">
             <div class="p-3">

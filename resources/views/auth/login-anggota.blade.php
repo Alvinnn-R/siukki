@@ -41,8 +41,8 @@
 
                     <div class="mb-3">
                         <label for="npm" class="form-label">NPM</label>
-                        <input type="text" class="form-control" id="npm" name="npm"
-                            placeholder="e.g. 23081010xxx" value="{{ old('npm') }}" required>
+                        <input type="text" class="form-control" id="npm" name="npm" placeholder="e.g. 23081010xxx"
+                            value="{{ old('npm') }}" required>
                         <div class="invalid-feedback">
                             Please enter your NPM.
                         </div>
@@ -66,8 +66,10 @@
                     <button class="btn btn-success w-100" type="submit">Login</button>
                 </form>
 
-                <p class="text-center mt-4 register-link">
-                    Not Registered Yet? <a href="{{ url('register') }}">Register</a>
+                <p
+                    class="text-center mt-4 https://docs.google.com/forms/d/e/1FAIpQLSf7GU8-Kor1OPE0Ji6duCdPIWM0sGqNnnVTE3Hz1K9CNb7uZg/viewform?usp=sharing">
+                    Not Registered Yet? <a
+                        href="{{ url('https://docs.google.com/forms/d/e/1FAIpQLSf7GU8-Kor1OPE0Ji6duCdPIWM0sGqNnnVTE3Hz1K9CNb7uZg/viewform?usp=sharing') }}">Register</a>
                 </p>
 
                 <p class="text-center mt-3">
