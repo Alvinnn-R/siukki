@@ -38,9 +38,7 @@ Route::middleware('auth:anggota')->group(function () {
     Route::post('/anggota/misi/{id}/complete', [anggotaMisiController::class, 'complete'])->name('anggota.misi.complete');
     Route::post('/anggota/misi/checkin', [anggotaMisiController::class, 'checkin']);
 
-    Route::get('/poin', function () {
-        return view('anggota.poin');
-    })->name('poin.index');
+    Route::get('/poin', [PoinController::class, 'index'])->name('poin.index');
 
     Route::get('/kalender', function () {
         return view('anggota.kalender.index');
