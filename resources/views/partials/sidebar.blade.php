@@ -97,7 +97,7 @@
                         {{-- <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                            href="{{ route('misi.index') }}"> --}}
                         <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
+                            href="{{ route('misi') }}">
                             <i class="material-icons me-2 nav-icon">assignment</i> Misi
                         </a>
                     </li>

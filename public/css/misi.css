@@ -1,0 +1,72 @@
+/* Misi Page Styles */
+
+.misi-container {
+    background: #e9f5e9;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.card {
+    background-color: #bfd8af;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.modal-checkin {
+    background-color: #e3ffe3;
+    border-radius: 15px;
+    border: none;
+}
+
+.modal-checkin h4 {
+    font-weight: bold;
+}
+
+.modal-checkin h3 {
+    font-size: 28px;
+}
+
+.btn-success:disabled {
+    background-color: #ccc !important;
+    border-color: #ccc !important;
+}
+
+.misi-icon {
+    font-size: 48px;
+    color: #4caf50; /* hijau sesuai tema */
+    margin-bottom: 10px;
+}
+
+.modal-misi-content {
+    background-color: #bfd8af;
+    border-radius: 12px;
+    padding: 20px;
+    color: #1a1a1a; /* pastikan teks tetap terbaca */
+}
+
+.xp-display {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2e7d32; /* hijau gelap */
+}
+
+.btn-selesaikan {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 6px 16px;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+.modal-body {
+    padding-bottom: 60px;
+}
