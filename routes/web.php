@@ -43,20 +43,16 @@ Route::middleware('auth:anggota')->group(function () {
     })->name('poin.index');
 
     Route::get('/kalender', function () {
-        return view('anggota.kalender.index');
-    })->name('kalender.index');
+        return view('anggota.kalender');
+    })->name('kalender');
 
     Route::get('/leaderboard', function () {
-        return view('anggota.leaderboard.index');
-    })->name('leaderboard.index');
+        return view('anggota.leaderboard');
+    })->name('leaderboard');
 
     Route::get('/about', function () {
         return view('anggota.about');
     })->name('about');
-
-    // Route::get('/about', function () {
-    //     return view('anggota.about.index');
-    // })->name('about.index');
 
     Route::get('/setting', function () {
         return view('anggota.setting');

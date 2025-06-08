@@ -101,12 +101,13 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        {{-- <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                           href="{{ route('misi.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="{{ route('misi') }}">
-                            <i class="material-icons me-2 nav-icon">assignment</i> Misi
-                        </a>
+                        {{-- <a
+                            class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('misi.index') }}"> --}}
+                            <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                                href="{{ route('misi') }}">
+                                <i class="material-icons me-2 nav-icon">assignment</i> Misi
+                            </a>
                     </li>
                     <li class="nav-item mb-2">
                         {{-- <a
@@ -122,7 +123,7 @@
                             class="nav-link {{ request()->routeIs('kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('kalender.index') }}"> --}}
                             <a class="nav-link {{ request()->routeIs('kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                                href="#">
+                                href="{{ route('kalender') }}">
                                 <i class="material-icons me-2 nav-icon">event</i> Kalender Event
                             </a>
                     </li>
@@ -131,7 +132,7 @@
                             class="nav-link {{ request()->routeIs('leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('leaderboard.index') }}"> --}}
                             <a class="nav-link {{ request()->routeIs('leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                                href="#">
+                                href="{{ route('leaderboard') }}">
                                 <i class="material-icons me-2 nav-icon">leaderboard</i> Leaderboard
                             </a>
                     </li>

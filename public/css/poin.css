@@ -8,11 +8,6 @@ body {
     padding: 20px;
 }
 
-/* Kartu utama XP & Badge */
-.bg-success-subtle {
-    background-color: #a6cf90 !important;
-}
-
 /* Label di atas kartu */
 .badge-label {
     background: #7fbf4d;
@@ -99,4 +94,83 @@ body {
     .bg-success-subtle img {
         height: 70px !important;
     }
+}
+
+.main-content-poin {
+    background: #99bc85;
+    border-radius: 20px;
+    padding: 2rem 0;
+    min-height: 90vh;
+}
+
+/* Buat semua box utama lebar penuh parent */
+.xp-card,
+.badge-card,
+.history-card {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bg-success-subtle {
+    background-color: #B6D7A8 !important;
+}
+
+.poin-header-title {
+    color: #2c3e50;
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    /* tanpa background, tanpa border */
+}
+
+
+.poin-area {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 0; 
+}
+
+.poin-header-title {
+    color: #2c3e50;
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    margin-top: 0;
+}
+
+/* 1. Shadow seperti Setting */
+.bg-success-subtle {
+    background-color: #B6D7A8 !important;
+    box-shadow: 0 16px 40px 0 rgba(44, 62, 43, 0.23), 0 1.5px 6px 0 rgba(44,62,43,0.13);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.7s cubic-bezier(.4,2,.3,1) forwards;
+    transition: box-shadow 0.35s cubic-bezier(.4,2,.3,1), transform 0.35s cubic-bezier(.4,2,.3,1);
+}
+
+/* 2. Efek delay biar munculnya berurutan */
+.xp-card.bg-success-subtle    { animation-delay: 0.06s; }
+.badge-card.bg-success-subtle { animation-delay: 0.20s; }
+.history-card.bg-success-subtle { animation-delay: 0.34s; }
+
+/* 3. Keyframes animasi (sama dengan setting/about) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 4. Hover effect untuk animasi shadow & scale */
+.bg-success-subtle:hover {
+    box-shadow: 0 24px 56px 0 rgba(44,62,43,0.26), 0 2.5px 9px 0 rgba(44,62,43,0.18);
+    transform: translateY(-4px) scale(1.03);
 }
