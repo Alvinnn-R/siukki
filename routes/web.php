@@ -4,12 +4,8 @@ use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\Admin\MisiController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
-<<<<<<< HEAD
-use App\Http\Controllers\MisiController;
-=======
 use App\Http\Controllers\SettingAnggotaController;
 use App\Http\Controllers\PoinController;
->>>>>>> 57d39b01a3897c30015dc157b64ae886616ede7f
 use Illuminate\Support\Facades\Route;
 
 /*

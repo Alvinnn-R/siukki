@@ -101,22 +101,12 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-<<<<<<< HEAD
                         {{-- <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                            href="{{ route('misi.index') }}"> --}}
                         <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('misi') }}">
                             <i class="material-icons me-2 nav-icon">assignment</i> Misi
                         </a>
-=======
-                        {{-- <a
-                            class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="{{ route('misi.index') }}"> --}}
-                            <a class="nav-link {{ request()->routeIs('misi*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                                href="#">
-                                <i class="material-icons me-2 nav-icon">assignment</i> Misi
-                            </a>
->>>>>>> 57d39b01a3897c30015dc157b64ae886616ede7f
                     </li>
                     <li class="nav-item mb-2">
                         {{-- <a
