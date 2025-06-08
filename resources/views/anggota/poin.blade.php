@@ -3,7 +3,7 @@
 @section('title', 'Poin SiUKKI')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/poin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/poin.css') }}">
 @endpush
 
 @section('content')
@@ -48,6 +48,4 @@
             @endforelse
             </div>
         </div>
-    </div>
-</div>
 @endsection

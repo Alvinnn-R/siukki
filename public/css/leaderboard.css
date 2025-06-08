@@ -73,46 +73,19 @@ body {
   color: #2c3e2b;
 }
 
+/* Box khusus about section */
 .about-section-box {
     background-color: #d2ebbc;
     padding: 36px 40px;
     border-radius: 15px;
     margin-bottom: 32px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.07);
     font-family: "Poppins", sans-serif;
     font-size: 1.24rem;
     width: 100%;
     max-width: 100%;
     display: block;
-    /* Animasi fadeInUp: */
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.7s cubic-bezier(.4,2,.3,1) forwards;
 }
-
-/* Delay untuk animasi box berikutnya agar efek "beruntun" */
-.about-section-box:nth-child(3) { animation-delay: 0.18s; }
-.about-section-box:nth-child(4) { animation-delay: 0.33s; }
-
-/* Keyframes fadeInUp sama persis seperti setting */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Hover effect (optional, agar tetap ada animasi saat hover) */
-.about-section-box:hover {
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    transform: translateY(-4px) scale(1.025);
-    transition: all 0.3s cubic-bezier(.4,2,.3,1);
-}
-
 
 
 .about-section-box h5 {
@@ -202,7 +175,7 @@ body {
     padding: 36px 40px; /* perbesar padding */
     border-radius: 15px;
     margin-bottom: 32px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.07);
     font-family: "Poppins", sans-serif;
     font-size: 1.24rem; /* perbesar font */
 }
@@ -229,4 +202,3 @@ body {
         font-size: 1.11rem;
     }
 }
-
