@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthAnggotaController;
 use App\Http\Controllers\SettingAnggotaController;
 use App\Http\Controllers\PoinController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MisiController as anggotaMisiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +34,9 @@ Route::middleware('auth:anggota')->group(function () {
     })->name('dashboard');
 
     // Placeholder routes untuk menu anggota
-    Route::get('/misi', [MisiController::class, 'index'])->name('misi');
-    Route::post('/anggota/misi/{id}/complete', [MisiController::class, 'complete'])->name('anggota.misi.complete');
-    Route::post('/anggota/misi/checkin', [MisiController::class, 'checkin']);
+    Route::get('/misi', [anggotaMisiController::class, 'index'])->name('misi');
+    Route::post('/anggota/misi/{id}/complete', [anggotaMisiController::class, 'complete'])->name('anggota.misi.complete');
+    Route::post('/anggota/misi/checkin', [anggotaMisiController::class, 'checkin']);
 
     Route::get('/poin', function () {
         return view('anggota.poin');
