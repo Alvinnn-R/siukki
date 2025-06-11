@@ -154,8 +154,8 @@
                             required>
                             <option value="harian" {{ old('tipe_misi', $misi->tipe_misi) === 'harian' ? 'selected' : '' }}>
                                 Harian</option>
-                            <option value="mingguan"
-                                {{ old('tipe_misi', $misi->tipe_misi) === 'mingguan' ? 'selected' : '' }}>Mingguan</option>
+                            {{-- <option value="mingguan"
+                                {{ old('tipe_misi', $misi->tipe_misi) === 'mingguan' ? 'selected' : '' }}>Mingguan</option> --}}
                             <option value="event" {{ old('tipe_misi', $misi->tipe_misi) === 'event' ? 'selected' : '' }}>
                                 Event</option>
                         </select>

@@ -20,7 +20,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 <h5 class="mb-2">Form Tambah Misi UKKI</h5>
-                <p class="mb-0 text-muted">Buat misi baru untuk anggota UKKI. Misi dapat berupa harian, mingguan, atau event
+                <p class="mb-0 text-muted">Buat misi baru untuk anggota UKKI. Misi dapat berupa harian atau event
                     spesial dengan XP reward.</p>
             </div>
             <a href="{{ route('admin.misi.index') }}" class="btn btn-outline-secondary">
@@ -79,13 +79,13 @@
                         required>
                         <option value="">Pilih tipe misi</option>
                         <option value="harian" {{ old('tipe_misi') == 'harian' ? 'selected' : '' }}>Harian</option>
-                        <option value="mingguan" {{ old('tipe_misi') == 'mingguan' ? 'selected' : '' }}>Mingguan</option>
+                        {{-- <option value="mingguan" {{ old('tipe_misi') == 'mingguan' ? 'selected' : '' }}>Mingguan</option> --}}
                         <option value="event" {{ old('tipe_misi') == 'event' ? 'selected' : '' }}>Event</option>
                     </select>
                     @error('tipe_misi')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                    <div class="form-text">Misi harian dapat diulang setiap hari, mingguan dan event hanya sekali dalam
+                    <div class="form-text">Misi harian dapat diulang setiap hari dan event hanya sekali dalam
                         periode</div>
                 </div>
             </div>
@@ -180,7 +180,7 @@
                 <strong>Tips:</strong>
                 <ul class="mb-0 mt-2">
                     <li>Misi harian biasanya memiliki periode 1 hari</li>
-                    <li>Misi mingguan memiliki periode 7 hari</li>
+                    {{-- <li>Misi mingguan memiliki periode 7 hari</li> --}}
                     <li>Misi event dapat memiliki periode custom sesuai kebutuhan</li>
                 </ul>
             </div>
@@ -232,7 +232,11 @@
                 const month = String(endDate.getMonth() + 1).padStart(2, '0');
                 const day = String(endDate.getDate()).padStart(2, '0');
 
-                if (tipe === 'harian' || tipe === 'mingguan') {
+                // if (tipe === 'harian' || tipe === 'mingguan') {
+                //     document.getElementById('tanggal_selesai').value = `${year}-${month}-${day}`;
+                // }
+
+                if (tipe === 'harian') {
                     document.getElementById('tanggal_selesai').value = `${year}-${month}-${day}`;
                 }
             }
