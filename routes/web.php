@@ -44,9 +44,7 @@ Route::middleware('auth:anggota')->group(function () {
         return view('anggota.kalender');
     })->name('kalender');
 
-    Route::get('/leaderboard', function () {
-        return view('anggota.leaderboard');
-    })->name('leaderboard');
+    Route::get('/leaderboard/{filter?}', [PoinController::class, 'leaderboard'])->name('leaderboard');
 
     Route::get('/about', function () {
         return view('anggota.about');
