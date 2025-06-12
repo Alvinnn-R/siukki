@@ -77,24 +77,24 @@
             </div>
         </div>
         @endforeach
-</div>
+    </div>
 </div>
 
-<!-- Modal Check-in -->
-<div class="modal fade" id="checkinModal" tabindex="-1" aria-labelledby="checkinModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center modal-misi-content">
-      <div class="modal-header border-0">
-        <h5 class="modal-title w-100 fw-bold" id="checkinModalLabel">Check-in Harian</h5>
-        <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="xp-display mb-3">+<span id="checkinXP">0</span> XP</div>
-        <p class="text-muted mb-0">Terima kasih sudah check-in hari ini!</p>
+  <!-- Modal Check-in -->
+  <div class="modal fade" id="checkinModal" tabindex="-1" aria-labelledby="checkinModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center modal-misi-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title w-100 fw-bold" id="checkinModalLabel">Check-in Harian</h5>
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="xp-display mb-3">+<span id="checkinXP">0</span> XP</div>
+          <p class="text-muted mb-0">Terima kasih sudah check-in hari ini!</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
   

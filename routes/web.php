@@ -58,6 +58,7 @@ Route::middleware('auth:anggota')->group(function () {
     Route::get('/setting', [SettingAnggotaController::class, 'index'])->name('setting');
     Route::put('/setting/profile', [SettingAnggotaController::class, 'updateProfile'])->name('setting.profile');
     Route::put('/setting/password', [SettingAnggotaController::class, 'updatePassword'])->name('setting.password');
+    Route::put('/setting/username', [SettingAnggotaController::class, 'updateUsername'])->name('setting.username');
     Route::put('/setting/badge', [SettingAnggotaController::class, 'updateBadge'])->name('setting.badge');
     Route::delete('/setting/remove-image', [SettingAnggotaController::class, 'removeProfileImage'])->name('setting.remove-image');
     Route::put('/setting/notifications', [SettingAnggotaController::class, 'updateNotificationSettings'])->name('setting.notifications');
