@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AnggotaController;
+use App\Http\Controllers\Admin\LeaderboardController;
 use App\Http\Controllers\Admin\MisiController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
@@ -109,13 +110,11 @@ Route::prefix('admin')->group(function () {
             return view('admin.event.create');
         })->name('event.create');
 
-        Route::get('/poin', function () {
-            return view('admin.poin.index');
-        })->name('poin.index');
+        Route::get('/leaderboard/{filter?}', [LeaderboardController::class, 'leaderboard'])->name('leaderboard');
 
-        Route::get('/leaderboard', function () {
-            return view('admin.leaderboard.index');
-        })->name('leaderboard.index');
+        Route::get('/kalender', function () {
+            return view('admin.kalender');
+        })->name('kalender');
 
         Route::get('/laporan', function () {
             return view('admin.laporan.index');

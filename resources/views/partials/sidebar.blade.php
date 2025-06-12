@@ -51,8 +51,8 @@
                         {{-- <a
                             class="nav-link {{ request()->routeIs('admin.event*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.event.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('admin.event*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
+                        <a class="nav-link {{ request()->routeIs('admin.kalender*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.kalender') }}">
                             <i class="material-icons me-2 nav-icon">event</i> Kalender Event
                         </a>
                     </li>
@@ -69,7 +69,7 @@
                             class="nav-link {{ request()->routeIs('admin.leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.leaderboard.index') }}"> --}}
                         <a class="nav-link {{ request()->routeIs('admin.leaderboard*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
+                            href="{{ route('admin.leaderboard') }}">
                             <i class="material-icons me-2 nav-icon">leaderboard</i> Leaderboard
                         </a>
                     </li>
@@ -157,7 +157,8 @@
         <div class="mt-auto profile-footer">
             <div class="d-flex align-items-center justify-content-between px-3 py-4">
                 <div class="d-flex align-items-center">
-                    <img src="{{ asset('assets/images/Avater.png') }}" alt="Profile" class="rounded-circle avatar">
+                    <img src="{{ session('role') === 'admin' ? asset('assets/images/Avater.png') : (!empty($user->profile_url) ? $user->profile_url : asset('assets/images/avatar-admin.png')) }}"
+                        alt="Profile" class="rounded-circle avatar">
                     <div class="ms-2">
                         @if (auth('admin')->check())
                             <div class="fw-semibold text-white" style="font-size:0.99em; line-height:1.2;">
