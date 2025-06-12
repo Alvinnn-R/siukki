@@ -39,7 +39,7 @@
                         <div class="profile-setting-right">
                             <div class="button-row">
                                 <input type="file" id="profileImageInput" name="profile_image" accept="image/*" style="display: none;">
-                                <button type="button" class="btn-setting" onclick="document.getElementById('profileImageInput').click()">
+                                <button type="button" class="btn-setting" data-bs-toggle="modal" data-bs-target="#chooseAvatarModal">
                                     Change image
                                 </button>
                                 <button type="button" class="btn-setting" onclick="removeProfileImage()">
@@ -47,36 +47,30 @@
                                 </button>
                             </div>
                             
-                            <label for="username">Username</label>
+                            <label for="username" style="margin-bottom: 0px;">Username</label>
                             <input id="username" name="name" type="text" 
                                    value="{{ old('name', auth()->user()->name ?? 'Riky') }}" 
-                                   class="@error('name') is-invalid @enderror">
+                                   class="@error('name') is-invalid @enderror" readonly style="pointer-events: none; background-color: #f5f5f5;">
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
 
-                            <label for="current_password">Current Password</label>
-                            <input id="current_password" name="current_password" type="password" 
-                                   placeholder="Enter current password"
-                                   class="@error('current_password') is-invalid @enderror">
-                            @error('current_password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <!-- Edit Username Button -->
+                            <button type="button" class="btn-setting" data-bs-toggle="modal" data-bs-target="#editUsernameModal" style="margin-bottom: 15px;">
+                                Edit Username
+                            </button>
 
-                            <label for="new_password">New Password</label>
-                            <input id="new_password" name="password" type="password" 
-                                   placeholder="Enter new password"
-                                   class="@error('password') is-invalid @enderror">
+                            <label for="password" style="margin-bottom: 0px;">Password</label>
+                            <input id="password" name="password" type="password" 
+                                   class="@error('password') is-invalid @enderror"
+                                   value="************" readonly disabled style="pointer-events: none; background-color: #f5f5f5;">
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
 
-                            <label for="password_confirmation">Confirm New Password</label>
-                            <input id="password_confirmation" name="password_confirmation" type="password" 
-                                   placeholder="Confirm new password">
-
-                            <button type="submit" class="btn-setting" style="margin-top:10px;">
-                                Update Profile
+                            <!-- Edit Password Button -->
+                            <button type="button" class="btn-setting" data-bs-toggle="modal" data-bs-target="#editPasswordModal" style="margin-bottom: 15px;">
+                                Edit Password
                             </button>
                         </div>
                     </div>
@@ -96,15 +90,190 @@
                         <label class="switch">
                             <input type="checkbox" id="notifToggle" 
                                    {{ auth()->user()->notifications_enabled ? 'checked' : '' }}
-                                   onchange="toggleNotifications()">
+                                   onchange="confirmToggleNotifications()">
                             <span class="slider"></span>
                         </label>
                     </div>
+                    <script>
+                        function confirmToggleNotifications() {
+                            const checkbox = document.getElementById('notifToggle');
+                            if (checkbox.checked) {
+                                if (confirm('Are you sure you want to enable notifications?')) {
+                                    toggleNotifications();
+                                } else {
+                                    checkbox.checked = false;
+                                }
+                            } else {
+                                toggleNotifications();
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Choose Avatar Modal -->
+<div class="modal fade" id="chooseAvatarModal" tabindex="-1" aria-labelledby="chooseAvatarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chooseAvatarModalLabel">Choose Avatar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="avatarSelectForm" action="{{ route('setting.profile') }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="d-flex flex-wrap gap-3 justify-content-center" id="avatarList">
+                        @php
+                            $avatars= [
+                                'avatar/1_boy.jpeg',
+                                'avatar/2_boy.jpeg',
+                                'avatar/3_boy.jpeg',
+                                'avatar/4_boy.jpeg',
+                                'avatar/5_boy.jpeg',
+                                'avatar/6_boy.jpeg',
+                                'avatar/7_boy.jpeg',
+                                'avatar/8_boy.jpeg',
+                                'avatar/9_boy.jpeg',
+                                'avatar/10_boy.jpeg',
+                                'avatar/1_girl.jpeg',
+                                'avatar/2_girl.jpeg',
+                                'avatar/3_girl.jpeg',
+                                'avatar/4_girl.jpeg',
+                                'avatar/5_girl.jpeg',
+                                'avatar/6_girl.jpeg',
+                                'avatar/7_girl.jpeg',
+                                'avatar/8_girl.jpeg',
+                                'avatar/9_girl.jpeg',
+                                'avatar/10_girl.jpeg'
+                            ];
+                        @endphp
+                        @foreach($avatars as $avatar)
+                            <div class="avatar-option" data-avatar="{{ $avatar }}" style="cursor:pointer;">
+                                <img src="{{ asset('assets/images/' . $avatar) }}" alt="Avatar" style="width:70px; height:70px; border-radius:50%; border:2px solid #ddd; object-fit:cover;">
+                            </div>
+                        @endforeach
+                    </div>
+                    <input type="hidden" name="avatar" id="selectedAvatarInput">
+                    <hr>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveAvatarBtn" disabled>Save Change</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@push('styles')
+<style>
+    .avatar-option.selected img {
+        border: 3px solid #007bff;
+        box-shadow: 0 0 8px #007bff;
+        transition: border 0.2s, box-shadow 0.2s;
+    }
+    .avatar-option img:hover {
+        border: 3px solid #6c757d;
+        box-shadow: 0 0 8px #6c757d;
+        transition: border 0.2s, box-shadow 0.2s;
+    }
+</style>
+@endpush
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const avatarOptions = document.querySelectorAll('.avatar-option');
+        const selectedAvatarInput = document.getElementById('selectedAvatarInput');
+        const saveBtn = document.getElementById('saveAvatarBtn');
+
+        avatarOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedAvatarInput.value = this.getAttribute('data-avatar');
+                saveBtn.disabled = false;
+            });
+        });
+
+        // Optional: Reset selection when modal closed
+        $('#chooseAvatarModal').on('hidden.bs.modal', function () {
+            avatarOptions.forEach(opt => opt.classList.remove('selected'));
+            selectedAvatarInput.value = '';
+            saveBtn.disabled = true;
+        });
+    });
+</script>
+@endpush
+
+<!-- Edit Username Modal -->
+<div class="modal fade" id="editUsernameModal" tabindex="-1" aria-labelledby="editUsernameModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('setting.username') }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUsernameModalLabel">Edit Username</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="new_username">New Username</label>
+                    <input id="new_username" name="name" type="text" 
+                           placeholder="Enter new username"
+                           class="form-control @error('name') is-invalid @enderror">
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Password Modal -->
+ <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPasswordModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="{{ route('setting.password') }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editPasswordModalLabel">Edit Password</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body" >
+                                                <label for="current_password">Current Password</label>
+                                                <input id="current_password" name="current_password" type="password" 
+                                                       placeholder="Enter current password"
+                                                       class="form-control @error('current_password') is-invalid @enderror">
+                                                @error('current_password')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+
+                                                <label for="new_password" class="mt-3">New Password</label>
+                                                <input id="new_password" name="password" type="password" 
+                                                       placeholder="Enter new password"
+                                                       class="form-control @error('password') is-invalid @enderror">
+                                                @error('password')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+
+                                                <label for="password_confirmation" class="mt-3">Confirm New Password</label>
+                                                <input id="password_confirmation" name="password_confirmation" type="password" 
+                                                       placeholder="Confirm new password"
+                                                       class="form-control">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Update Password</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
 <!-- Badge Modal -->
 <div class="modal fade" id="badgeModal" tabindex="-1" aria-labelledby="badgeModalLabel" aria-hidden="true">
@@ -119,9 +288,18 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="badge" class="form-label">Badge</label>
-                        <input type="text" class="form-control" id="badge" name="badge" 
-                               value="{{ auth()->user()->badge ?? 'HAJI' }}" maxlength="20">
+                        <label class="form-label">Badge</label>
+                        <div class="d-flex gap-2">
+                            @php
+                                $badges = ['MURID ILMU', 'SANTRI', 'HABIB'];
+                                $currentBadge = auth()->user()->badge ?? 'HAJI';
+                            @endphp
+                            @foreach($badges as $badge)
+                                <input type="radio" class="btn-check" name="badge" id="badge-{{ $badge }}" value="{{ $badge }}" autocomplete="off"
+                                    {{ $currentBadge === $badge ? 'checked' : '' }}>
+                                <label class="btn btn-outline-primary" for="badge-{{ $badge }}">{{ $badge }}</label>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

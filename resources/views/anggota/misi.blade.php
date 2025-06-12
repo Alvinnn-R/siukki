@@ -59,8 +59,10 @@
                   <span class="material-icons misi-icon">{{ $misi->icon }}</span>
                     <h5 class="card-title mt-2">{{ $misi->nama_misi }}</h5>
                     @if($misi->is_completed)
+                    {{-- Misi event sudah diselesaikan --}}
                     <button class="btn btn-secondary" disabled>Misi Selesai</button>
                 @else
+                    {{-- Misi event  belum selesai --}}
                     <button class="btn btn-success btn-selesaikan-misi"
                         data-bs-toggle="modal"
                         data-bs-target="#misiModal"
@@ -70,7 +72,7 @@
                         data-deskripsi="{{ $misi->deskripsi }}">
                         Selesaikan Misi
                     </button>
-                @endif
+                @endif                
               </div>
             </div>
         </div>
@@ -78,21 +80,21 @@
     </div>
 </div>
 
-<!-- Modal Check-in -->
-<div class="modal fade" id="checkinModal" tabindex="-1" aria-labelledby="checkinModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center modal-misi-content">
-      <div class="modal-header border-0">
-        <h5 class="modal-title w-100 fw-bold" id="checkinModalLabel">Check-in Harian</h5>
-        <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="xp-display mb-3">+<span id="checkinXP">0</span> XP</div>
-        <p class="text-muted mb-0">Terima kasih sudah check-in hari ini!</p>
+  <!-- Modal Check-in -->
+  <div class="modal fade" id="checkinModal" tabindex="-1" aria-labelledby="checkinModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center modal-misi-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title w-100 fw-bold" id="checkinModalLabel">Check-in Harian</h5>
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="xp-display mb-3">+<span id="checkinXP">0</span> XP</div>
+          <p class="text-muted mb-0">Terima kasih sudah check-in hari ini!</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
   
