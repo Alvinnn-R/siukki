@@ -4,10 +4,10 @@ use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\Admin\MisiController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
-use App\Http\Controllers\SettingAnggotaController;
-use App\Http\Controllers\PoinController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MisiController as anggotaMisiController;
+use App\Http\Controllers\PoinController;
+use App\Http\Controllers\SettingAnggotaController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,9 +44,7 @@ Route::middleware('auth:anggota')->group(function () {
         return view('anggota.kalender');
     })->name('kalender');
 
-    Route::get('/leaderboard', function () {
-        return view('anggota.leaderboard');
-    })->name('leaderboard');
+    Route::get('/leaderboard/{filter?}', [PoinController::class, 'leaderboard'])->name('leaderboard');
 
     Route::get('/about', function () {
         return view('anggota.about');
@@ -87,12 +85,20 @@ Route::prefix('admin')->group(function () {
         // Route::get('/misi', function () {
         //     return view('admin.misi.index');
         // })->name('misi.index');
-        Route::resource('misi', MisiController::class);
-        Route::patch('misi/{misi}/toggle-status', [MisiController::class, 'toggleStatus'])->name('misi.toggle-status');
+        // Route::resource('misi', MisiController::class);
+        // // Route::get('/misi', [MisiController::class, 'index'])->name('admin.misi.index');
+        // Route::patch('misi/{misi}/toggle-status', [MisiController::class, 'toggleStatus'])->name('misi.toggle-status');
 
-        Route::get('/misi/create', function () {
-            return view('admin.misi.create');
-        })->name('misi.create');
+        // Route::get('/misi/create', function () {
+        //     return view('admin.misi.create');
+        // })->name('misi.create');
+
+        // Resource route untuk CRUD misi
+        Route::resource('misi', MisiController::class);
+
+        // Route khusus untuk toggle status
+        Route::patch('misi/{misi}/toggle-status', [MisiController::class, 'toggleStatus'])
+            ->name('misi.toggle-status');
 
         Route::get('/event', function () {
             return view('admin.event.index');

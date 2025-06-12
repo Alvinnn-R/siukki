@@ -51,6 +51,8 @@ class AnggotaController extends Controller
             'anggotaAktif',
             'totalBadges'
         ));
+
+        return view('admin.misi.index', compact('misis'));
     }
 
     public function create()

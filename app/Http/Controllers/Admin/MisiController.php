@@ -10,10 +10,42 @@ class MisiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $misis = Misi::orderBy('created_at', 'desc')->paginate(10);
-        return view('admin.misi.index', compact('misis'));
+        $query = Misi::query();
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_misi', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%")
+                    ->orWhere('xp_reward', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by tipe_misi
+        if ($request->filled('tipe_misi')) {
+            $query->where('tipe_misi', $request->tipe_misi);
+        }
+
+        // Filter by status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // PERBAIKAN UTAMA: Gunakan query yang sudah difilter, bukan query baru
+        $misis = $query->orderBy('created_at', 'desc')->paginate(10);
+
+        // Tambahkan parameter request ke pagination links
+        $misis->appends($request->all());
+
+        // Data untuk statistik (opsional)
+        $misisAktif  = Misi::where('status', 'aktif')->count();
+        $misisHarian = Misi::where('tipe_misi', 'harian')->count();
+        $misisEvent  = Misi::where('tipe_misi', 'event')->count();
+
+        return view('admin.misi.index', compact('misis', 'misisAktif', 'misisHarian', 'misisEvent'));
     }
 
     /**
@@ -38,7 +70,7 @@ class MisiController extends Controller
             'jadwal'          => 'required|date',
             'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'icon'            => 'nullable|image|mimes:svg,png|max:2048',
+            'icon'            => 'nullable|image|mimes:svg,png,jpg,jpeg|max:2048',
         ]);
 
         $data = $request->all();
@@ -86,7 +118,7 @@ class MisiController extends Controller
             'jadwal'          => 'required|date',
             'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'icon'            => 'nullable|image|mimes:svg,png|max:2048',
+            'icon'            => 'nullable|image|mimes:svg,png,jpg,jpeg|max:2048',
         ]);
 
         $data = $request->all();
@@ -94,8 +126,23 @@ class MisiController extends Controller
         // Upload icon baru jika ada
         if ($request->hasFile('icon')) {
             // Hapus icon lama jika ada
-            if ($misi->icon && file_exists(public_path('assets/icons/' . $misi->icon . '.svg'))) {
-                unlink(public_path('assets/icons/' . $misi->icon . '.svg'));
+            if ($misi->icon) {
+                $oldIconPath    = public_path('assets/icons/' . $misi->icon . '.svg');
+                $oldIconPathPng = public_path('assets/icons/' . $misi->icon . '.png');
+                $oldIconPathJpg = public_path('assets/icons/' . $misi->icon . '.jpg');
+
+                if (file_exists($oldIconPath)) {
+                    unlink($oldIconPath);
+                }
+
+                if (file_exists($oldIconPathPng)) {
+                    unlink($oldIconPathPng);
+                }
+
+                if (file_exists($oldIconPathJpg)) {
+                    unlink($oldIconPathJpg);
+                }
+
             }
 
             $iconName = time() . '.' . $request->file('icon')->getClientOriginalExtension();
@@ -115,8 +162,15 @@ class MisiController extends Controller
     public function destroy(Misi $misi)
     {
         // Hapus icon jika ada
-        if ($misi->icon && file_exists(public_path('assets/icons/' . $misi->icon . '.svg'))) {
-            unlink(public_path('assets/icons/' . $misi->icon . '.svg'));
+        if ($misi->icon) {
+            $iconExtensions = ['svg', 'png', 'jpg', 'jpeg'];
+            foreach ($iconExtensions as $ext) {
+                $iconPath = public_path('assets/icons/' . $misi->icon . '.' . $ext);
+                if (file_exists($iconPath)) {
+                    unlink($iconPath);
+                    break;
+                }
+            }
         }
 
         $misi->delete();

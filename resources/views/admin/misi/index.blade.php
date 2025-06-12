@@ -91,7 +91,7 @@
     <div class="misi-section-box d-flex justify-content-between align-items-center">
         <div>
             <h5 class="mb-1">Manajemen Misi</h5>
-            <p class="mb-0 text-muted">Kelola misi harian, mingguan, dan event untuk anggota UKKI</p>
+            <p class="mb-0 text-muted">Kelola misi harian dan event untuk anggota UKKI</p>
         </div>
         <a href="{{ route('admin.misi.create') }}" class="btn btn-success-custom btn-lg">
             <i class="material-icons me-2" style="vertical-align: middle;">add_circle</i>
@@ -101,7 +101,7 @@
 
     <!-- Search & Filter -->
     <div class="search-filter-box">
-        <form method="GET" action="{{ route('admin.misi.index') }}">
+        {{-- <form method="GET" action="{{ route('admin.misi.index') }}">
             <div class="row g-3">
                 <div class="col-md-4">
                     <label for="search" class="form-label fw-semibold">Cari Misi</label>
@@ -112,9 +112,8 @@
                     <label for="tipe" class="form-label fw-semibold">Filter Tipe</label>
                     <select class="form-select" id="tipe" name="tipe">
                         <option value="">Semua Tipe</option>
-                        <option value="harian" {{ request('tipe') == 'harian' ? 'selected' : '' }}>Harian</option>
-                        <option value="mingguan" {{ request('tipe') == 'mingguan' ? 'selected' : '' }}>Mingguan</option>
-                        <option value="event" {{ request('tipe') == 'event' ? 'selected' : '' }}>Event</option>
+                        <option value="harian" {{ request('tipe_misi') == 'harian' ? 'selected' : '' }}>Harian</option>
+                        <option value="event" {{ request('tipe_misi') == 'event' ? 'selected' : '' }}>Event</option>
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -130,6 +129,45 @@
                         <i class="material-icons" style="font-size: 18px;">search</i>
                         Cari
                     </button>
+                </div>
+            </div>
+        </form> --}}
+        <form method="GET" action="{{ route('admin.misi.index') }}" id="filterForm">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="search" class="form-label fw-semibold">Cari Misi</label>
+                    <input type="text" class="form-control" id="search" name="search" value="{{ request('search') }}"
+                        placeholder="Nama misi atau deskripsi...">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="tipe_misi" class="form-label fw-semibold">Filter Tipe</label>
+                    <select class="form-select" id="tipe_misi" name="tipe_misi">
+                        <option value="">Semua Tipe</option>
+                        <option value="harian" {{ request('tipe_misi') == 'harian' ? 'selected' : '' }}>Harian</option>
+                        <option value="event" {{ request('tipe_misi') == 'event' ? 'selected' : '' }}>Event</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="status" class="form-label fw-semibold">Filter Status</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="">Semua Status</option>
+                        <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="nonaktif" {{ request('status') == 'nonaktif' ? 'selected' : '' }}>Nonaktif
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <div class="d-flex gap-2 w-100">
+                        <button type="submit" class="btn btn-success-custom flex-fill" title="Cari">
+                            <i class="material-icons" style="font-size: 18px;">search</i>
+                        </button>
+                        <a href="{{ route('admin.misi.index') }}" class="btn btn-outline-secondary" title="Reset Filter">
+                            <i class="material-icons" style="font-size: 18px;">refresh</i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </form>
@@ -239,12 +277,31 @@
             </table>
         </div>
 
-        @if ($misis->hasPages())
+        {{-- @if ($misis->hasPages())
             <!-- Pagination -->
             <div class="p-3 border-top">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="text-muted">
                         Menampilkan {{ $misis->firstItem() }}-{{ $misis->lastItem() }} dari {{ $misis->total() }} misi
+                    </div>
+                    {{ $misis->links() }}
+                </div>
+            </div>
+        @endif --}}
+        @if ($misis->hasPages())
+            <div class="p-3 border-top">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted">
+                        Menampilkan {{ $misis->firstItem() }}-{{ $misis->lastItem() }} dari {{ $misis->total() }} misi
+                        @if (request('search'))
+                            <span class="badge bg-info ms-2">Pencarian: "{{ request('search') }}"</span>
+                        @endif
+                        @if (request('tipe_misi'))
+                            <span class="badge bg-primary ms-2">Tipe: {{ ucfirst(request('tipe_misi')) }}</span>
+                        @endif
+                        @if (request('status'))
+                            <span class="badge bg-secondary ms-2">Status: {{ ucfirst(request('status')) }}</span>
+                        @endif
                     </div>
                     {{ $misis->links() }}
                 </div>
@@ -358,6 +415,98 @@
             // Show modal
             const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
             deleteModal.show();
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto submit form when filter dropdown changes
+            const filterSelects = document.querySelectorAll('#tipe_misi, #status');
+            filterSelects.forEach(element => {
+                element.addEventListener('change', function() {
+                    document.getElementById('filterForm').submit();
+                });
+            });
+
+            // Search dengan delay untuk mengurangi request
+            const searchInput = document.getElementById('search');
+            let searchTimeout;
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    // Auto submit setelah user berhenti mengetik selama 500ms
+                    if (this.value.length >= 3 || this.value.length === 0) {
+                        document.getElementById('filterForm').submit();
+                    }
+                }, 500);
+            });
+
+            // Handle Enter key untuk search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    clearTimeout(searchTimeout);
+                    document.getElementById('filterForm').submit();
+                }
+            });
+
+            // Auto hide success message
+            const alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(function(alert) {
+                setTimeout(() => {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 5000);
+            });
+
+            // Highlight search terms in results
+            const searchTerm = "{{ request('search') }}";
+            if (searchTerm) {
+                highlightSearchTerms(searchTerm);
+            }
+        });
+
+        // Function to highlight search terms
+        function highlightSearchTerms(term) {
+            if (!term || term.length < 2) return;
+
+            const tableBody = document.querySelector('tbody');
+            if (!tableBody) return;
+
+            const regex = new RegExp(`(${term})`, 'gi');
+            const nameColumns = tableBody.querySelectorAll('td:nth-child(3)');
+
+            nameColumns.forEach(column => {
+                const originalText = column.innerHTML;
+                const highlightedText = originalText.replace(regex, '<mark>$1</mark>');
+                column.innerHTML = highlightedText;
+            });
+        }
+
+        // Function to show delete confirmation modal
+        function confirmDelete(button) {
+            const id = button.getAttribute('data-id');
+            const nama = button.getAttribute('data-nama');
+            const totalAktivitas = button.getAttribute('data-aktivitas') || '0';
+
+            // Set data ke modal
+            document.getElementById('deleteMisiNama').textContent = nama;
+            document.getElementById('deleteMisiAktivitas').textContent = totalAktivitas + ' aktivitas';
+
+            // Set action URL ke form
+            const deleteForm = document.getElementById('deleteForm');
+            const baseUrl = "{{ route('admin.misi.destroy', '__id__') }}";
+            deleteForm.action = baseUrl.replace('__id__', id);
+
+            // Show modal
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            deleteModal.show();
+        }
+
+        // Function to clear all filters
+        function clearFilters() {
+            document.getElementById('search').value = '';
+            document.getElementById('tipe_misi').value = '';
+            document.getElementById('status').value = '';
+            document.getElementById('filterForm').submit();
         }
     </script>
 @endpush
