@@ -59,8 +59,10 @@
                   <span class="material-icons misi-icon">{{ $misi->icon }}</span>
                     <h5 class="card-title mt-2">{{ $misi->nama_misi }}</h5>
                     @if($misi->is_completed)
+                    {{-- Misi event sudah diselesaikan --}}
                     <button class="btn btn-secondary" disabled>Misi Selesai</button>
                 @else
+                    {{-- Misi event  belum selesai --}}
                     <button class="btn btn-success btn-selesaikan-misi"
                         data-bs-toggle="modal"
                         data-bs-target="#misiModal"
@@ -70,12 +72,12 @@
                         data-deskripsi="{{ $misi->deskripsi }}">
                         Selesaikan Misi
                     </button>
-                @endif
+                @endif                
               </div>
             </div>
         </div>
         @endforeach
-    </div>
+</div>
 </div>
 
 <!-- Modal Check-in -->
