@@ -5,90 +5,20 @@
 @endpush
 
 @section('content')
-    <div class="main-content-kalender py-5">
+    <div class="main-content-kalender py-5 d-flex align-items-center" style="min-height:90vh;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-lg-10">
+                <div class="col-12 col-lg-11">
                     <!-- Judul Kalender -->
-                    <div class="section-header mb-3">
+                    <div class="section-header mb-2">
                         <h2 class="text-center">Kalender Event</h2>
                     </div>
-                    <!-- Navigasi bulan -->
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="fw-semibold mb-0">October 2025</h6>
-                        <div>
-                            <button class="btn btn-sm btn-outline-dark me-1">&lt;</button>
-                            <button class="btn btn-sm btn-outline-dark">&gt;</button>
-                        </div>
-                    </div>
-                    <!-- Kalender Grid (tanpa box/card putih) -->
-                    <div class="table-responsive">
-                        <table class="table table-borderless text-center align-middle calendar-table"
-                            style="table-layout: fixed;">
-                            <thead>
-                                <tr class="fw-bold">
-                                    <th>Mo</th>
-                                    <th>Tu</th>
-                                    <th>We</th>
-                                    <th>Th</th>
-                                    <th>Fr</th>
-                                    <th>Sa</th>
-                                    <th>Su</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>4</td>
-                                    <td>5</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>7</td>
-                                    <td>8</td>
-                                    <td>9</td>
-                                    <td><span class="event-day">10</span></td>
-                                    <td>11</td>
-                                    <td>12</td>
-                                </tr>
-                                <tr>
-                                    <td>13</td>
-                                    <td><span class="selected-day">14</span></td>
-                                    <td>15</td>
-                                    <td>16</td>
-                                    <td><span class="event-day">17</span></td>
-                                    <td>18</td>
-                                    <td>19</td>
-                                </tr>
-                                <tr>
-                                    <td>20</td>
-                                    <td>21</td>
-                                    <td>22</td>
-                                    <td>23</td>
-                                    <td>24</td>
-                                    <td>25</td>
-                                    <td>26</td>
-                                </tr>
-                                <tr>
-                                    <td>27</td>
-                                    <td>28</td>
-                                    <td>29</td>
-                                    <td>30</td>
-                                    <td>31</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- Event List -->
-                    <div class="mt-4">
-                        <p class="mb-1"><strong>10 Oktober</strong> – Diktat UKKI</p>
-                        <p class="mb-0"><strong>17 Oktober</strong> – Khataman Al-Qur'an</p>
+                    <!-- Kalender dengan shadow -->
+                    <div class="calendar-shadow-box mx-auto">
+                        <iframe
+                            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FBangkok&bgcolor=%23ffffff&src=ZXZlbnQudWtraUBnbWFpbC5jb20&src=ZThiZjZlNWU5YWZlMTYxMWE0NWYzYmViMDQ0MjIxZDk5NzBhMGM4YTM3Nzg2Yzk0MTM2ZTM5MWI4YTc4ZDI5ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NmQ5NWNkNTFiN2I1NThkNTVkNjcwNTgxMTkzN2E5OWNlNDc5ODI5Mzc4ZjczMjM0YWQ4YWY5MmIzNjcxNzlhNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Njc1NGU3YzA3NGVjMzQwYWRlOGM3MDFjMDE1ZmY5OGUyYTRhNTc4OWQxNzZlYmYzNDk3ZTBmNjM5NDk1Yzc0Y0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NmE5MGU5YWJlNDJkMGI3ZDM3MGY1Y2JlODNiMWFiNTk1NjQ5MmUyNDRlNWFlZGY1OTQ0NGJjOGQzMDQ1MTdmM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=MGVlYzAzNGY3YmJkZDgzZWE1NWI1MzUwNjkwMDRjNGZmMTMzZWI4M2UxMTk0ZmIzYTc4NzU1MDYzOTliNjgyZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NGI0OGEyMDdjOGNkNTVlYmRiNTg2YmJkMThmZDljMTc0MjgzOGY1NjNkMmNhMmIyOTBmNjNmMTIyZTUzNGJjY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aWQuaW5kb25lc2lhbiNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZW4uaW5kb25lc2lhbiNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZW4uaXNsYW1pYyNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23D50000&color=%23EF6C00&color=%234285F4&color=%230B8043&color=%238E24AA&color=%23F6BF26&color=%23E67C73&color=%230B8043&color=%230B8043&color=%237CB342"
+                            style="border:solid 1px #777; border-radius:12px;" width="100%" height="800" frameborder="0"
+                            scrolling="no"></iframe>
                     </div>
                 </div>
             </div>
