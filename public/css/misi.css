@@ -70,3 +70,31 @@
 .modal-body {
     padding-bottom: 60px;
 }
+
+.modal-content {
+    background-color: #99bc85; /* Warna hijau SiUKKI */
+}
+
+.btn-primary-skip {
+    background-color: #4a6f97; /* Warna abu-abu untuk tombol skip */
+    border-color: #4a6f97; /* Warna abu-abu untuk border tombol skip */
+    color: #fff; /* Warna teks putih untuk kontras */
+}
+
+.btn-primary-next {
+    background-color: #6d9d3b; /* Warna hijau SiUKKI */
+    border-color: #6d9d3b; /* Warna hijau SiUKKI */
+    color: #fff; /* Warna teks putih untuk kontras */
+}
+
+.btn-primary-next:hover {
+    background-color: #5a7f2e; /* Warna hijau SiUKKI yang lebih gelap saat hover */
+    border-color: #5a7f2e; /* Warna hijau SiUKKI yang lebih gelap saat hover */
+    color: #fff; /* Tetap putih saat hover */
+}
+
+.btn-primary-skip:hover {
+    background-color: #3e5a7f; /* Warna abu-abu yang lebih gelap saat hover */
+    border-color: #3e5a7f; /* Warna abu-abu yang lebih gelap saat hover */
+    color: #fff; /* Tetap putih saat hover */
+}

@@ -435,6 +435,18 @@ input:checked + .slider:before {
     animation: spin 1s ease infinite;
 }
 
+.avatar-option.selected img {
+    border: 3px solid #6d9d3b;
+    box-shadow: 0 0 15px #6d9d3b;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.avatar-option img:hover {
+    border: 3px solid #6c757d;
+    box-shadow: 0 0 15px #6c757d;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
 @keyframes spin {
     to { transform: rotate(360deg); }
 }

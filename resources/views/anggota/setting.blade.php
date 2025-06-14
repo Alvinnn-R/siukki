@@ -176,21 +176,7 @@
             </div>
         </div>
     </div>
-    @push('styles')
-        <style>
-            .avatar-option.selected img {
-                border: 3px solid #007bff;
-                box-shadow: 0 0 8px #007bff;
-                transition: border 0.2s, box-shadow 0.2s;
-            }
 
-            .avatar-option img:hover {
-                border: 3px solid #6c757d;
-                box-shadow: 0 0 8px #6c757d;
-                transition: border 0.2s, box-shadow 0.2s;
-            }
-        </style>
-    @endpush
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
