@@ -51,11 +51,15 @@
                     @foreach($top3Display as $i => $user)
                     <div class="leaderboard-top3-col leaderboard-top3-{{ $crowns[$i] }}">
                         @if($i == 1)
-                            <img src="{{ $crownIcons['gold'] }}" class="leaderboard-crown" alt="Crown">
+                            <img src="{{ $crownIcons['gold'] }}" class="leaderboard-crown leaderboard-crown-gold" alt="Crown">
+                        @elseif($i == 0)
+                            <img src="{{ $crownIcons['silver'] }}" class="leaderboard-crown leaderboard-crown-silver" alt="Crown">
+                        @elseif($i == 2)
+                            <img src="{{ $crownIcons['bronze'] }}" class="leaderboard-crown leaderboard-crown-bronze" alt="Crown">
                         @endif
                         <img 
                             src="{{ $user->profile_url }}" 
-                            class="leaderboard-avatar-top3 @if($i==1) leaderboard-avatar-top1 @endif"
+                            class="leaderboard-avatar-top3 @if($i==0) leaderboard-avatar-top2 @elseif($i==1) leaderboard-avatar-top1 @endif"
                             alt="Avatar"
                         >
                         <div class="leaderboard-top3-name @if($i==1) leaderboard-top3-name-main @endif">
@@ -88,7 +92,7 @@
                 @endphp
 
                 @foreach($top3 as $i => $user)
-                <div class="leaderboard-card {{ ['silver','gold','bronze'][$i] }} rank-{{ $i+1 }}">
+                <div class="leaderboard-card {{ ['gold','silver','bronze'][$i] }} rank-{{ $i+1 }}">
                     <span class="leaderboard-rank rank-{{ $i+1 }}">{{ $i+1 }}</span>
                     <img src="{{ $user->profile_url }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">
                     <span class="fw-bold">{{ $user->nama }}</span>

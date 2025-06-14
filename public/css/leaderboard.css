@@ -4,205 +4,6 @@ body {
   background-color: #f4fdf0;
 }
 
-/* Warna dan styling untuk sidebar */
-.sidebar {
-  background-color: #99bc85;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  border-right: 2px solid #7fbf4d;
-  font-family: "Poppins";
-}
-
-.sidebar-content {
-  overflow-y: auto;
-}
-
-/* Warna dan styling navigasi */
-.nav-link {
-  color: #000 !important;
-}
-
-.nav-link.active {
-  background-color: #6d9d3b !important;
-  color: white !important;
-}
-
-/* Ukuran ikon konsisten */
-.ikon {
-  height: 20px;
-  width: auto;
-}
-
-/* Footer profil */
-.profile-footer {
-  background: #6d9d3b;
-  margin-top: auto;
-}
-
-/* Gambar avatar */
-.avatar {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-}
-
-/* Ikon logout */
-.logout-icon {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) invert(1);
-}
-
-/* Content area */
-.content {
-  padding: 20px;
-}
-
-/* Custom styling untuk welcome banner */
-.welcome-banner {
-  background-color: #a6cf90;
-  border-radius: 15px;
-  border: none;
-  overflow: hidden;
-  font-family: "Aref Ruqaa";
-}
-
-.welcome-title {
-  font-weight: 600;
-  color: #2c3e2b;
-}
-
-/* Box khusus about section */
-.about-section-box {
-    background-color: #d2ebbc;
-    padding: 36px 40px;
-    border-radius: 15px;
-    margin-bottom: 32px;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.07);
-    font-family: "Poppins", sans-serif;
-    font-size: 1.24rem;
-    width: 100%;
-    max-width: 100%;
-    display: block;
-}
-
-
-.about-section-box h5 {
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #1e4013;
-}
-
-.about-section-box ul {
-  padding-left: 20px;
-  margin-top: 10px;
-}
-
-.about-section-box ul li {
-  margin-bottom: 6px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 767.98px) {
-  .sidebar {
-    height: auto;
-    position: relative;
-  }
-
-  .logo-container {
-    margin-bottom: 15px;
-  }
-}
-
-/* Titel SiUKKI */
-.siukki-title {
-  letter-spacing: 1px;
-  font-size: 1.35rem;
-}
-
-/* Hover navigasi */
-.hover-hijau:hover,
-.hover-hijau:focus {
-  background-color: #6d9d3b !important;
-  color: #fff !important;
-  transition: background 0.2s, color 0.2s;
-}
-
-/* Putihkan ikon PNG pada menu yang sedang aktif */
-.nav-link.active .ikon {
-  filter: brightness(0) invert(1);
-}
-
-/* Header teks "About" rata tengah + background hijau */
-.section-header {
-  background-color: #a6cf90;
-  padding: 15px 0;
-  border-radius: 15px;
-  margin-bottom: 25px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
-}
-
-.section-header h2 {
-  color: #2c3e50;
-    font-weight: 700;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    position: relative;
-}
-
-.main-content-about {
-    background: #99bc85;
-    border-radius: 20px;
-    padding: 2rem 0;
-    min-height: 90vh;
-}
-
-/* Header judul besar tanpa background */
-.about-header-title {
-    color: #2c3e50;
-    font-weight: 700;
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 2.5rem;
-    /* tanpa background, tanpa border */
-}
-
-/* Membesarkan isi box */
-.about-section-box {
-    background-color: #d2ebbc;
-    padding: 36px 40px; /* perbesar padding */
-    border-radius: 15px;
-    margin-bottom: 32px;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.07);
-    font-family: "Poppins", sans-serif;
-    font-size: 1.24rem; /* perbesar font */
-}
-
-/* Membesarkan heading dalam box */
-.about-section-box h5 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 18px;
-    color: #1e4013;
-}
-
-/* Responsive */
-@media (max-width: 991.98px) {
-    .about-header-title {
-        font-size: 1.8rem;
-        margin-bottom: 1.5rem;
-    }
-    .about-section-box {
-        padding: 22px 6px;
-        font-size: 1.06rem;
-    }
-    .about-section-box h5 {
-        font-size: 1.11rem;
-    }
-}
-
 /* Leaderboard styling */
 .leaderboard-crown {
     width: 48px;
@@ -275,6 +76,16 @@ body {
     gap: 0;
 }
 
+.leaderboard-btn.leaderboard-btn.active {
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.leaderboard-btn.leaderboard-btn:hover {
+    background: #7fbf4d;
+    color: #fff;
+}
+
 /* Jarak antar tombol filter leaderboard */
 .leaderboard-btn {
     margin: 0 24px;
@@ -292,6 +103,7 @@ body {
     align-items: end;
     min-height: 180px;
     margin-bottom: 1.5rem;
+    margin-top: 40px;
 }
 
 /* Top 3 Col */
@@ -310,16 +122,26 @@ body {
     width: 54px;
     height: 38px;
     position: absolute;
-    top: -38px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
 }
 
+.leaderboard-crown-gold {
+    top: -32px;
+}
+
+.leaderboard-crown-silver {
+    top: -12px;
+}
+.leaderboard-crown-bronze {
+    top: -12px;
+}
+
 /* Avatar Top 3 */
 .leaderboard-avatar-top3 {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid #fff;
@@ -336,6 +158,13 @@ body {
     border: 4px solid #ffe066;
     box-shadow: 0 4px 16px rgba(44,62,80,0.12);
     margin-top: 0;
+}
+
+.leaderboard-avatar-top2 {
+    width: 100px;
+    height: 100px;
+    border: 4px solid #c0c0c0;
+    box-shadow: 0 3px 12px rgba(44,62,80,0.1);
 }
 
 .leaderboard-top3-silver .leaderboard-avatar-top3 {
@@ -391,10 +220,11 @@ body {
 
 /* Avatar di Card Top 10 */
 .leaderboard-avatar-top10 {
-    width: 26px;
-    height: 26px;
+    width: 50px;
+    height: 50px;
     object-fit: cover;
-    margin-right: 12px;
+    margin-top: -5px;
+    margin-bottom: -5px;
 }
 
 /* Judul Top 10 */
@@ -411,7 +241,7 @@ body {
 
 /* Ranking Style */
 .leaderboard-rank.rank-1 {
-    color: #ffd700;
+    color: #d1b100;
     font-size: 1.7rem;
     font-weight: bold;
 }
