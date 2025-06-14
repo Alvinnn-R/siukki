@@ -15,7 +15,7 @@
       <img src="{{ asset('assets/images/modalmisi.png') }}" alt="Memulai Perjalanan" class="img-fluid mb-3">
       
       <div class="modal-body" style="height: 200px;">
-        <p id="modalText"><strong>Ustadzah: Riky, selamat datang di halaman misi. Kamu baru saja memulai perjalananmu di SiUKKI. Misi-misi ini adalah tantangan yang akan menguji ketekunan dan semangatmu untuk lebih aktif dalam kegiatan islami di kampus.</strong></p>
+        <p id="modalText"><strong>Ustadzah: {{ Auth::user()->nama }}, selamat datang di halaman misi. Kamu baru saja memulai perjalananmu di SiUKKI. Misi-misi ini adalah tantangan yang akan menguji ketekunan dan semangatmu untuk lebih aktif dalam kegiatan islami di kampus.</strong></p>
       </div>
       
       <div class="modal-footer border-0">
@@ -34,12 +34,12 @@
 
   // modal misi
   const texts = [
-        `<strong>Riky: Tapi, Ustadzah, ada banyak misi yang harus saya pilih. Bagaimana saya tahu misi mana yang harus saya mulai?</strong>`,
-        `<strong>Uztadzah: Tidak perlu khawatir, Riky. Mulailah dari yang paling sederhana. Setiap misi di SiUKKI dirancang untuk membantumu meningkatkan kualitas ibadah dan keterlibatan di kampus. Misalnya, kamu bisa memulai dengan membaca Al-Qur'an atau sholat berjamaah.</strong>`,
-        `<strong>Riky: Jadi, semua misi ini penting ya, Ustadzah?</strong>`,
-        `<strong>Ustadzah: Betul, Riky. Setiap langkah kecil yang kamu ambil akan memberi manfaat besar. XP yang kamu kumpulkan adalah bukti perkembanganmu. Namun, yang lebih penting adalah niat dan konsistensi yang kamu tunjukkan.</strong>`,
+        `<strong>{{ Auth::user()->nama }}: Tapi, Ustadzah, ada banyak misi yang harus saya pilih. Bagaimana saya tahu misi mana yang harus saya mulai?</strong>`,
+        `<strong>Uztadzah: Tidak perlu khawatir, {{ Auth::user()->nama }}. Mulailah dari yang paling sederhana. Setiap misi di SiUKKI dirancang untuk membantumu meningkatkan kualitas ibadah dan keterlibatan di kampus. Misalnya, kamu bisa memulai dengan membaca Al-Qur'an atau sholat berjamaah.</strong>`,
+        `<strong>{{ Auth::user()->nama }}: Jadi, semua misi ini penting ya, Ustadzah?</strong>`,
+        `<strong>Ustadzah: Betul, {{ Auth::user()->nama }}. Setiap langkah kecil yang kamu ambil akan memberi manfaat besar. XP yang kamu kumpulkan adalah bukti perkembanganmu. Namun, yang lebih penting adalah niat dan konsistensi yang kamu tunjukkan.</strong>`,
         `<strong>Uztadzah: Sekarang, pilih misi yang paling sesuai dengan waktu dan semangatmu. Ingat, misi-misi ini bukan hanya untuk mendapatkan XP, tetapi juga untuk mendekatkan diri kepada Allah dan meningkatkan kontribusimu di UKKI.</strong>`,
-        `<strong>Riky: Terima kasih, Ustadzah. Saya akan mulai dengan yang pertama. Ayo, saya siap untuk memulai!</strong>`
+        `<strong>{{ Auth::user()->nama }}: Terima kasih, Ustadzah. Saya akan mulai dengan yang pertama. Ayo, saya siap untuk memulai!</strong>`
     ];
 
     let currentStep = -1; // Mulai dari -1 karena kita akan menampilkan teks pertama pada klik pertama
