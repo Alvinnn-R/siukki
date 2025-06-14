@@ -46,15 +46,22 @@ body {
 .leaderboard-btn {
     margin: 0 24px;
     min-width: 80px;
-    border-radius: 12px !important;
+    border-radius: 12px;
     font-weight: 500;
     font-size: 1.1rem;
     box-shadow: none;
 }
 .leaderboard-btn.active {
-    background: #7fbf4d !important;
-    color: #fff !important;
+    background: #6d9d3b;
+    border-color: #6d9d3b;
+    color: #fff;
 }
+
+.leaderboard-btn:hover {
+    background: #6d9d3b;
+    color: #fff;
+}
+
 .leaderboard-bg {
     background: #99bc85;
 }
@@ -74,16 +81,6 @@ body {
     display: flex;
     justify-content: center;
     gap: 0;
-}
-
-.leaderboard-btn.leaderboard-btn.active {
-    border: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.leaderboard-btn.leaderboard-btn:hover {
-    background: #7fbf4d;
-    color: #fff;
 }
 
 /* Jarak antar tombol filter leaderboard */
