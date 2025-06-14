@@ -52,10 +52,10 @@ class MisiController extends Controller
     public function complete(Request $request, $id)
     {
         $npm = Auth::guard('anggota')->user()->npm;
-    
+
         // Ambil data misi berdasarkan id_misi
         $misi = Misi::findOrFail($id);
-    
+
         // PERBAIKAN: Cek completion berdasarkan tipe misi
         if ($misi->tipe_misi === 'harian') {
             // Untuk misi harian, cek apakah sudah diselesaikan hari ini
@@ -70,35 +70,35 @@ class MisiController extends Controller
                 ->where('status', 'approved')
                 ->exists();
         }
-    
+
         if ($sudahSelesai) {
             // Jika sudah dikerjakan, kembalikan respon gagal
-            $message = $misi->tipe_misi === 'harian' 
-                ? 'Misi sudah diselesaikan hari ini.' 
+            $message = $misi->tipe_misi === 'harian'
+                ? 'Misi sudah diselesaikan hari ini.'
                 : 'Misi sudah diselesaikan sebelumnya.';
-                
+
             return response()->json([
                 'success' => false,
                 'message' => $message
             ], 400);
         }
-    
+
         try {
             // Simpan aktivitas penyelesaian misi
             Aktivitas::create([
                 'npm' => $npm,
                 'id_misi' => $id,
-                'bukti_aktifitas' => null, 
+                'bukti_aktifitas' => null,
                 'tanggal' => today(),
                 'status' => 'approved',
                 'keterangan' => 'Misi diselesaikan',
                 'xp_diperoleh' => $misi->xp_reward
             ]);
-    
+
             // Tambahkan XP ke anggota
-            $anggota = Auth::guard('anggota')->user();
-            $anggota->syncXpFromActivities();
-    
+            // $anggota = Auth::guard('anggota')->user();
+            // $anggota->syncXpFromActivities();
+
             // Respon sukses
             return response()->json([
                 'success' => true,
@@ -112,19 +112,19 @@ class MisiController extends Controller
             ], 500);
         }
     }
-    
+
     // Method untuk check-in harian
     public function checkin(Request $request)
     {
         $npm = Auth::guard('anggota')->user()->npm;
-    
+
         // Cari misi "Check-in Harian" yang aktif dan berlaku hari ini
         $misi = Misi::where('nama_misi', 'Check-in Harian')
             ->where('status', 'aktif')
             ->whereDate('tanggal_mulai', '<=', today())
             ->whereDate('tanggal_selesai', '>=', today())
             ->first();
-    
+
         // Jika misi check-in tidak tersedia
         if (!$misi) {
             return response()->json([
@@ -132,21 +132,21 @@ class MisiController extends Controller
                 'message' => 'Misi check-in tidak tersedia saat ini.'
             ], 404);
         }
-    
+
         // Cek apakah user sudah check-in hari ini
         $sudah = Aktivitas::where('npm', $npm)
             ->where('id_misi', $misi->id_misi)
             ->whereDate('tanggal', today())
             ->where('status', 'approved')
             ->exists();
-    
+
         if ($sudah) {
             return response()->json([
                 'success' => false,
                 'message' => 'Kamu sudah check-in hari ini.'
             ], 409); // 409: Conflict
         }
-    
+
         // Simpan aktivitas check-in ke tabel Aktivitas
         Aktivitas::create([
             'npm' => $npm,
@@ -157,11 +157,11 @@ class MisiController extends Controller
             'keterangan' => 'Check-in harian',
             'xp_diperoleh' => $misi->xp_reward
         ]);
-    
+
         // Tambahkan XP ke anggota
         $anggota = Auth::guard('anggota')->user();
-        $anggota->addXp($misi->xp_reward);
-    
+        // $anggota->addXp($misi->xp_reward);
+
         // Kirim respon sukses beserta XP yang didapat
         return response()->json([
             'success' => true,
@@ -169,5 +169,5 @@ class MisiController extends Controller
             'xp' => $misi->xp_reward,
             'total_xp' => $anggota->xp
         ]);
-    }    
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AnggotaController;
+use App\Http\Controllers\Admin\LeaderboardController;
 use App\Http\Controllers\Admin\MisiController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthAnggotaController;
@@ -109,21 +110,20 @@ Route::prefix('admin')->group(function () {
             return view('admin.event.create');
         })->name('event.create');
 
-        Route::get('/poin', function () {
-            return view('admin.poin.index');
-        })->name('poin.index');
+        Route::get('/leaderboard/{filter?}', [LeaderboardController::class, 'leaderboard'])->name('leaderboard');
 
-        Route::get('/leaderboard', function () {
-            return view('admin.leaderboard.index');
-        })->name('leaderboard.index');
+        Route::get('/kalender', function () {
+            return view('admin.kalender');
+        })->name('kalender');
 
         Route::get('/laporan', function () {
             return view('admin.laporan.index');
         })->name('laporan.index');
 
-        Route::get('/setting', function () {
-            return view('admin.setting.index');
-        })->name('setting.index');
+        // Setting admin: hanya index dan update username/password
+        Route::get('/setting', [\App\Http\Controllers\Admin\SettingAdminController::class, 'index'])->name('setting.index');
+        Route::put('/setting/password', [\App\Http\Controllers\Admin\SettingAdminController::class, 'updatePassword'])->name('setting.password');
+        Route::put('/setting/username', [\App\Http\Controllers\Admin\SettingAdminController::class, 'updateUsername'])->name('setting.username');
 
         Route::get('/profile', function () {
             return view('admin.profile.index');
