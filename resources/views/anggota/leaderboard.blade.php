@@ -57,12 +57,13 @@
                         @elseif($i == 2)
                             <img src="{{ $crownIcons['bronze'] }}" class="leaderboard-crown leaderboard-crown-bronze" alt="Crown">
                         @endif
-                        @php
+                        {{-- @php
                         $profilePath = Str::contains($user->profile, 'avatar/')
                             ? 'assets/images/' . $user->profile
                             : 'uploads/profiles/' . $user->profile;
                         @endphp
-                        <img src="{{ asset($profilePath) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">                    
+                        <img src="{{ asset($profilePath) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">--}}
+                        <img src="{{ asset('assets/images/' . $user->profile) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">
                         <div class="leaderboard-top3-name @if($i==1) leaderboard-top3-name-main @endif">
                             {{ $user->nama }}
                         </div>
@@ -95,12 +96,13 @@
                 @foreach($top3 as $i => $user)
                 <div class="leaderboard-card {{ ['gold','silver','bronze'][$i] }} rank-{{ $i+1 }}">
                     <span class="leaderboard-rank rank-{{ $i+1 }}">{{ $i+1 }}</span>
-                    @php
+                    {{-- @php
                         $profilePath = Str::contains($user->profile, 'avatar/')
                             ? 'assets/images/' . $user->profile
                             : 'uploads/profiles/' . $user->profile;
                     @endphp
-                    <img src="{{ asset($profilePath) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">
+                    <img src="{{ asset($profilePath) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar"> --}}
+                    <img src="{{ asset('assets/images/' . $user->profile) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">
                     <span class="fw-bold">{{ $user->nama }}</span>
                     <span class="ms-auto leaderboard-xp">{{ $getXp($user) }} Xp.</span>
                 </div>
@@ -119,12 +121,13 @@
                     @elseif($i==2) bronze rank-3 
                     @endif">
                     <span class="leaderboard-rank rank-{{ $i+1 }}">{{ $i+1 }}</span>
-                    @php
+                    {{-- @php
                         $profilePath = Str::contains($user->profile, 'avatar/')
                             ? 'assets/images/' . $user->profile
                             : 'uploads/profiles/' . $user->profile;
                     @endphp
-                    <img src="{{ asset($profilePath) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">
+                    <img src="{{ asset($profilePath) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar"> --}}
+                    <img src="{{ asset('assets/images/' . $user->profile) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">
                     <span class="fw-bold">{{ $user->nama }}</span>
                     <span class="ms-auto leaderboard-xp">{{ $getXp($user) }} Xp.</span>
                 </div>
