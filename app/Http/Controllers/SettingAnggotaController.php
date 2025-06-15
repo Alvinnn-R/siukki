@@ -16,48 +16,51 @@ class SettingAnggotaController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-        return view('anggota.setting', compact('user'));
+        $anggota = Auth::guard('anggota')->user();
+        return view('anggota.setting', compact('anggota'));
     }
+    
 
     public function updateProfile(Request $request)
     {
+
+        $anggota = Auth::guard('anggota')->user();
+    
+        // Simpan langsung string preset avatar
+        if ($request->filled('profile')) {
+            $anggota->profile = $request->profile;
+        }
+    
+        $anggota->save();
+    
+        return back()->with('success', 'Profil berhasil diperbarui.');
+    }
+    
+            
+    public function removeImage()
+    {
+        $user = Auth::guard('anggota')->user();
+    
+        // Set profile ke default avatar
+        $user->profile = null;
+        $user->save();
+    
+        return back()->with('success', 'Foto Profil Berhasil Dihapus!');
+    }
+    
+    public function updateUsername(Request $request)
+    {
         $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,' . Auth::id(),
-            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'name' => 'required|string|max:255',
         ]);
 
-        $user = Auth::user();
-        
-        if ($request->hasFile('profile_image')) {
-            // Delete old image if exists
-            if ($user->profile_image) {
-                Storage::delete('public/' . $user->profile_image);
-            }
-            
-            // Store new image
-            $imagePath = $request->file('profile_image')->store('profile_images', 'public');
-            $user->profile_image = $imagePath;
-        }
+        $anggota = Auth::guard('anggota')->user();
+        $anggota->nama = $request->name;
+        $anggota->save();
 
-        $user->username = $request->username;
-        $user->save();
-
-        return back()->with('success', 'Profile updated successfully!');
+        return response()->json(['success' => true]);
     }
 
-    public function removeProfileImage()
-    {
-        $user = Auth::user();
-        
-        if ($user->profile_image) {
-            Storage::delete('public/' . $user->profile_image);
-            $user->profile_image = null;
-            $user->save();
-        }
-
-        return back()->with('success', 'Profile image removed successfully!');
-    }
 
     public function updatePassword(Request $request)
     {
@@ -76,19 +79,6 @@ class SettingAnggotaController extends Controller
         $user->save();
 
         return back()->with('success', 'Password updated successfully!');
-    }
-
-    public function updateBadge(Request $request)
-    {
-        $request->validate([
-            'badge' => 'required|string|max:50'
-        ]);
-
-        $user = Auth::user();
-        $user->badge = $request->badge;
-        $user->save();
-
-        return back()->with('success', 'Badge updated successfully!');
     }
 
     public function updateNotificationSettings(Request $request)

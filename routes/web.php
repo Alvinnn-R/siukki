@@ -56,12 +56,11 @@ Route::middleware('auth:anggota')->group(function () {
     })->name('setting');
 
     // Routes yang disesuaikan dengan SettingAnggotaController
-    Route::get('/setting', [SettingAnggotaController::class, 'index'])->name('setting');
-    Route::put('/setting/profile', [SettingAnggotaController::class, 'updateProfile'])->name('setting.profile');
+    Route::post('/setting', [SettingAnggotaController::class, 'index'])->name('setting');
+    Route::post('/setting/profile', [SettingAnggotaController::class, 'updateProfile'])->name('setting.profile');
     Route::put('/setting/password', [SettingAnggotaController::class, 'updatePassword'])->name('setting.password');
-    Route::put('/setting/username', [SettingAnggotaController::class, 'updateUsername'])->name('setting.username');
-    Route::put('/setting/badge', [SettingAnggotaController::class, 'updateBadge'])->name('setting.badge');
-    Route::delete('/setting/remove-image', [SettingAnggotaController::class, 'removeProfileImage'])->name('setting.remove-image');
+    Route::post('/setting/update-username', [SettingAnggotaController::class, 'updateUsername'])->name('setting.username.update');
+    Route::post('/setting/remove-image', [SettingAnggotaController::class, 'removeImage'])->name('setting.profile.remove');
     Route::put('/setting/notifications', [SettingAnggotaController::class, 'updateNotificationSettings'])->name('setting.notifications');
 });
 
