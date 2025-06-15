@@ -5,7 +5,7 @@
 @endpush
 
 @section('content')
-    <div class="container py-5">
+    <div class="container py-2">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-12">
                 <!-- Box Kelola Kalender Event -->

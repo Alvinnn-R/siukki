@@ -33,7 +33,7 @@
 
                         <div class="profile-setting-card">
                             <div class="profile-setting-left">
-                                <img src="{{ $user->profile_url ? $user->profile_url : asset('assets/images/Avater.png') }}"
+                                <img src="{{ auth()->user()->profile_url ? auth()->user()->profile_url : asset('assets/images/Avater.png') }}"
                                     alt="Profile" id="profileImage" />
                             </div>
                             <div class="profile-setting-right">

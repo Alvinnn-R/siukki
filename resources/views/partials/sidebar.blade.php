@@ -157,8 +157,20 @@
         <div class="mt-auto profile-footer">
             <div class="d-flex align-items-center justify-content-between px-3 py-4">
                 <div class="d-flex align-items-center">
-                    <img src="{{ session('role') === 'admin' ? asset('assets/images/Avater.png') : (!empty($user->profile_url) ? $user->profile_url : asset('assets/images/avatar-admin.png')) }}"
-                        alt="Profile" class="rounded-circle avatar">
+                    {{-- <img src="{{ session('role') === 'admin' ? asset('assets/images/Avater.png') : (!empty($user->profile_url) ? $user->profile_url : asset('assets/images/avatar-admin.png')) }}"
+                        alt="Profile" class="rounded-circle avatar"> --}}
+                    @php
+                        $isAdmin = session('role') === 'admin';
+                        $profileImage = $isAdmin
+                            ? asset('assets/images/Avater.png')
+                            : (!empty(auth()->user()?->profile_url)
+                                ? asset(auth()->user()->profile_url)
+                                : asset('assets/images/avatar-admin.png'));
+                    @endphp
+
+                    <img src="{{ $profileImage }}" alt="Profile" class="rounded-circle avatar">
+
+
                     <div class="ms-2">
                         @if (auth('admin')->check())
                             <div class="fw-semibold text-white" style="font-size:0.99em; line-height:1.2;">
