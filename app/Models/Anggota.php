@@ -35,12 +35,19 @@ class Anggota extends Authenticatable
     ];
 
     // Accessor untuk mendapatkan URL profile picture
+    // public function getProfileUrlAttribute()
+    // {
+    //     if ($this->profile) {
+    //         return asset('uploads/profiles/' . $this->profile);
+    //     }
+    //     return asset('assets/images/Avater.png'); // default avatar
+    // }
+
     public function getProfileUrlAttribute()
     {
-        if ($this->profile) {
-            return asset('uploads/profiles/' . $this->profile);
-        }
-        return asset('assets/images/Avater.png'); // default avatar
+        return $this->profile
+        ? asset('uploads/profiles/' . $this->profile)
+        : null;
     }
 
     // Accessor untuk mendapatkan XP yang dibutuhkan untuk level selanjutnya
