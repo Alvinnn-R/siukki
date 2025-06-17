@@ -10,6 +10,17 @@
     @php
         // Cek filter aktif (default 'day' jika tidak ada)
         $activeFilter = $filter ?? 'day';
+        
+        // Function untuk mendapatkan URL profile image
+        $getProfileImage = function($user) {
+            if (!$user->profile) {
+                return asset('assets/images/default-avatar.png');
+            }
+            
+            return str_contains($user->profile, 'avatar/') 
+                ? asset('assets/images/' . $user->profile) 
+                : asset('uploads/profiles/' . $user->profile);
+        };
     @endphp
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -23,11 +34,11 @@
                     <!-- Filter Buttons -->
                     <div class="mb-4">
                         <div class="btn-group leaderboard-filter-group" role="group">
-                            <a href="{{ route('leaderboard', ['filter' => 'day']) }}"
+                            <a href="{{ route('admin.leaderboard', ['filter' => 'day']) }}"
                                 class="btn leaderboard-btn {{ $activeFilter === 'day' ? 'active' : '' }}">Today</a>
-                            <a href="{{ route('leaderboard', ['filter' => 'week']) }}"
+                            <a href="{{ route('admin.leaderboard', ['filter' => 'week']) }}"
                                 class="btn leaderboard-btn {{ $activeFilter === 'week' ? 'active' : '' }}">Week</a>
-                            <a href="{{ route('leaderboard', ['filter' => 'month']) }}"
+                            <a href="{{ route('admin.leaderboard', ['filter' => 'month']) }}"
                                 class="btn leaderboard-btn {{ $activeFilter === 'month' ? 'active' : '' }}">Month</a>
                         </div>
                     </div>
@@ -54,9 +65,13 @@
                         @foreach ($top3Display as $i => $user)
                             <div class="leaderboard-top3-col leaderboard-top3-{{ $crowns[$i] }}">
                                 @if ($i == 1)
-                                    <img src="{{ $crownIcons['gold'] }}" class="leaderboard-crown" alt="Crown">
+                                    <img src="{{ $crownIcons['gold'] }}" class="leaderboard-crown leaderboard-crown-gold" alt="Crown">
+                                @elseif ($i == 0)
+                                    <img src="{{ $crownIcons['silver'] }}" class="leaderboard-crown leaderboard-crown-silver" alt="Crown">
+                                @elseif ($i == 2)
+                                    <img src="{{ $crownIcons['bronze'] }}" class="leaderboard-crown leaderboard-crown-bronze" alt="Crown">
                                 @endif
-                                <img src="{{ $user->profile_url }}"
+                                <img src="{{ $getProfileImage($user) }}"
                                     class="leaderboard-avatar-top3 @if ($i == 1) leaderboard-avatar-top1 @endif"
                                     alt="Avatar">
                                 <div
@@ -92,7 +107,7 @@
                     @foreach ($top3 as $i => $user)
                         <div class="leaderboard-card {{ ['silver', 'gold', 'bronze'][$i] }} rank-{{ $i + 1 }}">
                             <span class="leaderboard-rank rank-{{ $i + 1 }}">{{ $i + 1 }}</span>
-                            <img src="{{ $user->profile_url }}" class="leaderboard-avatar rank-{{ $i + 1 }}"
+                            <img src="{{ $getProfileImage($user) }}" class="leaderboard-avatar rank-{{ $i + 1 }}"
                                 alt="Avatar">
                             <span class="fw-bold">{{ $user->nama }}</span>
                             <span class="ms-auto leaderboard-xp">{{ $getXp($user) }} Xp.</span>
@@ -106,13 +121,13 @@
                     <h5 class="fw-bold mb-3 leaderboard-top10-title">Top 10 Ranking</h5>
                     <!-- Top 10 Cards -->
                     @foreach ($anggota->take(10) as $i => $user)
-                        <div
-                            class="d-flex align-items-center mb-2 leaderboard-card
-                    @if ($i == 0) gold rank-1
-                    @elseif($i == 1) silver rank-2
-                    @elseif($i == 2) bronze rank-3 @endif">
+                        <div class="d-flex align-items-center mb-2 leaderboard-card 
+                            @if ($i == 0) gold rank-1 
+                            @elseif($i == 1) silver rank-2 
+                            @elseif($i == 2) bronze rank-3 
+                            @endif">
                             <span class="leaderboard-rank rank-{{ $i + 1 }}">{{ $i + 1 }}</span>
-                            <img src="{{ $user->profile_url }}"
+                            <img src="{{ $getProfileImage($user) }}"
                                 class="rounded-circle leaderboard-avatar-top10 rank-{{ $i + 1 }}" alt="Avatar">
                             <span class="fw-bold">{{ $user->nama }}</span>
                             <span class="ms-auto leaderboard-xp">{{ $getXp($user) }} Xp.</span>
