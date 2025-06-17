@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -23,20 +22,20 @@ class SettingAnggotaController extends Controller
     public function updateProfile(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,' . Auth::id(),
-            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'username'      => 'required|string|max:255|unique:users,username,' . Auth::id(),
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $user = Auth::user();
-        
+
         if ($request->hasFile('profile_image')) {
             // Delete old image if exists
             if ($user->profile_image) {
                 Storage::delete('public/' . $user->profile_image);
             }
-            
+
             // Store new image
-            $imagePath = $request->file('profile_image')->store('profile_images', 'public');
+            $imagePath           = $request->file('profile_image')->store('profile_images', 'public');
             $user->profile_image = $imagePath;
         }
 
@@ -49,7 +48,7 @@ class SettingAnggotaController extends Controller
     public function removeProfileImage()
     {
         $user = Auth::user();
-        
+
         if ($user->profile_image) {
             Storage::delete('public/' . $user->profile_image);
             $user->profile_image = null;
@@ -63,12 +62,12 @@ class SettingAnggotaController extends Controller
     {
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
+            'new_password'     => 'required|min:8|confirmed',
         ]);
 
         $user = Auth::user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (! Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => 'Current password is incorrect']);
         }
 
@@ -81,10 +80,10 @@ class SettingAnggotaController extends Controller
     public function updateBadge(Request $request)
     {
         $request->validate([
-            'badge' => 'required|string|max:50'
+            'badge' => 'required|string|max:50',
         ]);
 
-        $user = Auth::user();
+        $user        = Auth::user();
         $user->badge = $request->badge;
         $user->save();
 
@@ -93,7 +92,7 @@ class SettingAnggotaController extends Controller
 
     public function updateNotificationSettings(Request $request)
     {
-        $user = Auth::user();
+        $user                        = Auth::user();
         $user->notifications_enabled = $request->has('notifications_enabled');
         $user->save();
 

@@ -156,8 +156,8 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ $member->profile_url }}" alt="Avatar" class="rounded-circle me-2"
-                                        style="width: 35px; height: 35px; object-fit: cover;">
+                                    <img src="{{ $member->profile_url }}" alt="Avatar"
+                                        class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
                                     <div>
                                         <div class="fw-semibold">{{ $member->nama }}</div>
                                         <small class="text-muted">Member sejak

@@ -5,49 +5,88 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <style>
-        .profile-preview {
-            width: 150px;
-            height: 150px;
+        /* Avatar selection styles */
+        .avatar-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
             object-fit: cover;
-            border: 3px solid #e0e0e0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: border-color 0.3s;
         }
 
-        .current-info {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid #4CAF50;
+        .avatar-preview:hover {
+            border-color: #007bff;
         }
 
-        .form-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1.5rem;
+        .avatar-option {
+            cursor: pointer;
+            transition: transform 0.2s;
         }
 
-        .section-title {
+        .avatar-option:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-option.selected img {
+            border: 3px solid #007bff !important;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+        .profile-preview-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .preview-card {
+            gap: 15px;
+            padding: 20px;
             background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px dashed #dee2e6;
+            border-radius: 10px;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
         }
 
-        .alert-info-custom {
-            background: #e3f2fd;
-            border: 1px solid #90caf9;
-            color: #1565c0;
-            border-radius: 8px;
+        .profile-preview-container:hover {
+            border-color: #007bff;
+            background: #f0f8ff;
+        }
+
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .badge-selection-container {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #dee2e6;
+            height: fit-content;
+        }
+
+        .badge-preview {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .badge-display {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        .badge-display.empty {
+            background: #6c757d;
+            color: #fff;
         }
     </style>
 @endpush
@@ -65,9 +104,9 @@
     <div class="misi-section-box">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h5 class="mb-2">Edit Profil: {{ $anggota->nama }}</h5>
-                <p class="mb-0 text-muted">Perbarui informasi anggota UKKI. Biarkan field password kosong jika tidak ingin
-                    mengubah password.</p>
+                <h5 class="mb-2">Edit Data Anggota: {{ $anggota->nama }}</h5>
+                <p class="mb-0 text-muted">Perbarui informasi anggota yang diperlukan. Kosongkan password jika tidak ingin
+                    mengubah.</p>
             </div>
             <a href="{{ route('admin.anggota.index') }}" class="btn btn-outline-secondary">
                 <i class="material-icons me-1" style="font-size: 18px;">arrow_back</i>
@@ -89,48 +128,15 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.anggota.update', $anggota->npm) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.anggota.update', $anggota) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
-        <!-- Current Profile Info -->
-        <div class="form-section">
-            <div class="section-title">
-                <i class="material-icons me-2">account_circle</i>
-                <h5 class="mb-0">Profil Saat Ini</h5>
-            </div>
-
-            <div class="row align-items-center">
-                <div class="col-md-3 text-center">
-                    <img src="{{ $anggota->profile_url }}" alt="{{ $anggota->nama }}"
-                        class="rounded-circle profile-preview mb-3" id="currentProfileImg">
-                    <p class="mb-0 text-muted">Foto Profil Saat Ini</p>
-                </div>
-                <div class="col-md-9">
-                    <div class="current-info">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <small class="text-muted d-block">NPM</small>
-                                <strong>{{ $anggota->npm }}</strong>
-                            </div>
-                            <div class="col-md-6">
-                                <small class="text-muted d-block">Level Saat Ini</small>
-                                <strong>Level {{ $anggota->level }} - {{ $anggota->badge }}</strong>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <small class="text-muted d-block">Total XP</small>
-                                <strong>{{ $anggota->xp }} XP</strong>
-                            </div>
-                            <div class="col-md-6">
-                                <small class="text-muted d-block">Bergabung Sejak</small>
-                                <strong>{{ $anggota->created_at->format('d F Y') }}</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Alert Info -->
+        <div class="alert alert-info-custom" role="alert">
+            <i class="material-icons me-2" style="vertical-align: middle;">info</i>
+            <strong>Informasi:</strong> Anggota login menggunakan NPM sebagai username. Kosongkan password jika tidak ingin
+            mengubah.
         </div>
 
         <!-- Data Anggota Section -->
@@ -144,18 +150,20 @@
                 <div class="col-md-6 mb-3">
                     <label for="npm" class="form-label fw-semibold">NPM <span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('npm') is-invalid @enderror" id="npm"
-                        name="npm" value="{{ old('npm', $anggota->npm) }}" maxlength="15" required>
+                        name="npm" value="{{ old('npm', $anggota->npm) }}" placeholder="Contoh: 23081010001"
+                        maxlength="15" required>
                     @error('npm')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                    <div class="form-text">NPM digunakan sebagai username login</div>
+                    <div class="form-text">NPM akan digunakan sebagai username login</div>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label for="nama" class="form-label fw-semibold">Nama Lengkap <span
                             class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
-                        name="nama" value="{{ old('nama', $anggota->nama) }}" required>
+                        name="nama" value="{{ old('nama', $anggota->nama) }}" placeholder="Masukkan nama lengkap anggota"
+                        required>
                     @error('nama')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -163,37 +171,85 @@
             </div>
 
             <div class="row">
+                <!-- Profile Section -->
                 <div class="col-md-6 mb-3">
-                    <label for="profile" class="form-label fw-semibold">Ganti Foto Profil</label>
-                    <input type="file" class="form-control @error('profile') is-invalid @enderror" id="profile"
-                        name="profile" accept="image/*">
-                    @error('profile')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                    <div class="form-text">Biarkan kosong jika tidak ingin mengubah foto. Format: JPG, PNG, maksimal 2MB
+                    <label class="form-label fw-semibold">Foto Profil</label>
+                    <div class="profile-preview-container">
+                        @php
+                            $currentProfileSrc = asset('assets/images/Avater.png'); // default
+                            $currentSelectedAvatar = '';
+
+                            if ($anggota->selected_avatar) {
+                                // If user has selected avatar
+                                $currentProfileSrc = asset('assets/images/' . $anggota->selected_avatar);
+                                $currentSelectedAvatar = $anggota->selected_avatar;
+                            } elseif (
+                                $anggota->profile &&
+                                file_exists(public_path('assets/images/' . $anggota->profile))
+                            ) {
+                                // If user has uploaded custom profile
+                                $currentProfileSrc = asset('assets/images/' . $anggota->profile);
+                            }
+                        @endphp
+
+                        <img src="{{ $currentProfileSrc }}" alt="Profile Preview" id="profilePreview"
+                            class="avatar-preview">
+
+                        <div class="profile-actions">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#chooseAvatarModal">
+                                <i class="material-icons me-1" style="font-size: 16px;">face</i>
+                                Pilih Avatar
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="resetProfileImage()"
+                                id="removeImageBtn"
+                                style="{{ $anggota->selected_avatar || $anggota->profile ? 'display: inline-block;' : 'display: none;' }}">
+                                <i class="material-icons me-1" style="font-size: 16px;">delete</i>
+                                Hapus
+                            </button>
+                        </div>
                     </div>
+
+                    <!-- Hidden inputs -->
+                    <input type="hidden" name="selected_avatar" id="selectedAvatarInput"
+                        value="{{ old('selected_avatar', $anggota->selected_avatar) }}">
+                    <input type="hidden" name="profile_type" id="profileTypeInput"
+                        value="{{ $anggota->selected_avatar ? 'avatar' : ($anggota->profile ? 'upload' : 'default') }}">
+                    <input type="hidden" name="remove_profile" id="removeProfileInput" value="0">
+
+                    @error('selected_avatar')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
 
+                <!-- Badge Section -->
                 <div class="col-md-6 mb-3">
                     <label for="badge" class="form-label fw-semibold">Badge</label>
-                    <select class="form-select @error('badge') is-invalid @enderror" id="badge" name="badge">
-                        <option value="">Otomatis berdasarkan level</option>
-                        <option value="Murid Ilmu" {{ old('badge', $anggota->badge) == 'Murid Ilmu' ? 'selected' : '' }}>
-                            Murid Ilmu
-                        </option>
-                        <option value="Penuntut Kebaikan"
-                            {{ old('badge', $anggota->badge) == 'Penuntut Kebaikan' ? 'selected' : '' }}>
-                            Penuntut Kebaikan
-                        </option>
-                        <option value="Cendekiawan Islami"
-                            {{ old('badge', $anggota->badge) == 'Cendekiawan Islami' ? 'selected' : '' }}>
-                            Cendekiawan Islami
-                        </option>
-                    </select>
-                    @error('badge')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                    <div class="form-text">Badge akan otomatis disesuaikan dengan level jika tidak dipilih</div>
+                    <div class="badge-selection-container">
+                        <div class="badge-preview">
+                            <div class="badge-display {{ $anggota->badge ? '' : 'empty' }}" id="badgeDisplay">
+                                {{ $anggota->badge ?: 'Belum ada badge' }}
+                            </div>
+                            <div class="form-text text-center">Preview badge yang dipilih</div>
+                        </div>
+
+                        <select class="form-select @error('badge') is-invalid @enderror" id="badge" name="badge">
+                            <option value="">Pilih badge (opsional)</option>
+                            <option value="Murid Ilmu"
+                                {{ old('badge', $anggota->badge) == 'Murid Ilmu' ? 'selected' : '' }}>Murid Ilmu</option>
+                            <option value="Penuntut Kebaikan"
+                                {{ old('badge', $anggota->badge) == 'Penuntut Kebaikan' ? 'selected' : '' }}>Penuntut
+                                Kebaikan</option>
+                            <option value="Cendekiawan Islami"
+                                {{ old('badge', $anggota->badge) == 'Cendekiawan Islami' ? 'selected' : '' }}>Cendekiawan
+                                Islami</option>
+                        </select>
+
+                        @error('badge')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <div class="form-text mt-2">Badge akan otomatis disesuaikan dengan level jika tidak dipilih</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -207,13 +263,13 @@
 
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    <label for="xp" class="form-label fw-semibold">Total XP</label>
+                    <label for="xp" class="form-label fw-semibold">XP</label>
                     <input type="number" class="form-control @error('xp') is-invalid @enderror" id="xp"
                         name="xp" value="{{ old('xp', $anggota->xp) }}" min="0" max="10000">
                     @error('xp')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                    <div class="form-text">XP saat ini: {{ $anggota->xp }}</div>
+                    <div class="form-text">XP anggota saat ini</div>
                 </div>
 
                 <div class="col-md-4 mb-3">
@@ -223,32 +279,18 @@
                     @error('level')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                    <div class="form-text">Level saat ini: {{ $anggota->level }}</div>
+                    <div class="form-text">Level anggota saat ini</div>
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label class="form-label fw-semibold">Preview Level & XP</label>
+                    <label class="form-label fw-semibold">Preview Level</label>
                     <div class="preview-card">
-                        <div class="progress mb-2" style="height: 20px;">
-                            <div class="progress-bar bg-success" role="progressbar"
-                                style="width: {{ $anggota->progress_percentage }}%"
-                                aria-valuenow="{{ $anggota->progress_percentage }}" aria-valuemin="0"
-                                aria-valuemax="100">
-                                {{ round($anggota->progress_percentage) }}%
-                            </div>
-                        </div>
-                        <small class="text-muted d-block">Progress: {{ $anggota->xp }} / {{ $anggota->level * 300 }}
-                            XP</small>
-                        <small class="text-muted">Butuh {{ $anggota->xp_to_next_level }} XP untuk Level
-                            {{ $anggota->level + 1 }}</small>
+                        <small class="text-muted d-block">XP untuk Level 1: 0-299</small>
+                        <small class="text-muted d-block">XP untuk Level 2: 300-599</small>
+                        <small class="text-muted d-block">XP untuk Level 3: 600-899</small>
+                        <small class="text-muted">dst. (setiap level = 300 XP)</small>
                     </div>
                 </div>
-            </div>
-
-            <div class="alert alert-info-custom" role="alert">
-                <i class="material-icons me-2" style="vertical-align: middle;">info</i>
-                <strong>Catatan:</strong> Mengubah XP atau Level secara manual akan mempengaruhi progress anggota.
-                Pastikan perubahan sesuai dengan kebijakan sistem gamifikasi.
             </div>
         </div>
 
@@ -256,7 +298,7 @@
         <div class="form-section">
             <div class="section-title">
                 <i class="material-icons me-2">vpn_key</i>
-                <h5 class="mb-0">Ubah Password (Opsional)</h5>
+                <h5 class="mb-0">Data Login</h5>
             </div>
 
             <div class="row">
@@ -267,14 +309,24 @@
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                    <div class="form-text">Minimal 8 karakter. Biarkan kosong jika tidak ingin mengubah password.</div>
+                    <div class="form-text">Minimal 8 karakter jika diisi, kosongkan jika tidak ingin mengubah</div>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label for="password_confirmation" class="form-label fw-semibold">Konfirmasi Password Baru</label>
+                    <label for="password_confirmation" class="form-label fw-semibold">Konfirmasi Password</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
                         placeholder="Ulangi password baru">
-                    <div class="form-text">Hanya isi jika Anda mengubah password</div>
+                    <div class="form-text">Masukkan ulang password untuk konfirmasi</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-info-custom">
+                        <i class="material-icons me-2" style="vertical-align: middle;">info</i>
+                        <strong>Info Login:</strong> Anggota login menggunakan <strong>NPM: {{ $anggota->npm }}</strong>
+                        sebagai username.
+                    </div>
                 </div>
             </div>
         </div>
@@ -283,41 +335,177 @@
         <div class="misi-section-box">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h6 class="mb-1">Simpan Perubahan</h6>
-                    <p class="mb-0 text-muted">Pastikan semua data sudah benar sebelum menyimpan</p>
+                    <h6 class="mb-1">Update Data Anggota</h6>
+                    <p class="mb-0 text-muted">Pastikan semua perubahan sudah benar sebelum menyimpan</p>
                 </div>
                 <div class="d-flex gap-3">
-                    <a href="{{ route('admin.anggota.show', $anggota->npm) }}" class="btn btn-outline-secondary">
-                        <i class="material-icons me-1" style="font-size: 18px;">visibility</i>
-                        Lihat Profil
-                    </a>
                     <a href="{{ route('admin.anggota.index') }}" class="btn btn-outline-secondary">
                         <i class="material-icons me-1" style="font-size: 18px;">cancel</i>
                         Batal
                     </a>
                     <button type="submit" class="btn btn-success-custom">
                         <i class="material-icons me-1" style="font-size: 18px;">save</i>
-                        Simpan Perubahan
+                        Update Anggota
                     </button>
                 </div>
             </div>
         </div>
     </form>
+
+    <!-- Choose Avatar Modal -->
+    <div class="modal fade" id="chooseAvatarModal" tabindex="-1" aria-labelledby="chooseAvatarModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chooseAvatarModalLabel">
+                        <i class="material-icons me-2" style="vertical-align: middle;">face</i>
+                        Pilih Avatar
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3" id="avatarList">
+                        @php
+                            $avatars = [
+                                'avatar/1_boy.jpeg',
+                                'avatar/2_boy.jpeg',
+                                'avatar/3_boy.jpeg',
+                                'avatar/4_boy.jpeg',
+                                'avatar/5_boy.jpeg',
+                                'avatar/6_boy.jpeg',
+                                'avatar/7_boy.jpeg',
+                                'avatar/8_boy.jpeg',
+                                'avatar/9_boy.jpeg',
+                                'avatar/10_boy.jpeg',
+                                'avatar/1_girl.jpeg',
+                                'avatar/2_girl.jpeg',
+                                'avatar/3_girl.jpeg',
+                                'avatar/4_girl.jpeg',
+                                'avatar/5_girl.jpeg',
+                                'avatar/6_girl.jpeg',
+                                'avatar/7_girl.jpeg',
+                                'avatar/8_girl.jpeg',
+                                'avatar/9_girl.jpeg',
+                                'avatar/10_girl.jpeg',
+                            ];
+                        @endphp
+                        @foreach ($avatars as $avatar)
+                            <div class="col-md-3 col-sm-4 col-6">
+                                <div class="avatar-option text-center {{ old('selected_avatar', $anggota->selected_avatar) == $avatar ? 'selected' : '' }}"
+                                    data-avatar="{{ $avatar }}">
+                                    <img src="{{ asset('assets/images/' . $avatar) }}" alt="Avatar"
+                                        class="img-fluid rounded-circle"
+                                        style="width: 80px; height: 80px; border: 2px solid #ddd; object-fit: cover; cursor: pointer;">
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="material-icons me-1" style="font-size: 16px;">cancel</i>
+                        Batal
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveAvatarBtn" data-bs-dismiss="modal">
+                        <i class="material-icons me-1" style="font-size: 16px;">check</i>
+                        Pilih Avatar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
     <script>
-        // Preview new image before upload
-        document.getElementById('profile').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('currentProfileImg').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+        // Avatar selection functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const avatarOptions = document.querySelectorAll('.avatar-option');
+            const selectedAvatarInput = document.getElementById('selectedAvatarInput');
+            const profileTypeInput = document.getElementById('profileTypeInput');
+            const removeProfileInput = document.getElementById('removeProfileInput');
+            const saveBtn = document.getElementById('saveAvatarBtn');
+            const profilePreview = document.getElementById('profilePreview');
+            const removeBtn = document.getElementById('removeImageBtn');
+            const badgeSelect = document.getElementById('badge');
+            const badgeDisplay = document.getElementById('badgeDisplay');
+
+            let selectedAvatar = selectedAvatarInput.value;
+
+            // Initialize modal selection state on page load
+            function setInitialSelection() {
+                avatarOptions.forEach(option => {
+                    const avatarPath = option.getAttribute('data-avatar');
+                    if (avatarPath === selectedAvatar) {
+                        option.classList.add('selected');
+                    } else {
+                        option.classList.remove('selected');
+                    }
+                });
             }
+
+            // Set initial selection
+            setInitialSelection();
+
+            // Avatar selection in modal
+            avatarOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedAvatar = this.getAttribute('data-avatar');
+                });
+            });
+
+            // Save selected avatar
+            saveBtn.addEventListener('click', function() {
+                if (selectedAvatar) {
+                    selectedAvatarInput.value = selectedAvatar;
+                    profilePreview.src = "{{ asset('assets/images/') }}" + "/" + selectedAvatar;
+                    profileTypeInput.value = 'avatar';
+                    removeProfileInput.value = '0';
+
+                    // Show remove button
+                    removeBtn.style.display = 'inline-block';
+                }
+            });
+
+            // Badge selection preview
+            badgeSelect.addEventListener('change', function() {
+                const selectedBadge = this.value;
+                if (selectedBadge) {
+                    badgeDisplay.textContent = selectedBadge;
+                    badgeDisplay.classList.remove('empty');
+                } else {
+                    badgeDisplay.textContent = 'Belum ada badge';
+                    badgeDisplay.classList.add('empty');
+                }
+            });
+
+            // Reset modal selection when opened
+            $('#chooseAvatarModal').on('shown.bs.modal', function() {
+                selectedAvatar = selectedAvatarInput.value;
+                setInitialSelection();
+            });
+
+            // Reset selection when modal closed without saving
+            $('#chooseAvatarModal').on('hidden.bs.modal', function() {
+                selectedAvatar = selectedAvatarInput.value;
+                setInitialSelection();
+            });
         });
+
+        // Reset profile image
+        function resetProfileImage() {
+            document.getElementById('profilePreview').src = "{{ asset('assets/images/Avater.png') }}";
+            document.getElementById('selectedAvatarInput').value = '';
+            document.getElementById('profileTypeInput').value = 'default';
+            document.getElementById('removeProfileInput').value = '1';
+            document.getElementById('removeImageBtn').style.display = 'none';
+
+            // Clear avatar selections in modal
+            document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
+        }
 
         // Real-time password confirmation validation
         document.getElementById('password_confirmation').addEventListener('input', function() {
@@ -340,66 +528,20 @@
                 if (feedback && feedback.classList.contains('invalid-feedback')) {
                     feedback.remove();
                 }
-            } else if (!password && confirmPassword) {
-                this.classList.add('is-invalid');
-                if (!this.nextElementSibling || !this.nextElementSibling.classList.contains('invalid-feedback')) {
-                    const feedback = document.createElement('div');
-                    feedback.classList.add('invalid-feedback');
-                    feedback.textContent = 'Masukkan password baru terlebih dahulu!';
-                    this.parentNode.appendChild(feedback);
-                }
-            }
-        });
-
-        // Clear password confirmation when password field is cleared
-        document.getElementById('password').addEventListener('input', function() {
-            if (!this.value) {
-                const confirmField = document.getElementById('password_confirmation');
-                confirmField.value = '';
-                confirmField.classList.remove('is-invalid', 'is-valid');
-                const feedback = confirmField.nextElementSibling;
+            } else {
+                this.classList.remove('is-invalid', 'is-valid');
+                const feedback = this.nextElementSibling;
                 if (feedback && feedback.classList.contains('invalid-feedback')) {
                     feedback.remove();
                 }
             }
         });
 
-        // Auto calculate badge based on level
-        document.getElementById('level').addEventListener('input', function() {
-            const level = parseInt(this.value);
-            const badgeSelect = document.getElementById('badge');
-
-            // Only auto-set if badge is not manually selected
-            if (!badgeSelect.value) {
-                if (level >= 9) {
-                    badgeSelect.value = 'Cendekiawan Islami';
-                } else if (level >= 5) {
-                    badgeSelect.value = 'Penuntut Kebaikan';
-                } else {
-                    badgeSelect.value = 'Murid Ilmu';
-                }
-            }
-        });
-
-        // XP and Level relationship info
-        document.getElementById('xp').addEventListener('input', function() {
-            const xp = parseInt(this.value) || 0;
-            const calculatedLevel = Math.floor(xp / 300) + 1;
-            const levelInput = document.getElementById('level');
-
-            // Show suggestion if XP doesn't match level
-            if (calculatedLevel !== parseInt(levelInput.value)) {
-                this.classList.add('border-warning');
-                if (!this.parentNode.querySelector('.xp-warning')) {
-                    const warning = document.createElement('small');
-                    warning.className = 'text-warning xp-warning';
-                    warning.textContent = `XP ini seharusnya untuk Level ${calculatedLevel}`;
-                    this.parentNode.appendChild(warning);
-                }
-            } else {
-                this.classList.remove('border-warning');
-                const warning = this.parentNode.querySelector('.xp-warning');
-                if (warning) warning.remove();
+        // Password field validation
+        document.getElementById('password').addEventListener('input', function() {
+            const confirmPassword = document.getElementById('password_confirmation');
+            if (confirmPassword.value) {
+                confirmPassword.dispatchEvent(new Event('input'));
             }
         });
     </script>
