@@ -241,54 +241,86 @@
             }
         });
     </script>
-{{-- Script untuk edit Username--}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modal = document.getElementById('editUsernameModal');
+    
+    {{-- Script untuk edit Username--}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('editUsernameModal');
 
-        modal.addEventListener('shown.bs.modal', function () {
-            const input = document.getElementById('newUsernameInput');
+            modal.addEventListener('shown.bs.modal', function () {
+                const input = document.getElementById('newUsernameInput');
 
-            if (!input) return;
-            input.focus();
+                if (!input) return;
+                input.focus();
 
-            input.removeEventListener('keydown', window._handleEnterKey); // prevent duplication
+                input.removeEventListener('keydown', window._handleEnterKey); // prevent duplication
 
-            window._handleEnterKey = function (e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
+                window._handleEnterKey = function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
 
-                    const name = input.value.trim();
-                    if (!name) return;
+                        const name = input.value.trim();
+                        if (!name) return;
 
-                    fetch("{{ route('setting.username.update') }}", {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ name })
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('Username berhasil diperbarui!');
-                            location.reload();
-                        } else {
-                            alert('Gagal memperbarui username.');
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Error:", err);
-                        alert("Terjadi kesalahan saat memperbarui.");
-                    });
-                }
-            };
+                        fetch("{{ route('setting.username.update') }}", {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ name })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Username berhasil diperbarui!');
+                                location.reload();
+                            } else {
+                                alert('Gagal memperbarui username.');
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Error:", err);
+                            alert("Terjadi kesalahan saat memperbarui.");
+                        });
+                    }
+                };
 
-            input.addEventListener('keydown', window._handleEnterKey);
+                input.addEventListener('keydown', window._handleEnterKey);
+            });
         });
-    });
-</script>
+    </script>
+
+    {{-- Modal paswword tidak ditutup jika terjadi error --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editPasswordModal = document.getElementById('editPasswordModal');
+            const modal = new bootstrap.Modal(editPasswordModal);
+            
+            // Buka modal jika ada error
+            @if($errors->has('current_password') || $errors->has('new_password') || $errors->has('password_confirmation'))
+                modal.show();
+            @endif
+            
+            // Tangani submit form
+            const form = document.querySelector('#editPasswordModal form');
+            form.addEventListener('submit', function(event) {
+                // Jika ada error, jangan tutup modal
+                const hasErrors = document.querySelectorAll('.is-invalid').length > 0;
+                if (hasErrors) {
+                    event.preventDefault();
+                    // Tetap tampilkan modal
+                    modal.show();
+                }
+            });
+            
+            // Jika sukses, tutup modal
+            @if(session('success'))
+                modal.hide();
+            @endif
+        });
+    </script>
+
 
 @endpush
 

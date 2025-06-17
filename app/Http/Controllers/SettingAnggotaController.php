@@ -64,12 +64,20 @@ class SettingAnggotaController extends Controller
 
     public function updatePassword(Request $request)
     {
+        $messages = [
+            'current_password.required' => 'Password saat ini wajib diisi.',
+            'new_password.required' => 'Password baru wajib diisi.',
+            'new_password.min' => 'Password baru harus mengandung setidaknya 8 karakter.',
+            'password_confirmation.required' => 'Konfirmasi password wajib diisi.',
+            'password_confirmation.same' => 'Konfirmasi password harus sama dengan password baru.',
+        ];
+
         // Validasi input dari form
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|min:8',  // Pastikan password baru diisi dan memiliki panjang minimal
-            'password_confirmation' => 'required|same:new_password',  // Pastikan konfirmasi password sama dengan password baru
-        ]);
+            'new_password' => 'required|min:8',  
+            'password_confirmation' => 'required|same:new_password',  
+        ], $messages);
     
         // Ambil data user yang sedang login
         $user = Auth::user();
