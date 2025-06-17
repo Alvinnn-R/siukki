@@ -118,7 +118,7 @@ class Misi extends Model
     public function getIconUrlAttribute()
     {
         if ($this->icon) {
-            return asset('assets/icons/' . $this->icon . '.svg');
+            return asset('uploads/icon/' . $this->icon);
         }
 
         // Default icon berdasarkan tipe misi
@@ -128,7 +128,7 @@ class Misi extends Model
             'event'    => 'event',
         ];
 
-        return asset('assets/icons/' . ($defaultIcons[$this->tipe_misi] ?? 'assignment') . '.svg');
+        return asset('uploads/icon/' . ($defaultIcons[$this->tipe_misi] ?? 'assignment'));
     }
 
     // Get status color untuk UI

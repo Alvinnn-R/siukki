@@ -45,18 +45,25 @@ class Anggota extends Authenticatable
 
     public function getProfileUrlAttribute()
     {
-        if (!$this->profile) {
-            return asset('assets/images/default-avatar.png');
-        }
-        
-        // Check if it's a default avatar from assets/images/avatar/
-        if (str_contains($this->profile, 'avatar/')) {
-            return asset('assets/images/' . $this->profile);
-        }
-        
-        // Otherwise it's an uploaded profile image
-        return asset('uploads/profiles/' . $this->profile);
+        return $this->profile
+        ? asset('assets/images/' . $this->profile)
+        : null;
     }
+
+    // public function getProfileImageAttribute()
+    // {
+    //     if (empty($this->profile_url)) {
+    //         return asset('assets/images/Avater.png');
+    //     }
+
+    //     // If it's uploaded file
+    //     if (str_starts_with($this->profile_url, 'images/')) {
+    //         return asset($this->profile_url);
+    //     }
+
+    //     // If it's avatar or default image
+    //     return asset('assets/images/' . $this->profile_url);
+    // }
 
     // Accessor untuk mendapatkan XP yang dibutuhkan untuk level selanjutnya
     public function getXpToNextLevelAttribute()

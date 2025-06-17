@@ -166,46 +166,46 @@
         </div>
     </div>
 
-    <!-- Edit Password Modal -->
-    <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPasswordModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ route('setting.password') }}" method="POST">
-                    @csrf
-                    {{-- @method('PUT') --}}
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editPasswordModalLabel">Edit Password</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="current_password">Current Password</label>
-                        <input id="current_password" name="current_password" type="password"
-                            placeholder="Enter current password"
-                            class="form-control @error('current_password') is-invalid @enderror">
-                        @error('current_password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+        <!-- Modal Edit Password -->
+        <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('setting.password') }}" method="POST">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editPasswordModalLabel">Edit Password</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Current Password -->
+                            <label for="current_password">Password Saat Ini</label>
+                            <input id="current_password" name="current_password" type="password" placeholder="Masukkan Password Saat Ini" class="form-control @error('current_password') is-invalid @enderror">
+                            @error('current_password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
 
-                        <label for="new_password" class="mt-3">New Password</label>
-                        <input id="new_password" name="password" type="password" placeholder="Enter new password"
-                            class="form-control @error('password') is-invalid @enderror">
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                            <!-- New Password -->
+                            <label for="new_password" class="mt-3">Password Baru</label>
+                            <input id="new_password" name="new_password" type="password" placeholder="Masukkan Password Baru" class="form-control @error('new_password') is-invalid @enderror">
+                            @error('new_password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
 
-                        <label for="password_confirmation" class="mt-3">Confirm New Password</label>
-                        <input id="password_confirmation" name="password_confirmation" type="password"
-                            placeholder="Confirm new password" class="form-control">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update Password</button>
-                    </div>
-                </form>
+                            <!-- Confirm New Password -->
+                            <label for="password_confirmation" class="mt-3">Konfirmasi Password Baru</label>
+                            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="Konfirmasi Password baru" class="form-control @error('password_confirmation') is-invalid @enderror">
+                            @error('password_confirmation')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
     @push('scripts')
     {{-- Edit Profile --}}
@@ -241,54 +241,86 @@
             }
         });
     </script>
-{{-- Script untuk edit Username--}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modal = document.getElementById('editUsernameModal');
+    
+    {{-- Script untuk edit Username--}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('editUsernameModal');
 
-        modal.addEventListener('shown.bs.modal', function () {
-            const input = document.getElementById('newUsernameInput');
+            modal.addEventListener('shown.bs.modal', function () {
+                const input = document.getElementById('newUsernameInput');
 
-            if (!input) return;
-            input.focus();
+                if (!input) return;
+                input.focus();
 
-            input.removeEventListener('keydown', window._handleEnterKey); // prevent duplication
+                input.removeEventListener('keydown', window._handleEnterKey); // prevent duplication
 
-            window._handleEnterKey = function (e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
+                window._handleEnterKey = function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
 
-                    const name = input.value.trim();
-                    if (!name) return;
+                        const name = input.value.trim();
+                        if (!name) return;
 
-                    fetch("{{ route('setting.username.update') }}", {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ name })
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('Username berhasil diperbarui!');
-                            location.reload();
-                        } else {
-                            alert('Gagal memperbarui username.');
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Error:", err);
-                        alert("Terjadi kesalahan saat memperbarui.");
-                    });
-                }
-            };
+                        fetch("{{ route('setting.username.update') }}", {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ name })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Username berhasil diperbarui!');
+                                location.reload();
+                            } else {
+                                alert('Gagal memperbarui username.');
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Error:", err);
+                            alert("Terjadi kesalahan saat memperbarui.");
+                        });
+                    }
+                };
 
-            input.addEventListener('keydown', window._handleEnterKey);
+                input.addEventListener('keydown', window._handleEnterKey);
+            });
         });
-    });
-</script>
+    </script>
+
+    {{-- Modal paswword tidak ditutup jika terjadi error --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editPasswordModal = document.getElementById('editPasswordModal');
+            const modal = new bootstrap.Modal(editPasswordModal);
+            
+            // Buka modal jika ada error
+            @if($errors->has('current_password') || $errors->has('new_password') || $errors->has('password_confirmation'))
+                modal.show();
+            @endif
+            
+            // Tangani submit form
+            const form = document.querySelector('#editPasswordModal form');
+            form.addEventListener('submit', function(event) {
+                // Jika ada error, jangan tutup modal
+                const hasErrors = document.querySelectorAll('.is-invalid').length > 0;
+                if (hasErrors) {
+                    event.preventDefault();
+                    // Tetap tampilkan modal
+                    modal.show();
+                }
+            });
+            
+            // Jika sukses, tutup modal
+            @if(session('success'))
+                modal.hide();
+            @endif
+        });
+    </script>
+
 
 @endpush
 

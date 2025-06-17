@@ -43,6 +43,13 @@
             color: #1565c0;
             border-radius: 8px;
         }
+
+        .alert-info-custom {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            color: #1565c0;
+            border-radius: 8px;
+        }
     </style>
 @endpush
 
@@ -75,6 +82,12 @@
                     <p class="mb-0 text-muted">Silakan edit informasi misi sesuai kebutuhan</p>
                 </div>
             </div>
+        </div>
+
+        <!-- Alert Info -->
+        <div class="alert alert-info-custom" role="alert">
+            <i class="material-icons me-2" style="vertical-align: middle;">info</i>
+            <strong>Informasi:</strong> Perubahan pada misi akan mempengaruhi anggota yang belum menyelesaikan misi ini.
         </div>
 
         <!-- Form Content -->
@@ -284,6 +297,40 @@
                 }
                 reader.readAsDataURL(this.files[0]);
             }
+        });
+
+        // Auto set tanggal selesai berdasarkan tipe misi
+        document.getElementById('tipe_misi').addEventListener('change', function() {
+            const tipe = this.value;
+            const tanggalMulai = document.getElementById('tanggal_mulai').value;
+
+            if (tanggalMulai) {
+                const startDate = new Date(tanggalMulai);
+                let endDate = new Date(tanggalMulai);
+
+                if (tipe === 'harian') {
+                    // Misi harian = 1 hari
+                    endDate = startDate;
+                }
+
+                // Format date to YYYY-MM-DD
+                const year = endDate.getFullYear();
+                const month = String(endDate.getMonth() + 1).padStart(2, '0');
+                const day = String(endDate.getDate()).padStart(2, '0');
+
+                if (tipe === 'harian') {
+                    document.getElementById('tanggal_selesai').value = `${year}-${month}-${day}`;
+                }
+            }
+        });
+
+        // Trigger tipe misi change event when tanggal_mulai changes
+        document.getElementById('tanggal_mulai').addEventListener('change', function() {
+            document.getElementById('tanggal_selesai').min = this.value;
+
+            // Trigger tipe misi change event to auto-set tanggal_selesai
+            const event = new Event('change');
+            document.getElementById('tipe_misi').dispatchEvent(event);
         });
     </script>
 @endpush
