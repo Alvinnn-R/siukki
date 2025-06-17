@@ -29,12 +29,9 @@
 
                     <form action="{{ route('setting') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
-
                         <div class="profile-setting-card">
                             <div class="profile-setting-left">
-                                <img src="{{ auth()->user()->profile_url ? auth()->user()->profile_url : asset('assets/images/Avater.png') }}"
-                                    alt="Profile" id="profileImage" />
+                                <img src="{{ asset('assets/images/' . (Auth::guard('anggota')->user()->profile ?? 'avatar/1_boy.jpeg')) }}?v={{ time() }}" alt="Profile" class="img-profile">                           
                             </div>
                             <div class="profile-setting-right">
                                 <div class="button-row">
@@ -44,14 +41,14 @@
                                         data-bs-target="#chooseAvatarModal">
                                         Change image
                                     </button>
-                                    <button type="button" class="btn-setting" onclick="removeProfileImage()">
+                                    {{-- Remove Image --}}
+                                    <button type="button" class="btn-setting" id="removeImageBtn">
                                         Remove image
-                                    </button>
+                                    </button>                                   
                                 </div>
-
                                 <label for="username" style="margin-bottom: 0px;">Username</label>
                                 <input id="username" name="name" type="text"
-                                    value="{{ old('name', auth()->user()->name ?? 'Riky') }}"
+                                    value="{{ Auth::user()->nama }}"
                                     class="@error('name') is-invalid @enderror" readonly
                                     style="pointer-events: none; background-color: #f5f5f5;">
                                 @error('name')
@@ -81,40 +78,10 @@
                         </div>
                     </form>
 
-                    <div class="setting-bottom-row">
-                        <div class="badge-box">
-                            <span>Badge</span>
-                            <input type="text" value="{{ auth()->user()->badge ?? 'HAJI' }}" disabled>
-                            <button class="btn-setting" data-bs-toggle="modal" data-bs-target="#badgeModal">
-                                Edit badge
-                            </button>
-                        </div>
-                        <div class="notif-box">
-                            <span>Notification</span>
-                            <input type="text"
-                                value="{{ auth()->user()->email ?? '23081010021@student.upnjatim.ac.id' }}" disabled>
-                            <label class="switch">
-                                <input type="checkbox" id="notifToggle"
-                                    {{ auth()->user()->notifications_enabled ? 'checked' : '' }}
-                                    onchange="confirmToggleNotifications()">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <script>
-                            function confirmToggleNotifications() {
-                                const checkbox = document.getElementById('notifToggle');
-                                if (checkbox.checked) {
-                                    if (confirm('Are you sure you want to enable notifications?')) {
-                                        toggleNotifications();
-                                    } else {
-                                        checkbox.checked = false;
-                                    }
-                                } else {
-                                    toggleNotifications();
-                                }
-                            }
-                        </script>
-                    </div>
+                    {{-- Form RemoveImage --}}
+                    <form id="removeImageForm" action="{{ route('setting.profile.remove') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>
@@ -131,7 +98,7 @@
                 </div>
                 <form id="avatarSelectForm" action="{{ route('setting.profile') }}" method="POST">
                     @csrf
-                    @method('PUT')
+                    {{-- @method('PUT') --}}
                     <div class="modal-body">
                         <div class="d-flex flex-wrap gap-3 justify-content-center" id="avatarList">
                             @php
@@ -165,7 +132,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        <input type="hidden" name="avatar" id="selectedAvatarInput">
+                        <input type="hidden" name="profile" id="selectedAvatarInput">
                         <hr>
                     </div>
                     <div class="modal-footer">
@@ -177,207 +144,188 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const avatarOptions = document.querySelectorAll('.avatar-option');
-                const selectedAvatarInput = document.getElementById('selectedAvatarInput');
-                const saveBtn = document.getElementById('saveAvatarBtn');
-
-                avatarOptions.forEach(option => {
-                    option.addEventListener('click', function() {
-                        avatarOptions.forEach(opt => opt.classList.remove('selected'));
-                        this.classList.add('selected');
-                        selectedAvatarInput.value = this.getAttribute('data-avatar');
-                        saveBtn.disabled = false;
-                    });
-                });
-
-                // Optional: Reset selection when modal closed
-                $('#chooseAvatarModal').on('hidden.bs.modal', function() {
-                    avatarOptions.forEach(opt => opt.classList.remove('selected'));
-                    selectedAvatarInput.value = '';
-                    saveBtn.disabled = true;
-                });
-            });
-        </script>
-    @endpush
 
     <!-- Edit Username Modal -->
     <div class="modal fade" id="editUsernameModal" tabindex="-1" aria-labelledby="editUsernameModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('setting.username') }}" method="POST">
+                {{-- <form action=""> --}}
                     @csrf
-                    @method('PUT')
+                    {{-- @method('PUT') --}}
                     <div class="modal-header">
                         <h5 class="modal-title" id="editUsernameModalLabel">Edit Username</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label for="new_username">New Username</label>
-                        <input id="new_username" name="name" type="text" placeholder="Enter new username"
-                            class="form-control @error('name') is-invalid @enderror">
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </form>
+                        <label for="newUsername">New Username</label>
+                        <input type="text" id="newUsernameInput" class="form-control" placeholder="Enter new username">
+                    </div>                    
+                {{-- </form> --}}
             </div>
         </div>
     </div>
 
-    <!-- Edit Password Modal -->
-    <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPasswordModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ route('setting.password') }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editPasswordModalLabel">Edit Password</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="current_password">Current Password</label>
-                        <input id="current_password" name="current_password" type="password"
-                            placeholder="Enter current password"
-                            class="form-control @error('current_password') is-invalid @enderror">
-                        @error('current_password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-
-                        <label for="new_password" class="mt-3">New Password</label>
-                        <input id="new_password" name="password" type="password" placeholder="Enter new password"
-                            class="form-control @error('password') is-invalid @enderror">
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-
-                        <label for="password_confirmation" class="mt-3">Confirm New Password</label>
-                        <input id="password_confirmation" name="password_confirmation" type="password"
-                            placeholder="Confirm new password" class="form-control">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update Password</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Badge Modal -->
-    <div class="modal fade" id="badgeModal" tabindex="-1" aria-labelledby="badgeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="badgeModalLabel">Edit Badge</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('setting.badge') }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Badge</label>
-                            <div class="d-flex gap-2">
-                                @php
-                                    $badges = ['MURID ILMU', 'SANTRI', 'HABIB'];
-                                    $currentBadge = auth()->user()->badge ?? 'HAJI';
-                                @endphp
-                                @foreach ($badges as $badge)
-                                    <input type="radio" class="btn-check" name="badge"
-                                        id="badge-{{ $badge }}" value="{{ $badge }}" autocomplete="off"
-                                        {{ $currentBadge === $badge ? 'checked' : '' }}>
-                                    <label class="btn btn-outline-primary"
-                                        for="badge-{{ $badge }}">{{ $badge }}</label>
-                                @endforeach
-                            </div>
+        <!-- Modal Edit Password -->
+        <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('setting.password') }}" method="POST">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editPasswordModalLabel">Edit Password</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
+                        <div class="modal-body">
+                            <!-- Current Password -->
+                            <label for="current_password">Password Saat Ini</label>
+                            <input id="current_password" name="current_password" type="password" placeholder="Masukkan Password Saat Ini" class="form-control @error('current_password') is-invalid @enderror">
+                            @error('current_password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+
+                            <!-- New Password -->
+                            <label for="new_password" class="mt-3">Password Baru</label>
+                            <input id="new_password" name="new_password" type="password" placeholder="Masukkan Password Baru" class="form-control @error('new_password') is-invalid @enderror">
+                            @error('new_password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+
+                            <!-- Confirm New Password -->
+                            <label for="password_confirmation" class="mt-3">Konfirmasi Password Baru</label>
+                            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="Konfirmasi Password baru" class="form-control @error('password_confirmation') is-invalid @enderror">
+                            @error('password_confirmation')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-@endsection
-
-@section('scripts')
+    @push('scripts')
+    {{-- Edit Profile --}}
     <script>
-        // Preview image before upload
-        document.getElementById('profileImageInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('profileImage').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+        document.addEventListener('DOMContentLoaded', function() {
+            const avatarOptions = document.querySelectorAll('.avatar-option');
+            const selectedAvatarInput = document.getElementById('selectedAvatarInput');
+            const saveBtn = document.getElementById('saveAvatarBtn');
+
+            avatarOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedAvatarInput.value = this.getAttribute('data-avatar');
+                    saveBtn.disabled = false;
+                });
+            });
+
+            // Optional: Reset selection when modal closed
+            $('#chooseAvatarModal').on('hidden.bs.modal', function() {
+                avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                selectedAvatarInput.value = '';
+                saveBtn.disabled = true;
+            });
+        });
+    </script>
+
+    {{-- Script untuk Remove Image --}}
+    <script>
+        document.getElementById('removeImageBtn').addEventListener('click', function () {
+            if (confirm('Yakin ingin menghapus foto profil?')) {
+                document.getElementById('removeImageForm').submit();
             }
         });
-
-        // Remove profile image
-        function removeProfileImage() {
-            if (confirm('Are you sure you want to remove your profile image?')) {
-                fetch('{{ route('setting.remove-image') }}', {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            document.getElementById('profileImage').src = '{{ asset('assets/Avater.png') }}';
-                            location.reload();
-                        } else {
-                            alert('Failed to remove image');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('An error occurred');
-                    });
-            }
-        }
-
-        // Toggle notifications
-        function toggleNotifications() {
-            const checkbox = document.getElementById('notifToggle');
-            const enabled = checkbox.checked;
-
-            fetch('{{ route('setting.notifications') }}', {
-                    method: 'PUT',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        notifications_enabled: enabled
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.success) {
-                        // Revert checkbox if failed
-                        checkbox.checked = !enabled;
-                        alert('Failed to update notification settings');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Revert checkbox if failed
-                    checkbox.checked = !enabled;
-                    alert('An error occurred');
-                });
-        }
     </script>
+    
+    {{-- Script untuk edit Username--}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('editUsernameModal');
+
+            modal.addEventListener('shown.bs.modal', function () {
+                const input = document.getElementById('newUsernameInput');
+
+                if (!input) return;
+                input.focus();
+
+                input.removeEventListener('keydown', window._handleEnterKey); // prevent duplication
+
+                window._handleEnterKey = function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+
+                        const name = input.value.trim();
+                        if (!name) return;
+
+                        fetch("{{ route('setting.username.update') }}", {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ name })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Username berhasil diperbarui!');
+                                location.reload();
+                            } else {
+                                alert('Gagal memperbarui username.');
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Error:", err);
+                            alert("Terjadi kesalahan saat memperbarui.");
+                        });
+                    }
+                };
+
+                input.addEventListener('keydown', window._handleEnterKey);
+            });
+        });
+    </script>
+
+    {{-- Modal paswword tidak ditutup jika terjadi error --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editPasswordModal = document.getElementById('editPasswordModal');
+            const modal = new bootstrap.Modal(editPasswordModal);
+            
+            // Buka modal jika ada error
+            @if($errors->has('current_password') || $errors->has('new_password') || $errors->has('password_confirmation'))
+                modal.show();
+            @endif
+            
+            // Tangani submit form
+            const form = document.querySelector('#editPasswordModal form');
+            form.addEventListener('submit', function(event) {
+                // Jika ada error, jangan tutup modal
+                const hasErrors = document.querySelectorAll('.is-invalid').length > 0;
+                if (hasErrors) {
+                    event.preventDefault();
+                    // Tetap tampilkan modal
+                    modal.show();
+                }
+            });
+            
+            // Jika sukses, tutup modal
+            @if(session('success'))
+                modal.hide();
+            @endif
+        });
+    </script>
+
+
+@endpush
+
 @endsection
+
+
+
+

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class SettingAnggotaController extends Controller
 {
@@ -15,87 +14,85 @@ class SettingAnggotaController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-        return view('anggota.setting', compact('user'));
+        $anggota = Auth::guard('anggota')->user();
+        return view('anggota.setting', compact('anggota'));
     }
 
     public function updateProfile(Request $request)
     {
-        $request->validate([
-            'username'      => 'required|string|max:255|unique:users,username,' . Auth::id(),
-            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
 
-        $user = Auth::user();
+        $anggota = Auth::guard('anggota')->user();
 
-        if ($request->hasFile('profile_image')) {
-            // Delete old image if exists
-            if ($user->profile_image) {
-                Storage::delete('public/' . $user->profile_image);
-            }
-
-            // Store new image
-            $imagePath           = $request->file('profile_image')->store('profile_images', 'public');
-            $user->profile_image = $imagePath;
+        // Simpan langsung string preset avatar
+        if ($request->filled('profile')) {
+            $anggota->profile = $request->profile;
         }
 
-        $user->username = $request->username;
-        $user->save();
+        $anggota->save();
 
-        return back()->with('success', 'Profile updated successfully!');
+        return back()->with('success', 'Profil berhasil diperbarui.');
     }
 
-    public function removeProfileImage()
+    public function removeImage()
     {
-        $user = Auth::user();
+        $user = Auth::guard('anggota')->user();
 
-        if ($user->profile_image) {
-            Storage::delete('public/' . $user->profile_image);
-            $user->profile_image = null;
-            $user->save();
-        }
+        // Set profile ke default avatar
+        $user->profile = null;
+        $user->save();
 
-        return back()->with('success', 'Profile image removed successfully!');
+        return back()->with('success', 'Foto Profil Berhasil Dihapus!');
+    }
+
+    public function updateUsername(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $anggota       = Auth::guard('anggota')->user();
+        $anggota->nama = $request->name;
+        $anggota->save();
+
+        return response()->json(['success' => true]);
     }
 
     public function updatePassword(Request $request)
     {
-        $request->validate([
-            'current_password' => 'required',
-            'new_password'     => 'required|min:8|confirmed',
-        ]);
+        $messages = [
+            'current_password.required'      => 'Password saat ini wajib diisi.',
+            'new_password.required'          => 'Password baru wajib diisi.',
+            'new_password.min'               => 'Password baru harus mengandung setidaknya 8 karakter.',
+            'password_confirmation.required' => 'Konfirmasi password wajib diisi.',
+            'password_confirmation.same'     => 'Konfirmasi password harus sama dengan password baru.',
+        ];
 
+        // Validasi input dari form
+        $request->validate([
+            'current_password'      => 'required',
+            'new_password'          => 'required|min:8',
+            'password_confirmation' => 'required|same:new_password',
+        ], $messages);
+
+        // Ambil data user yang sedang login
         $user = Auth::user();
 
+        // Cek apakah password saat ini benar
         if (! Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'Current password is incorrect']);
+            return back()->withErrors(['current_password' => 'Password saat ini salah']);
         }
 
+        // Cek apakah password baru dan konfirmasi password cocok
+        if ($request->new_password !== $request->password_confirmation) {
+            return back()->withErrors(['password_confirmation' => 'Password baru dan konfirmasi password tidak cocok']);
+        }
+
+        // Perbarui password
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return back()->with('success', 'Password updated successfully!');
+        // Kirim pesan keberhasilan setelah password berhasil diubah
+        return back()->with('success', 'Password berhasil diperbarui!');
     }
 
-    public function updateBadge(Request $request)
-    {
-        $request->validate([
-            'badge' => 'required|string|max:50',
-        ]);
-
-        $user        = Auth::user();
-        $user->badge = $request->badge;
-        $user->save();
-
-        return back()->with('success', 'Badge updated successfully!');
-    }
-
-    public function updateNotificationSettings(Request $request)
-    {
-        $user                        = Auth::user();
-        $user->notifications_enabled = $request->has('notifications_enabled');
-        $user->save();
-
-        return back()->with('success', 'Notification settings updated successfully!');
-    }
 }

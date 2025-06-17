@@ -159,14 +159,24 @@
                 <div class="d-flex align-items-center">
                     {{-- <img src="{{ session('role') === 'admin' ? asset('assets/images/Avater.png') : (!empty($user->profile_url) ? $user->profile_url : asset('assets/images/avatar-admin.png')) }}"
                         alt="Profile" class="rounded-circle avatar"> --}}
-                    @php
+                        @php
                         $isAdmin = session('role') === 'admin';
-                        $profileImage = $isAdmin
-                            ? asset('assets/images/Avater.png')
-                            : (!empty(auth()->user()?->profile_url)
-                                ? asset(auth()->user()->profile_url)
-                                : asset('assets/images/avatar-admin.png'));
+                        $profilePath = auth()->user()?->profile;
+                    
+                        // Jika admin, pakai avatar admin
+                        if ($isAdmin) {
+                            $profileImage = asset('assets/images/Avater.png');
+                        }
+                        // Jika ada profile dan diawali dengan "avatar/", berarti avatar default
+                        elseif (!empty($profilePath) && str_starts_with($profilePath, 'avatar/')) {
+                            $profileImage = asset('assets/images/' . $profilePath);
+                        }
+                        // Default lainnya
+                        else {
+                            $profileImage = asset('assets/images/avatar-admin.png');
+                        }
                     @endphp
+                    
 
                     <img src="{{ $profileImage }}" alt="Profile" class="rounded-circle avatar">
 

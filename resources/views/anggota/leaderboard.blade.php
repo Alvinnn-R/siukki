@@ -57,8 +57,9 @@
                         @elseif($i == 2)
                             <img src="{{ $crownIcons['bronze'] }}" class="leaderboard-crown leaderboard-crown-bronze" alt="Crown">
                         @endif
-                        <img 
-                            src="{{ $user->profile_url }}" 
+                        {{-- <img 
+                            src="{{ $user->profile_url }}"  --}}
+                            <img src="{{ asset('assets/images/' . $user->profile) }}" 
                             class="leaderboard-avatar-top3 @if($i==0) leaderboard-avatar-top2 @elseif($i==1) leaderboard-avatar-top1 @endif"
                             alt="Avatar"
                         >
@@ -76,8 +77,7 @@
                     // Cek filter aktif (default 'day' jika tidak ada)
                     $activeFilter = $filter ?? 'day';
                 @endphp
-
-                @php
+@php
                     // Untuk menampilkan XP sesuai filter
                     $getXp = function($user) use ($activeFilter) {
                         if ($activeFilter === 'week') {
@@ -94,7 +94,8 @@
                 @foreach($top3 as $i => $user)
                 <div class="leaderboard-card {{ ['gold','silver','bronze'][$i] }} rank-{{ $i+1 }}">
                     <span class="leaderboard-rank rank-{{ $i+1 }}">{{ $i+1 }}</span>
-                    <img src="{{ $user->profile_url }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">
+                    {{-- <img src="{{ $user->profile_url }}"  --}}
+                    <img src="{{ asset('assets/images/' . $user->profile) }}" class="leaderboard-avatar rank-{{ $i+1 }}" alt="Avatar">
                     <span class="fw-bold">{{ $user->nama }}</span>
                     <span class="ms-auto leaderboard-xp">{{ $getXp($user) }} Xp.</span>
                 </div>
@@ -113,7 +114,8 @@
                     @elseif($i==2) bronze rank-3 
                     @endif">
                     <span class="leaderboard-rank rank-{{ $i+1 }}">{{ $i+1 }}</span>
-                    <img src="{{ $user->profile_url}}" class="rounded-circle leaderboard-avatar-top10 rank-{{ $i+1 }}" alt="Avatar">
+                    {{-- <img src="{{ $user->profile_url}}"  --}}
+                    <img src="{{ asset('assets/images/' . $user->profile) }}" class="rounded-circle leaderboard-avatar-top10 rank-{{ $i+1 }}" alt="Avatar">
                     <span class="fw-bold">{{ $user->nama }}</span>
                     <span class="ms-auto leaderboard-xp">{{ $getXp($user) }} Xp.</span>
                 </div>
