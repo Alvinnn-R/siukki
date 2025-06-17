@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Misi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class MisiController extends Controller
 {
@@ -65,21 +66,28 @@ class MisiController extends Controller
             'nama_misi'       => 'required|string|max:255',
             'deskripsi'       => 'nullable|string',
             'xp_reward'       => 'required|integer|min:0',
-            'tipe_misi'       => 'required|in:harian,mingguan,event',
+            'tipe_misi'       => 'required|in:harian,event',
             'status'          => 'required|in:aktif,nonaktif',
             'jadwal'          => 'required|date',
             'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'icon'            => 'nullable|image|mimes:svg,png,jpg,jpeg|max:2048',
+            'icon'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         $data = $request->all();
 
-        // Upload icon jika ada
+        // Handle icon upload
         if ($request->hasFile('icon')) {
-            $iconName = time() . '.' . $request->file('icon')->getClientOriginalExtension();
-            $request->file('icon')->move(public_path('assets/icons'), $iconName);
-            $data['icon'] = pathinfo($iconName, PATHINFO_FILENAME);
+            // Create directory if it doesn't exist
+            $iconPath = public_path('uploads/icon');
+            if (! File::exists($iconPath)) {
+                File::makeDirectory($iconPath, 0755, true);
+            }
+
+            $iconFile = $request->file('icon');
+            $iconName = time() . '_' . uniqid() . '.' . $iconFile->getClientOriginalExtension();
+            $iconFile->move($iconPath, $iconName);
+            $data['icon'] = $iconName;
         }
 
         Misi::create($data);
@@ -113,41 +121,37 @@ class MisiController extends Controller
             'nama_misi'       => 'required|string|max:255',
             'deskripsi'       => 'nullable|string',
             'xp_reward'       => 'required|integer|min:0',
-            'tipe_misi'       => 'required|in:harian,mingguan,event',
+            'tipe_misi'       => 'required|in:harian,event',
             'status'          => 'required|in:aktif,nonaktif',
             'jadwal'          => 'required|date',
             'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'icon'            => 'nullable|image|mimes:svg,png,jpg,jpeg|max:2048',
+            'icon'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         $data = $request->all();
 
-        // Upload icon baru jika ada
+        // Handle icon upload
         if ($request->hasFile('icon')) {
-            // Hapus icon lama jika ada
-            if ($misi->icon) {
-                $oldIconPath    = public_path('assets/icons/' . $misi->icon . '.svg');
-                $oldIconPathPng = public_path('assets/icons/' . $misi->icon . '.png');
-                $oldIconPathJpg = public_path('assets/icons/' . $misi->icon . '.jpg');
-
-                if (file_exists($oldIconPath)) {
-                    unlink($oldIconPath);
-                }
-
-                if (file_exists($oldIconPathPng)) {
-                    unlink($oldIconPathPng);
-                }
-
-                if (file_exists($oldIconPathJpg)) {
-                    unlink($oldIconPathJpg);
-                }
-
+            // Create directory if it doesn't exist
+            $iconPath = public_path('uploads/icon');
+            if (! File::exists($iconPath)) {
+                File::makeDirectory($iconPath, 0755, true);
             }
 
-            $iconName = time() . '.' . $request->file('icon')->getClientOriginalExtension();
-            $request->file('icon')->move(public_path('assets/icons'), $iconName);
-            $data['icon'] = pathinfo($iconName, PATHINFO_FILENAME);
+            // Delete old icon if exists
+            if ($misi->icon) {
+                $oldIconPath = public_path('uploads/icon/' . $misi->icon);
+                if (File::exists($oldIconPath)) {
+                    File::delete($oldIconPath);
+                }
+            }
+
+            // Upload new icon
+            $iconFile = $request->file('icon');
+            $iconName = time() . '_' . uniqid() . '.' . $iconFile->getClientOriginalExtension();
+            $iconFile->move($iconPath, $iconName);
+            $data['icon'] = $iconName;
         }
 
         $misi->update($data);
@@ -161,15 +165,11 @@ class MisiController extends Controller
      */
     public function destroy(Misi $misi)
     {
-        // Hapus icon jika ada
+        // Delete icon if exists
         if ($misi->icon) {
-            $iconExtensions = ['svg', 'png', 'jpg', 'jpeg'];
-            foreach ($iconExtensions as $ext) {
-                $iconPath = public_path('assets/icons/' . $misi->icon . '.' . $ext);
-                if (file_exists($iconPath)) {
-                    unlink($iconPath);
-                    break;
-                }
+            $iconPath = public_path('uploads/icon/' . $misi->icon);
+            if (File::exists($iconPath)) {
+                File::delete($iconPath);
             }
         }
 

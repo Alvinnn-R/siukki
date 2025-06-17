@@ -126,11 +126,11 @@
                 <div class="col-md-4 mb-3">
                     <label for="icon" class="form-label fw-semibold">Icon Misi</label>
                     <input type="file" class="form-control @error('icon') is-invalid @enderror" id="icon"
-                        name="icon" accept="image/svg+xml">
+                        name="icon" accept="image/*">
                     @error('icon')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                    <div class="form-text">Format: SVG only</div>
+                    <div class="form-text">Format: JPG, PNG, SVG, WEBP (Maks: 2MB)</div>
                 </div>
             </div>
         </div>
@@ -232,10 +232,6 @@
                 const month = String(endDate.getMonth() + 1).padStart(2, '0');
                 const day = String(endDate.getDate()).padStart(2, '0');
 
-                // if (tipe === 'harian' || tipe === 'mingguan') {
-                //     document.getElementById('tanggal_selesai').value = `${year}-${month}-${day}`;
-                // }
-
                 if (tipe === 'harian') {
                     document.getElementById('tanggal_selesai').value = `${year}-${month}-${day}`;
                 }
@@ -254,11 +250,22 @@
         // Preview icon file
         document.getElementById('icon').addEventListener('change', function(e) {
             const file = e.target.files[0];
-            if (file && file.type === 'image/svg+xml') {
-                console.log('SVG file selected:', file.name);
-            } else if (file) {
-                alert('Hanya file SVG yang diperbolehkan!');
-                this.value = '';
+            if (file) {
+                // Check file size (2MB = 2048KB)
+                if (file.size > 2048 * 1024) {
+                    alert('Ukuran file terlalu besar! Maksimal 2MB.');
+                    this.value = '';
+                    return;
+                }
+
+                // Check if it's an image
+                if (!file.type.startsWith('image/')) {
+                    alert('File harus berupa gambar!');
+                    this.value = '';
+                    return;
+                }
+
+                console.log('Image file selected:', file.name, 'Size:', (file.size / 1024).toFixed(2) + 'KB');
             }
         });
     </script>
