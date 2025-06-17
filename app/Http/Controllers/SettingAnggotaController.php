@@ -64,29 +64,34 @@ class SettingAnggotaController extends Controller
 
     public function updatePassword(Request $request)
     {
+        // Validasi input dari form
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
+            'new_password' => 'required|min:8',  // Pastikan password baru diisi dan memiliki panjang minimal
+            'password_confirmation' => 'required|same:new_password',  // Pastikan konfirmasi password sama dengan password baru
         ]);
-
+    
+        // Ambil data user yang sedang login
         $user = Auth::user();
-
+    
+        // Cek apakah password saat ini benar
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'Current password is incorrect']);
+            return back()->withErrors(['current_password' => 'Password saat ini salah']);
         }
-
+    
+        // Cek apakah password baru dan konfirmasi password cocok
+        if ($request->new_password !== $request->password_confirmation) {
+            return back()->withErrors(['password_confirmation' => 'Password baru dan konfirmasi password tidak cocok']);
+        }
+    
+        // Perbarui password
         $user->password = Hash::make($request->new_password);
         $user->save();
-
-        return back()->with('success', 'Password updated successfully!');
+    
+        // Kirim pesan keberhasilan setelah password berhasil diubah
+        return back()->with('success', 'Password berhasil diperbarui!');
     }
+        
+    
 
-    public function updateNotificationSettings(Request $request)
-    {
-        $user = Auth::user();
-        $user->notifications_enabled = $request->has('notifications_enabled');
-        $user->save();
-
-        return back()->with('success', 'Notification settings updated successfully!');
-    }
 }
