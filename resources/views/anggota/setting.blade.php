@@ -163,30 +163,33 @@
       </div>
     </div>
 
-    <!-- Modal Edit Username -->
-    <div class="modal fade" id="editUsernameModal" tabindex="-1" aria-labelledby="editUsernameModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                {{-- <form action=""> --}}
-                    @csrf
-                    {{-- @method('PUT') --}}
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editUsernameModalLabel">Edit Username</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="newUsername">New Username</label>
-                        <input type="text" id="newUsernameInput" class="form-control" placeholder="Masukkan username baru">
-                    </div>
-                    <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Update Username</button>
-                    </div>
-                {{-- </form> --}}
+    {{-- Form untuk Edit Username --}}
+<form id="editUsernameForm" action="{{ route('setting.username.update') }}" method="POST" style="display: none;">
+    @csrf
+    <input type="hidden" name="name" id="hiddenUsernameInput">
+</form>
+
+{{-- Modal Edit Username --}}
+<div class="modal fade" id="editUsernameModal" tabindex="-1" aria-labelledby="editUsernameModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUsernameModalLabel">Edit Username</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="newUsernameInput" class="form-label">Username Baru</label>
+                <input type="text" id="newUsernameInput" class="form-control" placeholder="Masukkan username baru">
+                <div class="invalid-feedback" id="usernameError"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary" id="confirmUpdateUsernameBtn">Update Username</button>
             </div>
         </div>
     </div>
+</div>
+
 
         <!-- Modal Edit Password -->
         <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPasswordModalLabel" aria-hidden="true">
@@ -255,7 +258,7 @@
         });
     </script>
 
-    {{-- Script untuk Remove Image dengan Bootstrap Modal --}}
+    {{-- Script untuk Remove Image --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const removeImageBtn = document.getElementById('removeImageBtn');
@@ -272,71 +275,98 @@
         });
     </script>
     
-    {{-- Script untuk edit Username--}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('editUsernameModal');
-            const input = document.getElementById('newUsernameInput');
-            const updateBtn = modal.querySelector('.btn-primary');
-            const cancelBtn = modal.querySelector('.btn-secondary');
+    {{-- Script untuk Edit Username --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editUsernameBtn = document.getElementById('editUsernameBtn'); // Button trigger modal
+        const editUsernameForm = document.getElementById('editUsernameForm');
+        const editUsernameModal = new bootstrap.Modal(document.getElementById('editUsernameModal'));
+        const newUsernameInput = document.getElementById('newUsernameInput');
+        const hiddenUsernameInput = document.getElementById('hiddenUsernameInput');
+        const confirmUpdateBtn = document.getElementById('confirmUpdateUsernameBtn');
+        const usernameError = document.getElementById('usernameError');
 
-            // Fungsi untuk update username
-            function updateUsername() {
-                const name = input.value.trim();
-                if (!name) return;
-
-                fetch("{{ route('setting.username.update') }}", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ name })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Username berhasil diperbarui!');
-                        location.reload();
-                    } else {
-                        alert(data.message || 'Gagal memperbarui username.');
-                    }
-                })
-                .catch(err => {
-                    console.error("Error:", err);
-                    alert("Terjadi kesalahan saat memperbarui.");
-                });
-            }
-
-            // Enter key pada input
-            modal.addEventListener('shown.bs.modal', function () {
-                input.focus();
+        // Buka modal saat button edit username diklik
+        if (editUsernameBtn) {
+            editUsernameBtn.addEventListener('click', function () {
+                editUsernameModal.show();
             });
+        }
 
-            input.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    updateUsername();
-                }
-            });
-
-            // Klik tombol update
-            updateBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                updateUsername();
-            });
-
-            // Kosongkan input saat Cancel ditekan
-            cancelBtn.addEventListener('click', function () {
-                input.value = '';
-            });
-
-            // Juga kosongkan input saat modal ditutup (misal klik X)
-            modal.addEventListener('hidden.bs.modal', function () {
-                input.value = '';
-            });
+        // Focus pada input saat modal dibuka
+        document.getElementById('editUsernameModal').addEventListener('shown.bs.modal', function () {
+            newUsernameInput.focus();
+            newUsernameInput.select();
         });
-    </script>
+
+        // Validasi input
+        function validateUsername(username) {
+            const trimmedUsername = username.trim();
+            
+            if (!trimmedUsername) {
+                showError('Username tidak boleh kosong');
+                return false;
+            }
+            
+            if (trimmedUsername.length > 255) {
+                showError('Username maksimal 255 karakter');
+                return false;
+            }
+            
+            clearError();
+            return true;
+        }
+
+        // Tampilkan error
+        function showError(message) {
+            newUsernameInput.classList.add('is-invalid');
+            usernameError.textContent = message;
+        }
+
+        // Hapus error
+        function clearError() {
+            newUsernameInput.classList.remove('is-invalid');
+            usernameError.textContent = '';
+        }
+
+        // Submit form saat Enter ditekan
+        newUsernameInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                submitForm();
+            }
+        });
+
+        // Validasi real-time
+        newUsernameInput.addEventListener('input', function () {
+            clearError();
+        });
+
+        // Submit form saat tombol konfirmasi diklik
+        confirmUpdateBtn.addEventListener('click', function () {
+            submitForm();
+        });
+
+        // Fungsi submit form
+        function submitForm() {
+            const username = newUsernameInput.value;
+            
+            if (validateUsername(username)) {
+                hiddenUsernameInput.value = username.trim();
+                editUsernameModal.hide();
+                editUsernameForm.submit();
+            }
+        }
+
+        // Reset form saat modal ditutup
+        document.getElementById('editUsernameModal').addEventListener('hidden.bs.modal', function () {
+            clearError();
+            // Reset ke nilai original jika diperlukan
+            newUsernameInput.value = "{{ Auth::guard('anggota')->user()->nama ?? '' }}";
+        });
+    });
+</script>
+
 
     {{-- Modal password tidak ditutup jika terjadi error --}}
     <script>

@@ -50,11 +50,11 @@ class SettingAnggotaController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $anggota       = Auth::guard('anggota')->user();
+        $anggota = Auth::guard('anggota')->user();
         $anggota->nama = $request->name;
         $anggota->save();
 
-        return response()->json(['success' => true]);
+        return back()->with('success', 'Username Berhasil Diperbarui!');
     }
 
     public function updatePassword(Request $request)
