@@ -77,8 +77,8 @@
             <div class="col-md-8">
                 <div class="d-flex align-items-center">
                     @if ($misi->icon)
-                        <img src="{{ asset('assets/icons/' . $misi->icon . '.svg') }}" alt="{{ $misi->nama_misi }}"
-                            class="me-4" style="width: 64px; height: 64px;">
+                        <img src="{{ asset('uploads/icon/' . $misi->icon) }}" alt="{{ $misi->nama_misi }}" class="me-4"
+                            style="width: 64px; height: 64px;">
                     @else
                         <i class="material-icons me-4" style="font-size: 64px;">assignment</i>
                     @endif

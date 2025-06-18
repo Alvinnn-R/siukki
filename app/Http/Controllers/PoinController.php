@@ -39,7 +39,6 @@ class PoinController extends Controller
                     ->whereBetween('tanggal', [now()->startOfWeek(), now()->endOfWeek()]);
             }], 'xp_diperoleh')
                 ->orderByDesc('xp_minggu')
-                ->take(10)
                 ->get();
         } elseif ($filter === 'month') {
             // Ambil XP total bulan ini
@@ -49,7 +48,6 @@ class PoinController extends Controller
                     ->whereYear('tanggal', now()->year);
             }], 'xp_diperoleh')
                 ->orderByDesc('xp_bulan')
-                ->take(10)
                 ->get();
         } elseif ($filter === 'day') {
             // Ambil XP total hari ini saja
@@ -58,11 +56,10 @@ class PoinController extends Controller
                     ->whereDate('tanggal', now()->toDateString());
             }], 'xp_diperoleh')
                 ->orderByDesc('xp_hari')
-                ->take(10)
                 ->get();
         } else {
             // Default: XP total all time
-            $anggota = \App\Models\Anggota::orderByDesc('xp')->take(10)->get();
+            $anggota = \App\Models\Anggota::orderByDesc('xp')->get();
         }
 
         return view('anggota.leaderboard', compact('anggota', 'filter'));
