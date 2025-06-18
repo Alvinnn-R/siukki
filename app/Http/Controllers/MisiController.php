@@ -28,18 +28,19 @@ class MisiController extends Controller
 
         // Ambil semua misi event aktif dalam 30 hari ke depan
         $misiEvent = Misi::where('tipe_misi', 'event')
-            ->where('status', 'aktif')
-            ->whereBetween('tanggal_mulai', [today(), today()->addDays(30)])
-            ->orderBy('tanggal_mulai', 'asc')
-            ->get()
-            ->map(function ($misi) use ($npm) {
-                // PERBAIKAN: Untuk misi event, cek apakah pernah diselesaikan (tidak terbatas hari ini)
-                $misi->is_completed = Aktivitas::where('npm', $npm)
-                    ->where('id_misi', $misi->id_misi)
-                    ->where('status', 'approved')
-                    ->exists();
-                return $misi;
-            });
+        ->where('status', 'aktif')
+        // Misi yang sedang berlangsung (tanggal mulai <= hari ini <= tanggal selesai)
+        ->where('tanggal_mulai', '<=', today())
+        ->where('tanggal_selesai', '>=', today())
+        ->orderBy('tanggal_mulai', 'asc')
+        ->get()
+        ->map(function ($misi) use ($npm) {
+            $misi->is_completed = Aktivitas::where('npm', $npm)
+                ->where('id_misi', $misi->id_misi)
+                ->where('status', 'approved')
+                ->exists();
+            return $misi;
+        });
 
         // Kirim semua data ke view 'anggota.misi'
         return view('anggota.misi', compact(

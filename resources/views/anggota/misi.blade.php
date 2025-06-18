@@ -75,7 +75,7 @@
         <div class="col">
             <div class="card h-100 text-center">
                 <div class="card-body">
-                  <span class="material-icons misi-icon">{{ $misi->icon }}</span>
+                    <img class="material-icons misi-icon" src="{{ asset('uploads/icon/' . $misi->icon) }}" width="50%"  >
                     <h5 class="card-title mt-2">{{ $misi->nama_misi }}</h5>
                     @if($misi->is_checkin)
                     @if($misi->is_completed)
@@ -98,7 +98,7 @@
                     {{-- Misi harian biasa dan belum selesai --}}
                     <button class="btn btn-success btn-selesaikan-misi"
                         data-bs-toggle="modal"
-                        data-bs-target="#misiModal"
+                        data-bs-target="#misiModalHarian"
                         data-id="{{ $misi->id_misi }}"
                         data-judul="{{ $misi->nama_misi }}"
                         data-xp="{{ $misi->xp_reward }}"
@@ -119,7 +119,7 @@
         <div class="col">
             <div class="card h-100 text-center">
                 <div class="card-body">
-                  <span class="material-icons misi-icon">{{ $misi->icon }}</span>
+                <img class="material-icons misi-icon" src="{{ asset('uploads/icon/' . $misi->icon) }}" width="50%">
                     <h5 class="card-title mt-2">{{ $misi->nama_misi }}</h5>
                     @if($misi->is_completed)
                     {{-- Misi event sudah diselesaikan --}}
@@ -128,7 +128,7 @@
                     {{-- Misi event  belum selesai --}}
                     <button class="btn btn-success btn-selesaikan-misi"
                         data-bs-toggle="modal"
-                        data-bs-target="#misiModal"
+                        data-bs-target="#misiModalTerbatas"
                         data-id="{{ $misi->id_misi }}"
                         data-judul="{{ $misi->nama_misi }}"
                         data-xp="{{ $misi->xp_reward }}"
@@ -177,12 +177,12 @@
     </div>
   </div> -->
 
-<!-- Modal Misi -->
-<div class="modal fade" id="misiModal" tabindex="-1" aria-labelledby="misiModalLabel" aria-hidden="true">
+<!-- Modal Misi Harian -->
+<div class="modal fade" id="misiModalHarian" tabindex="-1" aria-labelledby="misiModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-misi-content">
             <div class="modal-header border-0">
-                <h5 class="modal-title w-100 text-center" id="misiModalLabel">Nama Misi</h5>
+                <h5 class="modal-title w-100 text-center" id="misiModalLabel">Misi Harian</h5>
                 <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body position-relative">
@@ -202,73 +202,142 @@
     </div>
 </div>
 
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // ------------------------- MODAL MISI -------------------------
-        const modalMisi = document.getElementById('misiModal');
-        const btnModalSelesai = document.getElementById('btnSelesaikanMisi');
+<!-- Modal Misi Terbatas -->
+<div class="modal fade" id="misiModalTerbatas" tabindex="-1" aria-labelledby="misiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-color modal-misi-content text-center">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title w-100 fw-bold" id="misiModalLabel">Nama Misi</h5>
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body position-relative pb-5">
+                    <!-- Menampilkan Ikon Misi -->
+                    <img src="{{ asset('uploads/icon/' . $misi->icon) }}" alt="Ikon Misi" class="img-fluid mb-3"
+                        style="width: 50%;">
 
-        // Saat modal akan muncul
-        modalMisi.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget;
+                    <!-- Menampilkan XP -->
+                    <div class="xp-display text-center mb-3" id="misiXP">+0 XP</div>
 
-            // Ambil atribut dari tombol pemicu
-            const judul = button.getAttribute('data-judul');
-            const xp = parseInt(button.getAttribute('data-xp')) || 0;
-            const deskripsi = button.getAttribute('data-deskripsi');
-            const idMisi = button.getAttribute('data-id');
+                    <!-- Deskripsi Misi -->
+                    <p class="text-muted mb-3" id="misiDeskripsi">Deskripsi misi akan muncul di sini.</p>
 
-            // Set isi modal
-            document.getElementById('misiModalLabel').textContent = judul;
-            document.getElementById('misiXP').textContent = `+${xp} XP`;
-            if (document.getElementById('misiDeskripsi')) {
-                document.getElementById('misiDeskripsi').textContent = deskripsi;
-            }
+                    <!-- Tombol Selesaikan -->
+                    <button id="btnSelesaikanMisi" class="btn btn-success">Selesaikan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            // Simpan ID misi ke tombol di dalam modal
-            btnModalSelesai.setAttribute('data-id', idMisi);
-        });
 
-        // Ketika tombol di dalam modal diklik
-        btnModalSelesai.addEventListener('click', () => {
-            const idMisi = btnModalSelesai.getAttribute('data-id');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // ------------------------- MODAL MISI HARIAN & TERBATAS -------------------------
+    // Modal Harian
+    const modalMisiHarian = document.getElementById('misiModalHarian');
+    const btnModalSelesaiHarian = modalMisiHarian.querySelector('#btnSelesaikanMisi');
+    // Modal Terbatas
+    const modalMisiTerbatas = document.getElementById('misiModalTerbatas');
+    const btnModalSelesaiTerbatas = modalMisiTerbatas.querySelector('#btnSelesaikanMisi');
 
-            fetch(`/anggota/misi/${idMisi}/complete`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // Token keamanan
-                },
-                body: JSON.stringify({})
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    // Tutup modal
-                    bootstrap.Modal.getInstance(modalMisi).hide();
+    // Handler untuk modal harian
+    modalMisiHarian.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const judul = button.getAttribute('data-judul');
+      const xp = parseInt(button.getAttribute('data-xp')) || 0;
+      const deskripsi = button.getAttribute('data-deskripsi');
+      const idMisi = button.getAttribute('data-id');
 
-                    // Temukan semua tombol yang punya data-id sama, lalu update tampilannya
-                    // Temukan tombol di luar modal (class btn-selesaikan-misi) saja
-                  const tombolTerkait = document.querySelectorAll(`.btn-selesaikan-misi[data-id="${idMisi}"]`);
-                    tombolTerkait.forEach(button => {
-                        button.textContent = 'Misi Selesai';
-                        button.classList.remove('btn-success');
-                        button.classList.add('btn-secondary');
-                        button.setAttribute('disabled', true);
-                        button.removeAttribute('data-bs-toggle');
-                        button.removeAttribute('data-bs-target');
-                    });
-                } else {
-                    alert(data.message || 'Gagal menyelesaikan misi.');
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert('Terjadi kesalahan saat menyelesaikan misi.');
-            });
-        });
-    
+      modalMisiHarian.querySelector('#misiModalLabel').textContent = judul;
+      modalMisiHarian.querySelector('#misiXP').textContent = `+${xp} XP`;
+      modalMisiHarian.querySelector('#misiDeskripsi').textContent = deskripsi;
+      btnModalSelesaiHarian.setAttribute('data-id', idMisi);
+    });
+
+    btnModalSelesaiHarian.addEventListener('click', () => {
+      const idMisi = btnModalSelesaiHarian.getAttribute('data-id');
+      fetch(`/anggota/misi/${idMisi}/complete`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: JSON.stringify({})
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          bootstrap.Modal.getInstance(modalMisiHarian).hide();
+          const tombolTerkait = document.querySelectorAll(`.btn-selesaikan-misi[data-id="${idMisi}"]`);
+          tombolTerkait.forEach(button => {
+            button.textContent = 'Misi Selesai';
+            button.classList.remove('btn-success');
+            button.classList.add('btn-secondary');
+            button.setAttribute('disabled', true);
+            button.removeAttribute('data-bs-toggle');
+            button.removeAttribute('data-bs-target');
+          });
+        } else {
+          alert(data.message || 'Gagal menyelesaikan misi.');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Terjadi kesalahan saat menyelesaikan misi.');
+      });
+    });
+
+    // Handler untuk modal terbatas
+    modalMisiTerbatas.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const judul = button.getAttribute('data-judul');
+      const xp = parseInt(button.getAttribute('data-xp')) || 0;
+      const deskripsi = button.getAttribute('data-deskripsi');
+      const idMisi = button.getAttribute('data-id');
+
+      modalMisiTerbatas.querySelector('#misiModalLabel').textContent = judul;
+      modalMisiTerbatas.querySelector('#misiXP').textContent = `+${xp} XP`;
+      modalMisiTerbatas.querySelector('#misiDeskripsi').textContent = deskripsi;
+      btnModalSelesaiTerbatas.setAttribute('data-id', idMisi);
+    });
+
+    btnModalSelesaiTerbatas.addEventListener('click', () => {
+      const idMisi = btnModalSelesaiTerbatas.getAttribute('data-id');
+      fetch(`/anggota/misi/${idMisi}/complete`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: JSON.stringify({})
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          bootstrap.Modal.getInstance(modalMisiTerbatas).hide();
+          const tombolTerkait = document.querySelectorAll(`.btn-selesaikan-misi[data-id="${idMisi}"]`);
+          tombolTerkait.forEach(button => {
+            button.textContent = 'Misi Selesai';
+            button.classList.remove('btn-success');
+            button.classList.add('btn-secondary');
+            button.setAttribute('disabled', true);
+            button.removeAttribute('data-bs-toggle');
+            button.removeAttribute('data-bs-target');
+          });
+        } else {
+          alert(data.message || 'Gagal menyelesaikan misi.');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Terjadi kesalahan saat menyelesaikan misi.');
+      });
+    });
+  });
+  </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
       // ------------------------- MODAL CHECK-IN -------------------------
       const modalCheckin = document.getElementById('checkinModal');
 
