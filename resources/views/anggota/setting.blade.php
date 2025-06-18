@@ -31,7 +31,7 @@
                         @csrf
                         <div class="profile-setting-card">
                             <div class="profile-setting-left">
-                                <img src="{{ asset('assets/images/' . (Auth::guard('anggota')->user()->profile ?? 'avatar/1_boy.jpeg')) }}?v={{ time() }}" alt="Profile" class="img-profile">                           
+                                <img src="{{ asset('assets/images/' . (Auth::guard('anggota')->user()->profile ?? 'avatar/noprofile.png')) }}?v={{ time() }}" alt="Profile" class="img-profile">                           
                             </div>
                             <div class="profile-setting-right">
                                 <div class="button-row">
@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <!-- Choose Avatar Modal -->
+    <!-- Modal Choose Avatar -->
     <div class="modal fade" id="chooseAvatarModal" tabindex="-1" aria-labelledby="chooseAvatarModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -144,8 +144,26 @@
         </div>
     </div>
 
+    {{-- Modal Konfirmasi Remove Image --}}
+    <div class="modal fade" id="removeImageConfirmModal" tabindex="-1" aria-labelledby="removeImageConfirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="removeImageConfirmModalLabel">Konfirmasi Hapus Foto Profil</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Apakah Anda yakin ingin menghapus foto profil?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            <button type="button" class="btn btn-secondary" id="confirmRemoveImageBtn" style="background-color:#dc3545; border-color:#dc3545; color:#fff;">Hapus</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Edit Username Modal -->
+    <!-- Modal Edit Username -->
     <div class="modal fade" id="editUsernameModal" tabindex="-1" aria-labelledby="editUsernameModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -159,8 +177,12 @@
                     </div>
                     <div class="modal-body">
                         <label for="newUsername">New Username</label>
-                        <input type="text" id="newUsernameInput" class="form-control" placeholder="Enter new username">
-                    </div>                    
+                        <input type="text" id="newUsernameInput" class="form-control" placeholder="Masukkan username baru">
+                    </div>
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update Username</button>
+                    </div>
                 {{-- </form> --}}
             </div>
         </div>
@@ -233,12 +255,20 @@
         });
     </script>
 
-    {{-- Script untuk Remove Image --}}
+    {{-- Script untuk Remove Image dengan Bootstrap Modal --}}
     <script>
-        document.getElementById('removeImageBtn').addEventListener('click', function () {
-            if (confirm('Yakin ingin menghapus foto profil?')) {
-                document.getElementById('removeImageForm').submit();
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+            const removeImageBtn = document.getElementById('removeImageBtn');
+            const removeImageForm = document.getElementById('removeImageForm');
+            const removeImageConfirmModal = new bootstrap.Modal(document.getElementById('removeImageConfirmModal'));
+
+            removeImageBtn.addEventListener('click', function () {
+                removeImageConfirmModal.show();
+            });
+
+            document.getElementById('confirmRemoveImageBtn').addEventListener('click', function () {
+                removeImageForm.submit();
+            });
         });
     </script>
     
@@ -246,78 +276,94 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const modal = document.getElementById('editUsernameModal');
+            const input = document.getElementById('newUsernameInput');
+            const updateBtn = modal.querySelector('.btn-primary');
+            const cancelBtn = modal.querySelector('.btn-secondary');
 
-            modal.addEventListener('shown.bs.modal', function () {
-                const input = document.getElementById('newUsernameInput');
+            // Fungsi untuk update username
+            function updateUsername() {
+                const name = input.value.trim();
+                if (!name) return;
 
-                if (!input) return;
-                input.focus();
-
-                input.removeEventListener('keydown', window._handleEnterKey); // prevent duplication
-
-                window._handleEnterKey = function (e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-
-                        const name = input.value.trim();
-                        if (!name) return;
-
-                        fetch("{{ route('setting.username.update') }}", {
-                            method: "POST",
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({ name })
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                alert('Username berhasil diperbarui!');
-                                location.reload();
-                            } else {
-                                alert('Gagal memperbarui username.');
-                            }
-                        })
-                        .catch(err => {
-                            console.error("Error:", err);
-                            alert("Terjadi kesalahan saat memperbarui.");
-                        });
+                fetch("{{ route('setting.username.update') }}", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ name })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Username berhasil diperbarui!');
+                        location.reload();
+                    } else {
+                        alert(data.message || 'Gagal memperbarui username.');
                     }
-                };
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    alert("Terjadi kesalahan saat memperbarui.");
+                });
+            }
 
-                input.addEventListener('keydown', window._handleEnterKey);
+            // Enter key pada input
+            modal.addEventListener('shown.bs.modal', function () {
+                input.focus();
+            });
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    updateUsername();
+                }
+            });
+
+            // Klik tombol update
+            updateBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                updateUsername();
+            });
+
+            // Kosongkan input saat Cancel ditekan
+            cancelBtn.addEventListener('click', function () {
+                input.value = '';
+            });
+
+            // Juga kosongkan input saat modal ditutup (misal klik X)
+            modal.addEventListener('hidden.bs.modal', function () {
+                input.value = '';
             });
         });
     </script>
 
-    {{-- Modal paswword tidak ditutup jika terjadi error --}}
+    {{-- Modal password tidak ditutup jika terjadi error --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const editPasswordModal = document.getElementById('editPasswordModal');
             const modal = new bootstrap.Modal(editPasswordModal);
-            
+
             // Buka modal jika ada error
             @if($errors->has('current_password') || $errors->has('new_password') || $errors->has('password_confirmation'))
                 modal.show();
             @endif
-            
-            // Tangani submit form
-            const form = document.querySelector('#editPasswordModal form');
-            form.addEventListener('submit', function(event) {
-                // Jika ada error, jangan tutup modal
-                const hasErrors = document.querySelectorAll('.is-invalid').length > 0;
-                if (hasErrors) {
-                    event.preventDefault();
-                    // Tetap tampilkan modal
-                    modal.show();
-                }
-            });
-            
+
             // Jika sukses, tutup modal
             @if(session('success'))
                 modal.hide();
             @endif
+
+            // Kosongkan form saat Cancel ditekan
+            const cancelBtn = editPasswordModal.querySelector('.btn-secondary');
+            cancelBtn.addEventListener('click', function () {
+                editPasswordModal.querySelectorAll('input[type="password"]').forEach(input => input.value = '');
+            });
+
+            // Juga kosongkan saat modal ditutup (misal klik X)
+            editPasswordModal.addEventListener('hidden.bs.modal', function () {
+                editPasswordModal.querySelectorAll('input[type="password"]').forEach(input => input.value = '');
+            });
         });
     </script>
 

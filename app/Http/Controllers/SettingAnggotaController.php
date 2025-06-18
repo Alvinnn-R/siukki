@@ -38,7 +38,7 @@ class SettingAnggotaController extends Controller
         $user = Auth::guard('anggota')->user();
 
         // Set profile ke default avatar
-        $user->profile = null;
+        $user->profile = 'avatar/noprofile.png';
         $user->save();
 
         return back()->with('success', 'Foto Profil Berhasil Dihapus!');

@@ -450,3 +450,9 @@ input:checked + .slider:before {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+#confirmRemoveImageBtn:hover {
+    background-color: #b52a37 !important;
+    border-color: #b52a37 !important;
+    color: #fff !important;
+}

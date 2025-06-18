@@ -173,7 +173,7 @@
                         }
                         // Default lainnya
                         else {
-                            $profileImage = asset('assets/images/avatar-admin.png');
+                            $profileImage = asset('assets/images/avatar/noprofile.png');
                         }
                     @endphp
                     
