@@ -98,3 +98,63 @@
     border-color: #3e5a7f; /* Warna abu-abu yang lebih gelap saat hover */
     color: #fff; /* Tetap putih saat hover */
 }
+
+.description-box {
+    background: #7ba866;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.reward-box {
+    background: #7ba866;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.section-title {
+    color: #1a5f3f;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: left;
+}
+
+.btn-selesaikan-modal {
+    background: #1a5f3f;
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    min-width: 140px;
+    transition: all 0.3s ease;
+}
+
+.btn-selesaikan-modal:hover {
+    background: #0d3a26;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(26, 95, 63, 0.3);
+    color: #fff;
+}
+
+.modal-title {
+    color: #1a5f3f;
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    padding: 1rem 0;
+}

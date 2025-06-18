@@ -39,11 +39,11 @@
                                         style="display: none;">
                                     <button type="button" class="btn-setting" data-bs-toggle="modal"
                                         data-bs-target="#chooseAvatarModal">
-                                        Change image
+                                        Change Avatar
                                     </button>
-                                    {{-- Remove Image --}}
+                                    {{-- Remove Avatar --}}
                                     <button type="button" class="btn-setting" id="removeImageBtn">
-                                        Remove image
+                                        Remove Avatar
                                     </button>                                   
                                 </div>
                                 <label for="username" style="margin-bottom: 0px;">Username</label>

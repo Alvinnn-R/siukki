@@ -173,7 +173,7 @@
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-semibold">Foto Profil</label>
                     <div class="profile-preview-container">
-                        <img src="{{ asset('assets/images/Avater.png') }}" alt="Profile Preview" id="profilePreview"
+                        <img src="{{ asset('assets/images/Avatar/noprofile.png') }}" alt="Profile Preview" id="profilePreview"
                             class="avatar-preview">
 
                         <div class="profile-actions">
@@ -449,7 +449,7 @@
 
         // Reset profile image
         function resetProfileImage() {
-            document.getElementById('profilePreview').src = "{{ asset('assets/images/Avater.png') }}";
+            document.getElementById('profilePreview').src = "{{ asset('assets/images/Avatar/noprofile.png') }}";
             document.getElementById('selectedAvatarInput').value = '';
             document.getElementById('profileTypeInput').value = 'default';
             document.getElementById('removeImageBtn').style.display = 'none';
