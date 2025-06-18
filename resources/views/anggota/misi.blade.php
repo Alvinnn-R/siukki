@@ -161,7 +161,7 @@
 
 
   
-  <!-- Modal Misi -->
+  <!-- Modal Misi
   <div class="modal fade" id="misiModal" tabindex="-1" aria-labelledby="misiModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content modal-misi-content text-center">
@@ -170,12 +170,38 @@
           <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body position-relative pb-5">
-          <div class="xp-display text-center mb-3" id="misiXP">+0 XP</div>       
-          <button id="btnSelesaikanMisi" class="btn btn-success">Selesaikan</button>
-        </div>        
+          <div class="xp-display text-center mb-3" id="misiXP">+0 XP</div>
+          <button id="btnSelesaikanMisi" class="btn btn-success position-absolute" style="right: 0rem; bottom: 0rem; min-width: 120px;">Selesaikan</button>
+        </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+<!-- Modal Misi -->
+<div class="modal fade" id="misiModal" tabindex="-1" aria-labelledby="misiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-misi-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title w-100 text-center" id="misiModalLabel">Nama Misi</h5>
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body position-relative">
+                <div class="section-title">Deskripsi</div>
+                <div class="description-box">
+                    <span id="misiDeskripsi">Deskripsi Misi</span>
+                </div>
+
+                <div class="section-title">Reward</div>
+                <div class="reward-box">
+                    <span id="misiXP">0xp</span> <!-- Tambahkan elemen dengan id misiXP -->
+                </div>
+
+                <button id="btnSelesaikanMisi" class="btn btn-selesaikan-modal">Selesaikan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
   
   <script>
     document.addEventListener('DOMContentLoaded', () => {
