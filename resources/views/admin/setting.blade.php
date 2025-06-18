@@ -122,11 +122,11 @@
         }
 
         /* .form-control {
-                                                            padding: 10px;
-                                                            border: 1px solid #ddd;
-                                                            border-radius: 5px;
-                                                            margin-bottom: 15px;
-                                                        } */
+                                                                        padding: 10px;
+                                                                        border: 1px solid #ddd;
+                                                                        border-radius: 5px;
+                                                                        margin-bottom: 15px;
+                                                                    } */
 
         .form-control.is-invalid {
             border-color: #dc3545;
