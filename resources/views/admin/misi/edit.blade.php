@@ -64,9 +64,9 @@
 
     <!-- Back Button -->
     <div class="mb-4">
-        <a href="{{ route('admin.misi.show', $misi->id_misi) }}" class="btn btn-outline-secondary">
+        <a href="{{ route('admin.misi.index', $misi->id_misi) }}" class="btn btn-outline-secondary">
             <i class="material-icons me-1" style="font-size: 18px;">arrow_back</i>
-            Kembali ke Detail
+            Kembali ke Daftar
         </a>
     </div>
 
@@ -229,7 +229,7 @@
 
                     @if ($misi->icon)
                         <div class="text-center mb-3">
-                            <img src="{{ asset('assets/icons/' . $misi->icon . '.png') }}" alt="Icon saat ini"
+                            <img src="{{ asset('uploads/icon/' . $misi->icon) }}" alt="Icon saat ini"
                                 class="preview-icon mb-2">
                             <small class="d-block text-muted">Icon saat ini</small>
                         </div>

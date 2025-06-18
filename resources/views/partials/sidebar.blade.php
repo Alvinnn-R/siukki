@@ -85,8 +85,8 @@
                         {{-- <a
                             class="nav-link {{ request()->routeIs('admin.setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
                             href="{{ route('admin.setting.index') }}"> --}}
-                        <a class="nav-link {{ request()->routeIs('admin.setting*') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
-                            href="#">
+                        <a class="nav-link {{ request()->routeIs('admin.setting') ? 'active' : 'hover-hijau' }} rounded-3 d-flex align-items-center"
+                            href="{{ route('admin.setting') }}">
                             <i class="material-icons me-2 nav-icon">settings</i> Setting
                         </a>
                     </li>
@@ -159,10 +159,10 @@
                 <div class="d-flex align-items-center">
                     {{-- <img src="{{ session('role') === 'admin' ? asset('assets/images/Avater.png') : (!empty($user->profile_url) ? $user->profile_url : asset('assets/images/avatar-admin.png')) }}"
                         alt="Profile" class="rounded-circle avatar"> --}}
-                        @php
+                    @php
                         $isAdmin = session('role') === 'admin';
                         $profilePath = auth()->user()?->profile;
-                    
+
                         // Jika admin, pakai avatar admin
                         if ($isAdmin) {
                             $profileImage = asset('assets/images/Avater.png');
@@ -176,7 +176,7 @@
                             $profileImage = asset('assets/images/avatar-admin.png');
                         }
                     @endphp
-                    
+
 
                     <img src="{{ $profileImage }}" alt="Profile" class="rounded-circle avatar">
 
