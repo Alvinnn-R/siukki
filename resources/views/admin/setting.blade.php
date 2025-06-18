@@ -7,7 +7,7 @@
 @push('styles')
     <style>
         .settings-area {
-            background: white;
+            background: #99bc85;
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -62,7 +62,7 @@
         }
 
         .btn-setting {
-            background-color: #28a745;
+            background-color: #6d9d3b;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -71,11 +71,12 @@
             font-size: 14px;
             margin-bottom: 15px;
             margin-right: 10px;
+            font-weight: 500;
             transition: background-color 0.3s;
         }
 
         .btn-setting:hover {
-            background-color: #218838;
+            background-color: #52841e;
         }
 
         .alert {
@@ -110,7 +111,8 @@
         }
 
         .modal-header {
-            background-color: #f8f9fa;
+            background-color: #99bc85;
+            border-radius: 5px 5px 0px 0px;
             border-bottom: 1px solid #dee2e6;
         }
 
@@ -120,11 +122,11 @@
         }
 
         /* .form-control {
-                    padding: 10px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    margin-bottom: 15px;
-                } */
+                                                            padding: 10px;
+                                                            border: 1px solid #ddd;
+                                                            border-radius: 5px;
+                                                            margin-bottom: 15px;
+                                                        } */
 
         .form-control.is-invalid {
             border-color: #dc3545;
@@ -159,7 +161,7 @@
         <div class="row">
             <div class="main-content-settings">
                 <div class="settings-area">
-                    <h2>Settings Admin</h2>
+                    <h2><i class="material-icons me-3" style="font-size: 2rem;">manage_accounts</i>Settings Admin</h2>
 
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -253,7 +255,8 @@
 
                         <!-- New Password -->
                         <label for="new_password" class="mt-3">Password Baru</label>
-                        <input id="new_password" name="new_password" type="password" placeholder="Masukkan Password Baru"
+                        <input id="new_password" name="new_password" type="password"
+                            placeholder="Masukkan Password Baru"
                             class="form-control @error('new_password') is-invalid @enderror">
                         @error('new_password')
                             <div class="invalid-feedback">{{ $message }}</div>

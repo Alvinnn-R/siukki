@@ -22,13 +22,13 @@ body {
 }
 
 /* Kartu XP & Badge */
-.rounded-3 {
+/* .rounded-3 {
     border-radius: 18px !important;
 }
 
 .shadow-sm {
     box-shadow: 0 2px 8px rgba(44, 62, 43, 0.08);
-}
+} */
 
 /* Gambar XP dan Badge */
 .bg-success-subtle img {
@@ -130,7 +130,7 @@ body {
 .poin-area {
     max-width: 1200px;
     margin: 0 auto;
-    padding-top: 0; 
+    padding-top: 0;
 }
 
 .poin-header-title {

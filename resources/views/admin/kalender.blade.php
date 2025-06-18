@@ -10,7 +10,8 @@
             <div class="col-12 col-lg-12">
                 <!-- Box Kelola Kalender Event -->
                 <div class="section-header mb-4" style="background-color: #99C281; padding: 20px; border-radius: 10px;">
-                    <h2 class="text-center text-white">Kelola Kalender Event</h2>
+                    <h2 class="text-center text-white"><i class="material-icons me-3" style="font-size: 2rem;">event</i>Kelola
+                        Kalender Event</h2>
                 </div>
 
                 <!-- Kalender Event dengan Embed Google Kalender -->

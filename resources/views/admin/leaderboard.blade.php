@@ -10,15 +10,15 @@
     @php
         // Cek filter aktif (default 'day' jika tidak ada)
         $activeFilter = $filter ?? 'day';
-        
+
         // Function untuk mendapatkan URL profile image
         $getProfileImage = function($user) {
             if (!$user->profile) {
                 return asset('assets/images/default-avatar.png');
             }
-            
-            return str_contains($user->profile, 'avatar/') 
-                ? asset('assets/images/' . $user->profile) 
+
+            return str_contains($user->profile, 'avatar/')
+                ? asset('assets/images/' . $user->profile)
                 : asset('uploads/profiles/' . $user->profile);
         };
     @endphp
@@ -121,10 +121,10 @@
                     <h5 class="fw-bold mb-3 leaderboard-top10-title">Top 10 Ranking</h5>
                     <!-- Top 10 Cards -->
                     @foreach ($anggota->take(10) as $i => $user)
-                        <div class="d-flex align-items-center mb-2 leaderboard-card 
-                            @if ($i == 0) gold rank-1 
-                            @elseif($i == 1) silver rank-2 
-                            @elseif($i == 2) bronze rank-3 
+                        <div class="d-flex align-items-center mb-2 leaderboard-card
+                            @if ($i == 0) gold rank-1
+                            @elseif($i == 1) silver rank-2
+                            @elseif($i == 2) bronze rank-3
                             @endif">
                             <span class="leaderboard-rank rank-{{ $i + 1 }}">{{ $i + 1 }}</span>
                             <img src="{{ $getProfileImage($user) }}"
