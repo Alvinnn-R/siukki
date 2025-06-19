@@ -7,7 +7,7 @@
     <!-- Modal -->
     <div class="modal fade" id="MisiModal" tabindex="-1" aria-labelledby="MisiModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-center">
+            <div class="modal-content modal-content-color text-center">
                 <div class="modal-header border-0">
                     <h5 class="modal-title w-100 fw-bold" id="MisiModalLabel">Memulai Perjalanan Di SiUKKI</h5>
                 </div>
@@ -143,7 +143,7 @@
     <!-- Modal Check-in -->
     <div class="modal fade" id="checkinModal" tabindex="-1" aria-labelledby="checkinModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-center modal-misi-content">
+            <div class="modal-content modal-content-color text-center modal-misi-content">
                 <div class="modal-header border-0">
                     <h5 class="modal-title w-100 fw-bold" id="checkinModalLabel">Check-in Harian</h5>
                     <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"
@@ -160,7 +160,7 @@
     <!-- Modal Misi Harian -->
     <div class="modal fade" id="misiModalHarian" tabindex="-1" aria-labelledby="misiModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-misi-content">
+            <div class="modal-content modal-content-color modal-misi-content">
                 <div class="modal-header border-0">
                     <h5 class="modal-title w-100 text-center" id="misiModalLabel">Misi Harian</h5>
                     <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"
