@@ -128,8 +128,8 @@
                                 {{-- Misi event  belum selesai --}}
                                 <button class="btn btn-success btn-selesaikan-misi" data-bs-toggle="modal"
                                     data-bs-target="#misiModalTerbatas" data-id="{{ $misi->id_misi }}"
-                                    data-judul="{{ $misi->nama_misi }}" data-xp="{{ $misi->xp_reward }}"
-                                    data-deskripsi="{{ $misi->deskripsi }}">
+                                    data-judul="{{ $misi->nama_misi }}" data-icon="{{ $misi->icon }}"
+                                    data-xp="{{ $misi->xp_reward }}" data-deskripsi="{{ $misi->deskripsi }}">
                                     Selesaikan Misi
                                 </button>
                             @endif
@@ -194,9 +194,8 @@
                 </div>
                 <div class="modal-body position-relative pb-5">
                     <!-- Menampilkan Ikon Misi -->
-                    <img src="{{ asset('uploads/icon/' . $misi->icon) }}" alt="Ikon Misi" class="img-fluid mb-3"
+                    <img src="{{ asset('uploads/icon/' . $misi->icon) }}" alt="ikonMisi" class="img-fluid mb-3"
                         style="width: 50%;">
-
                     <!-- Menampilkan XP -->
                     <div class="xp-display text-center mb-3" id="misiXP">+0 XP</div>
 
@@ -276,11 +275,15 @@
                 const xp = parseInt(button.getAttribute('data-xp')) || 0;
                 const deskripsi = button.getAttribute('data-deskripsi');
                 const idMisi = button.getAttribute('data-id');
+                const ikonMisi = button.getAttribute('data-icon');
 
                 modalMisiTerbatas.querySelector('#misiModalLabel').textContent = judul;
                 modalMisiTerbatas.querySelector('#misiXP').textContent = `+${xp} XP`;
                 modalMisiTerbatas.querySelector('#misiDeskripsi').textContent = deskripsi;
                 btnModalSelesaiTerbatas.setAttribute('data-id', idMisi);
+                modalMisiTerbatas.querySelector('img').src = 'uploads/icon/' +
+                    ikonMisi;
+                // imageElement.src = asset('uploads/icon/' + ikonMisi);
             });
 
             btnModalSelesaiTerbatas.addEventListener('click', () => {
