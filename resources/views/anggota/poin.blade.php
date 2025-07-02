@@ -37,12 +37,11 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-color">
                 <div class="modal-body text-center">
-                    <h2 class="fw-bold mb-4" style="color:#1a5f3f;">Level, Badge, dan Peringkat</h2>
+                    <h2 class="fw-bold mb-4" style="color:#1a5f3f;">Level & Badge</h2>
                     <img src="{{ asset('assets/images/modalmisi1.png') }}" alt="Ustadzah"
                         style="width:400px; max-width:90%; margin-bottom:20px;">
                     <div class="description-box mx-auto mb-3" style="max-width: 440px;">
-                        Ustadzah: "Setiap beberapa XP yang kamu kumpulkan tujuannya untuk meningkatkan level, badge, dan
-                        peringkat.
+                        Ustadzah: "Setiap beberapa XP yang kamu kumpulkan tujuannya untuk meningkatkan level dan badge.
                         Ayo kumpulkan XP sebanyak-banyaknya agar badge kamu adalah cendekiawan islam yang merupakan
                         badge tertinggi"
                     </div>
