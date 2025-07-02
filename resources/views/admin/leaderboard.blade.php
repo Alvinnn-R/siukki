@@ -12,7 +12,7 @@
         $activeFilter = $filter ?? 'day';
 
         // Function untuk mendapatkan URL profile image
-        $getProfileImage = function($user) {
+        $getProfileImage = function ($user) {
             if (!$user->profile) {
                 return asset('assets/images/default-avatar.png');
             }
@@ -65,17 +65,18 @@
                         @foreach ($top3Display as $i => $user)
                             <div class="leaderboard-top3-col leaderboard-top3-{{ $crowns[$i] }}">
                                 @if ($i == 1)
-                                    <img src="{{ $crownIcons['gold'] }}" class="leaderboard-crown leaderboard-crown-gold" alt="Crown">
+                                    <img src="{{ $crownIcons['gold'] }}" class="leaderboard-crown leaderboard-crown-gold"
+                                        alt="Crown">
                                 @elseif ($i == 0)
-                                    <img src="{{ $crownIcons['silver'] }}" class="leaderboard-crown leaderboard-crown-silver" alt="Crown">
+                                    <img src="{{ $crownIcons['silver'] }}" class="leaderboard-crown leaderboard-crown-silver"
+                                        alt="Crown">
                                 @elseif ($i == 2)
-                                    <img src="{{ $crownIcons['bronze'] }}" class="leaderboard-crown leaderboard-crown-bronze" alt="Crown">
+                                    <img src="{{ $crownIcons['bronze'] }}" class="leaderboard-crown leaderboard-crown-bronze"
+                                        alt="Crown">
                                 @endif
                                 <img src="{{ $getProfileImage($user) }}"
-                                    class="leaderboard-avatar-top3 @if ($i == 1) leaderboard-avatar-top1 @endif"
-                                    alt="Avatar">
-                                <div
-                                    class="leaderboard-top3-name @if ($i == 1) leaderboard-top3-name-main @endif">
+                                    class="leaderboard-avatar-top3 @if ($i == 1) leaderboard-avatar-top1 @endif" alt="Avatar">
+                                <div class="leaderboard-top3-name @if ($i == 1) leaderboard-top3-name-main @endif">
                                     {{ $user->nama }}
                                 </div>
                                 <div class="leaderboard-top3-level">
@@ -105,10 +106,9 @@
                     @endphp
 
                     @foreach ($top3 as $i => $user)
-                        <div class="leaderboard-card {{ ['silver', 'gold', 'bronze'][$i] }} rank-{{ $i + 1 }}">
+                        <div class="leaderboard-card {{ ['gold', 'silver', 'bronze'][$i] }} rank-{{ $i + 1 }}">
                             <span class="leaderboard-rank rank-{{ $i + 1 }}">{{ $i + 1 }}</span>
-                            <img src="{{ $getProfileImage($user) }}" class="leaderboard-avatar rank-{{ $i + 1 }}"
-                                alt="Avatar">
+                            <img src="{{ $getProfileImage($user) }}" class="leaderboard-avatar rank-{{ $i + 1 }}" alt="Avatar">
                             <span class="fw-bold">{{ $user->nama }}</span>
                             <span class="ms-auto leaderboard-xp">{{ $getXp($user) }} Xp.</span>
                         </div>
@@ -122,10 +122,10 @@
                     <!-- Top 10 Cards -->
                     @foreach ($anggota->take(10) as $i => $user)
                         <div class="d-flex align-items-center mb-2 leaderboard-card
-                            @if ($i == 0) gold rank-1
-                            @elseif($i == 1) silver rank-2
-                            @elseif($i == 2) bronze rank-3
-                            @endif">
+                                            @if ($i == 0) gold rank-1
+                                            @elseif($i == 1) silver rank-2
+                                            @elseif($i == 2) bronze rank-3
+                                            @endif">
                             <span class="leaderboard-rank rank-{{ $i + 1 }}">{{ $i + 1 }}</span>
                             <img src="{{ $getProfileImage($user) }}"
                                 class="rounded-circle leaderboard-avatar-top10 rank-{{ $i + 1 }}" alt="Avatar">

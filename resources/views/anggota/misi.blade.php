@@ -9,15 +9,16 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-color text-center">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title w-100 fw-bold" id="MisiModalLabel">Memulai Perjalanan Di SiUKKI</h5>
+                    <h5 class="modal-title w-100 fw-bold" id="MisiModalLabel">Mengerjakan Misi Di SiUKKI</h5>
                 </div>
 
                 <img src="{{ asset('assets/images/modalmisi.png') }}" alt="Memulai Perjalanan" class="img-fluid mb-3">
 
                 <div class="modal-body" style="height: 200px;">
-                    <p id="modalText"><strong>Ustadzah: {{ Auth::user()->nama }}, selamat datang di halaman misi. Kamu baru
-                            saja memulai perjalananmu di SiUKKI. Misi-misi ini adalah tantangan yang akan menguji ketekunan
-                            dan semangatmu untuk lebih aktif dalam kegiatan islami di kampus.</strong></p>
+                    <p id="modalText"><strong>Ustadzah: "Assalamu’alaikum <strong>{{ Auth::user()->nama }}</strong>, Selamat
+                            datang di
+                            halaman misi. Perjalananmu di SiUKKI baru saja dimulai. Setiap misi adalah tantangan untuk
+                            melatih ketekunan dan semangatmu dalam kegiatan Islami di kampus."</strong></p>
                 </div>
 
                 <div class="modal-footer border-0">
@@ -31,26 +32,26 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var MisiModal = new bootstrap.Modal(document.getElementById('MisiModal'));
             MisiModal.show();
         });
 
         // modal misi
         const texts = [
-            `<strong>{{ Auth::user()->nama }}: Tapi, Ustadzah, ada banyak misi yang harus saya pilih. Bagaimana saya tahu misi mana yang harus saya mulai?</strong>`,
-            `<strong>Uztadzah: Tidak perlu khawatir, {{ Auth::user()->nama }}. Mulailah dari yang paling sederhana. Setiap misi di SiUKKI dirancang untuk membantumu meningkatkan kualitas ibadah dan keterlibatan di kampus. Misalnya, kamu bisa memulai dengan membaca Al-Qur'an atau sholat berjamaah.</strong>`,
-            `<strong>{{ Auth::user()->nama }}: Jadi, semua misi ini penting ya, Ustadzah?</strong>`,
-            `<strong>Ustadzah: Betul, {{ Auth::user()->nama }}. Setiap langkah kecil yang kamu ambil akan memberi manfaat besar. XP yang kamu kumpulkan adalah bukti perkembanganmu. Namun, yang lebih penting adalah niat dan konsistensi yang kamu tunjukkan.</strong>`,
-            `<strong>Uztadzah: Sekarang, pilih misi yang paling sesuai dengan waktu dan semangatmu. Ingat, misi-misi ini bukan hanya untuk mendapatkan XP, tetapi juga untuk mendekatkan diri kepada Allah dan meningkatkan kontribusimu di UKKI.</strong>`,
-            `<strong>{{ Auth::user()->nama }}: Terima kasih, Ustadzah. Saya akan mulai dengan yang pertama. Ayo, saya siap untuk memulai!</strong>`
+            `<strong>{{ Auth::user()->nama }}: "Tapi Ustadzah, ada banyak misi. Bagaimana saya tahu harus mulai dari yang mana?"</strong>`,
+            `<strong>Uztadzah: "Tidak perlu khawatir, <strong>{{ Auth::user()->nama }}</strong>. Mulailah dari misi yang paling mudah. Semua misi di SiUKKI dirancang untuk membantumu meningkatkan ibadah dan keterlibatan di kampus. Misalnya, kamu bisa mulai dengan membaca Al-Qur’an atau sholat berjamaah."</strong>`,
+            `<strong>{{ Auth::user()->nama }}: "Jadi, semua misi ini penting, ya Ustadzah?"</strong>`,
+            `<strong>Ustadzah: "Betul, <strong>{{ Auth::user()->nama }}</strong>. Setiap langkah kecil membawa manfaat besar. XP yang kamu kumpulkan menunjukkan perkembanganmu. Tapi yang paling penting adalah niat dan konsistensimu."</strong>`,
+            `<strong>Uztadzah: "Sekarang, pilih misi yang sesuai dengan waktumu dan semangatmu. Ingat, misi ini bukan sekadar XP, tapi juga jalan untuk mendekat kepada Allah dan berkontribusi di UKKI."</strong>`,
+            `<strong>{{ Auth::user()->nama }}: "Terima kasih, Ustadzah. Saya siap memulai misi pertama!"</strong>`
         ];
 
         let currentStep = -1; // Mulai dari -1 karena kita akan menampilkan teks pertama pada klik pertama
         const modalText = document.getElementById('modalText');
         const nextBtn = document.getElementById('btnNextMisiModal');
 
-        nextBtn.addEventListener('click', function() {
+        nextBtn.addEventListener('click', function () {
             currentStep++;
             if (currentStep < texts.length) {
                 modalText.innerHTML = texts[currentStep];
@@ -78,8 +79,7 @@
                 <div class="col">
                     <div class="card h-100 text-center">
                         <div class="card-body">
-                            <img class="material-icons misi-icon" src="{{ asset('uploads/icon/' . $misi->icon) }}"
-                                width="50%">
+                            <img class="material-icons misi-icon" src="{{ asset('uploads/icon/' . $misi->icon) }}" width="50%">
                             <h5 class="card-title mt-2">{{ $misi->nama_misi }}</h5>
                             @if ($misi->is_checkin)
                                 @if ($misi->is_completed)
@@ -87,9 +87,8 @@
                                     <button class="btn btn-secondary" disabled>Check-In Berhasil</button>
                                 @else
                                     {{-- Jika misi check-in dan belum selesai --}}
-                                    <button class="btn btn-success btn-checkin" data-bs-toggle="modal"
-                                        data-bs-target="#checkinModal" data-id="{{ $misi->id_misi }}"
-                                        data-xp="{{ $misi->xp_reward }}">
+                                    <button class="btn btn-success btn-checkin" data-bs-toggle="modal" data-bs-target="#checkinModal"
+                                        data-id="{{ $misi->id_misi }}" data-xp="{{ $misi->xp_reward }}">
                                         Check-in
                                     </button>
                                 @endif
@@ -118,14 +117,13 @@
                 <div class="col">
                     <div class="card h-100 text-center">
                         <div class="card-body">
-                            <img class="material-icons misi-icon" src="{{ asset('uploads/icon/' . $misi->icon) }}"
-                                width="50%">
+                            <img class="material-icons misi-icon" src="{{ asset('uploads/icon/' . $misi->icon) }}" width="50%">
                             <h5 class="card-title mt-2">{{ $misi->nama_misi }}</h5>
                             @if ($misi->is_completed)
                                 {{-- Misi event sudah diselesaikan --}}
                                 <button class="btn btn-secondary" disabled>Misi Selesai</button>
                             @else
-                                {{-- Misi event  belum selesai --}}
+                                {{-- Misi event belum selesai --}}
                                 <button class="btn btn-success btn-selesaikan-misi" data-bs-toggle="modal"
                                     data-bs-target="#misiModalTerbatas" data-id="{{ $misi->id_misi }}"
                                     data-judul="{{ $misi->nama_misi }}" data-icon="{{ $misi->icon }}"
@@ -221,7 +219,7 @@
             const btnModalSelesaiTerbatas = modalMisiTerbatas.querySelector('#btnSelesaikanMisi');
 
             // Handler untuk modal harian
-            modalMisiHarian.addEventListener('show.bs.modal', function(event) {
+            modalMisiHarian.addEventListener('show.bs.modal', function (event) {
                 const button = event.relatedTarget;
                 const judul = button.getAttribute('data-judul');
                 const xp = parseInt(button.getAttribute('data-xp')) || 0;
@@ -237,13 +235,13 @@
             btnModalSelesaiHarian.addEventListener('click', () => {
                 const idMisi = btnModalSelesaiHarian.getAttribute('data-id');
                 fetch(`/anggota/misi/${idMisi}/complete`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        },
-                        body: JSON.stringify({})
-                    })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({})
+                })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
@@ -269,7 +267,7 @@
             });
 
             // Handler untuk modal terbatas
-            modalMisiTerbatas.addEventListener('show.bs.modal', function(event) {
+            modalMisiTerbatas.addEventListener('show.bs.modal', function (event) {
                 const button = event.relatedTarget;
                 const judul = button.getAttribute('data-judul');
                 const xp = parseInt(button.getAttribute('data-xp')) || 0;
@@ -289,13 +287,13 @@
             btnModalSelesaiTerbatas.addEventListener('click', () => {
                 const idMisi = btnModalSelesaiTerbatas.getAttribute('data-id');
                 fetch(`/anggota/misi/${idMisi}/complete`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        },
-                        body: JSON.stringify({})
-                    })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({})
+                })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
@@ -328,7 +326,7 @@
             const modalCheckin = document.getElementById('checkinModal');
 
             // Saat modal check-in ditampilkan, ambil data dari tombol yang men-trigger
-            modalCheckin.addEventListener('show.bs.modal', function(event) {
+            modalCheckin.addEventListener('show.bs.modal', function (event) {
                 const button = event.relatedTarget;
                 const xp = parseInt(button.getAttribute('data-xp')) || 0;
                 const idMisi = button.getAttribute('data-id');
@@ -338,15 +336,15 @@
 
                 // Kirim POST request ke server untuk check-in
                 fetch('/anggota/misi/checkin', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF dari Laravel
-                        },
-                        body: JSON.stringify({
-                            id_misi: idMisi
-                        }) // ID dikirim sebagai JSON
-                    })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF dari Laravel
+                    },
+                    body: JSON.stringify({
+                        id_misi: idMisi
+                    }) // ID dikirim sebagai JSON
+                })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
