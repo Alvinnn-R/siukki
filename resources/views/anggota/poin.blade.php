@@ -14,10 +14,10 @@
             <div class="modal-content modal-content-color">
                 <div class="modal-body text-center">
                     <h2 class="fw-bold mb-4" style="color:#1a5f3f;">Mengumpulkan XP di SiUKKI</h2>
-                    <img src="{{ asset('assets/images/modalmisi1.png') }}" alt="Ustadzah"
-                        style="width:400px; max-width:90%; margin-bottom:20px;">
+                    <img src="{{ asset('assets/images/modalmisi3.png') }}" alt="Ustadzah"
+                        style="width:400px; max-width:70%; margin-bottom:20px;">
                     <div class="description-box mx-auto mb-3" style="max-width: 440px;">
-                        Ustadzah: "Assalamu’alaikum, <strong>{{ Auth::user()->nama }}</strong>. Di halaman ini kamu bisa
+                        Ustaz: "Assalamu’alaikum, <strong>{{ Auth::user()->nama }}</strong>. Di halaman ini kamu bisa
                         melihat
                         jumlah XP yang telah kamu kumpulkan dari berbagai misi yang kamu kerjakan.
                         Gunakan poinmu sebagai motivasi untuk terus berkembang dan berkontribusi di SiUKKI!"
@@ -38,12 +38,11 @@
             <div class="modal-content modal-content-color">
                 <div class="modal-body text-center">
                     <h2 class="fw-bold mb-4" style="color:#1a5f3f;">Level & Badge</h2>
-                    <img src="{{ asset('assets/images/modalmisi1.png') }}" alt="Ustadzah"
-                        style="width:400px; max-width:90%; margin-bottom:20px;">
+                    <img src="{{ asset('assets/images/modalmisi3.png') }}" alt="Ustadzah"
+                        style="width:400px; max-width:70%; margin-bottom:20px;">
                     <div class="description-box mx-auto mb-3" style="max-width: 440px;">
-                        Ustadzah: "Setiap beberapa XP yang kamu kumpulkan tujuannya untuk meningkatkan level dan badge.
-                        Ayo kumpulkan XP sebanyak-banyaknya agar badge kamu adalah cendekiawan islam yang merupakan
-                        badge tertinggi"
+                        Ustaz: "Setiap XP yang kamu kumpulkan akan meningkatkan level dan badge-mu. Raih XP
+                        sebanyak-banyaknya untuk mendapatkan badge tertinggi: Cendekiawan Islam."
                     </div>
                     <div class="button-row mx-auto d-flex justify-content-between gap-2" style="max-width:440px;">
                         <button class="btn btn-primary-skip px-4 py-2" data-bs-dismiss="modal">Skip &gt;&gt;</button>

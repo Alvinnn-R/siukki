@@ -14,10 +14,10 @@
             <div class="modal-content modal-content-color">
                 <div class="modal-body text-center">
                     <h2 class="fw-bold mb-4" style="color:#1a5f3f;">Papan Peringkat di SiUKKI</h2>
-                    <img src="{{ asset('assets/images/modalmisi1.png') }}" alt="Ustadzah"
-                        style="width:400px; max-width:90%; margin-bottom:20px;">
+                    <img src="{{ asset('assets/images/modalmisi2.png') }}" alt="Ustadzah"
+                        style="width:400px; max-width:75%; margin-bottom:20px;">
                     <div class="description-box mx-auto mb-3" style="max-width: 440px;">
-                        Ustadzah: "Assalamu’alaikum, <strong>{{ Auth::user()->nama }}</strong>. Di halaman leaderboard, kamu
+                        Ustaz: "Assalamu’alaikum, <strong>{{ Auth::user()->nama }}</strong>. Di halaman leaderboard, kamu
                         bisa melihat urutan
                         peringkatmu dibandingkan teman-teman lain.
                         Jadikan posisi ini sebagai semangat untuk lebih aktif dan berprestasi dalam kegiatan Islami di
@@ -39,10 +39,10 @@
             <div class="modal-content modal-content-color">
                 <div class="modal-body text-center">
                     <h2 class="fw-bold mb-4" style="color:#1a5f3f;">Kejar Peringkat Terbaik</h2>
-                    <img src="{{ asset('assets/images/modalmisi1.png') }}" alt="Ustadzah"
-                        style="width:400px; max-width:90%; margin-bottom:20px;">
+                    <img src="{{ asset('assets/images/modalmisi2.png') }}" alt="Ustadzah"
+                        style="width:400px; max-width:75%; margin-bottom:20px;">
                     <div class="description-box mx-auto mb-3" style="max-width: 440px;">
-                        Ustadzah: "Papan peringkat akan direset setiap pengumuman diklat UKKI tahunan. Raih 10 besar untuk
+                        Ustaz: "Papan peringkat akan direset setiap pengumuman diklat UKKI tahunan. Raih 10 besar untuk
                         mendapatkan reward fantastis!"
                     </div>
                     <div class="button-row mx-auto d-flex justify-content-between gap-2" style="max-width:440px;">
@@ -169,11 +169,12 @@
                     <h5 class="fw-bold mb-3 leaderboard-top10-title">Top 10 Ranking</h5>
                     <!-- Top 10 Cards -->
                     @foreach ($anggota->take(10) as $i => $user)
-                        <div class="d-flex align-items-center mb-2 leaderboard-card 
-                                                                                                    @if ($i == 0) gold rank-1 
-                                                                                                    @elseif($i == 1) silver rank-2 
-                                                                                                    @elseif($i == 2) bronze rank-3 
-                                                                                                    @endif">
+                        <div
+                            class="d-flex align-items-center mb-2 leaderboard-card 
+                                                                                                                            @if ($i == 0) gold rank-1 
+                                                                                                                            @elseif($i == 1) silver rank-2 
+                                                                                                                            @elseif($i == 2) bronze rank-3 
+                                                                                                                            @endif">
                             <span class="leaderboard-rank rank-{{ $i + 1 }}">{{ $i + 1 }}</span>
                             <img src="{{ $getProfileImage($user) }}"
                                 class="rounded-circle leaderboard-avatar-top10 rank-{{ $i + 1 }}" alt="Avatar">
