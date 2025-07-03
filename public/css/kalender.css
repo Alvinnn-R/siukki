@@ -91,3 +91,49 @@ body {
     border: solid 1px #777;
 }
 
+/* ======================== */
+/* MODAL POIN TAMBAHAN      */
+/* ======================== */
+.modal-content-color {
+    background-color: #99bc85 !important;
+    border-radius: 18px !important;
+    border: none !important;
+}
+.description-box {
+    background-color: #bfd8af;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: rgb(0, 0, 0);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+.btn-primary-skip {
+    background-color: #4a6f97 !important;
+    border-color: #4a6f97 !important;
+    color: #fff !important;
+    border-radius: 8px;
+    font-weight: 600;
+}
+.btn-primary-skip:hover {
+    background-color: #3e5a7f !important;
+    border-color: #3e5a7f !important;
+    color: #fff !important;
+}
+.btn-primary-next {
+    background-color: #6d9d3b !important;
+    border-color: #6d9d3b !important;
+    color: #fff !important;
+    border-radius: 8px;
+    font-weight: 600;
+}
+.btn-primary-next:hover {
+    background-color: #5a7f2e !important;
+    border-color: #5a7f2e !important;
+    color: #fff !important;
+}
+@media (max-width: 600px) {
+    .description-box { font-size: 1.01rem; padding: .7rem; }
+    .modal-content-color { padding: 5px; }
+}

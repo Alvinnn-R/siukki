@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="about-section-box mb-4">
-                        <h5 class="fw-bold mb-3">Misi SIUKKI</h5>
+                        <h5 class="fw-bold mb-3">Visi &amp; Misi SIUKKI</h5>
                         <p>
                             SIUKKI berfokus pada pemberian pengalaman yang menyenangkan dalam meningkatkan partisipasi
                             mahasiswa dalam kegiatan UKKI dengan cara:
