@@ -14,7 +14,7 @@
 
                 <img src="{{ asset('assets/images/modalmisi.png') }}" alt="Memulai Perjalanan" class="img-fluid mb-3">
 
-                <div class="modal-body" style="height: 200px;">
+                <div class="modal-body" style="height: 230px;">
                     <p id="modalText"><strong>Ustadzah: "Assalamu’alaikum <strong>{{ Auth::user()->nama }}</strong>, Selamat
                             datang di
                             halaman misi. Perjalananmu di SiUKKI baru saja dimulai. Setiap misi adalah tantangan untuk

@@ -159,3 +159,23 @@
     margin: 0;
     padding: 1rem 0;
 }
+
+#modalText {
+    background: #bfd8af !important;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+#modalText {
+    /* ... style sebelumnya ... */
+    text-align: center !important;
+}
