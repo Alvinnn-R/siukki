@@ -129,7 +129,7 @@
                                 <button class="btn btn-success btn-selesaikan-misi" data-bs-toggle="modal"
                                     data-bs-target="#misiModalTerbatas" data-id="{{ $misi->id_misi }}"
                                     data-judul="{{ $misi->nama_misi }}" data-xp="{{ $misi->xp_reward }}"
-                                    data-deskripsi="{{ $misi->deskripsi }}">
+                                    data-deskripsi="{{ $misi->deskripsi }}" data-icon="{{ asset('uploads/icon/' . $misi->icon) }}">
                                     Selesaikan Misi
                                 </button>
                             @endif
@@ -276,10 +276,12 @@
                 const xp = parseInt(button.getAttribute('data-xp')) || 0;
                 const deskripsi = button.getAttribute('data-deskripsi');
                 const idMisi = button.getAttribute('data-id');
+                const icon = button.getAttribute('data-icon');
 
                 modalMisiTerbatas.querySelector('#misiModalLabel').textContent = judul;
                 modalMisiTerbatas.querySelector('#misiXP').textContent = `+${xp} XP`;
                 modalMisiTerbatas.querySelector('#misiDeskripsi').textContent = deskripsi;
+                modalMisiTerbatas.querySelector('img').setAttribute('src', icon);
                 btnModalSelesaiTerbatas.setAttribute('data-id', idMisi);
             });
 
